@@ -35,6 +35,7 @@ namespace Helpers
         public const string IDQUALIFIER = "IdQualifier";
         public const string ID = "Id";
         public const string TARGET = "Target";
+        public const string TargetStores = "TARGET STORES";
         public const string EDI856 = "856";
         public const string ASN = "ASN";
         
@@ -44,7 +45,7 @@ namespace Helpers
         public const string BillAndShipToCode = "BillAndShipToCode";
         public const string DUNSQualifier = "DUNSQualifier";
         public const string ShipTo = "ST";
-        public const string ShipFrom = "SF";
+        
         public const string DescShipTo = "Ship To";
         public const string DescShipFrom = "Ship From";
         /// <summary>
@@ -86,7 +87,7 @@ namespace Helpers
         public const string DateLoop = "DateLoop";
         public const string DateQualifier = "DateQualifier";
         public const string ShipDateString = "ShipDate";
-        public const string ShipDateNum = "011";
+        public const string ShipDateDateQualifierNumber = "011";
         public const string DateQualifierValue = "00";
         public const string DateQualifierValueForOrderLoop = "004";
         public const string Date = "Date";
@@ -160,6 +161,10 @@ namespace Helpers
         public const string OrderTotalWeight = "OrderTotalWeight";
 
 
+        public const string ShipFrom = "SF";
+
+
+
         /// <summary>
         /// Get ID for new ship for 
         /// </summary>
@@ -200,6 +205,8 @@ namespace Helpers
             HSAErro41 = 41, //Missing ship from address 
             HSAErro43 = 43, //Missing ship to address 
             HSAErro45 = 45, //Missing  doc Id
+            HSAErro47 = 47, //Missing CustomerNumber
+            HSAErro49 = 49, //Missing PO Date
 
         }
         #endregion
@@ -222,10 +229,18 @@ namespace Helpers
             City = 1,
             State = 2,
             PostalCode = 3,
-            StoreID = 4,
-            BillAndShipToCodes = 5,
+            BillAndShipToCodes = 4,
+            StoreID = 5,
 
         }
+
+        public enum ShippingInfoType : int
+        {
+            BoxCount = 1,
+            ShippingWeight = 2,
+
+        }
+
         public enum TargetProductMapping : int
 
         {

@@ -36,7 +36,7 @@ namespace ASNService
         {
             return new XElement(HEADER,
                 new XElement(CompanyCode, GetCompanyCode()),
-                new XElement(CUSTOMERNUMBER, Store),
+                new XElement(CUSTOMERNUMBER, GetCustomerNumber()),
                 new XElement(Direction, EDIHelperFunctions.Outbound),
                 new XElement(DocumentType, EDIHelperFunctions.EDI856),
                new XElement(EDIHelperFunctions.Version, VersionNumber),
@@ -46,11 +46,12 @@ namespace ASNService
 
         }
 
+        
         XElement BuildShipmentLevel()
         {
             return new XElement(EDIHelperFunctions.ShipmentLevel,
                                 new XElement(EDIHelperFunctions.DateLoop,
-                                new XElement(EDIHelperFunctions.DateQualifier, 011,
+                                new XElement(EDIHelperFunctions.DateQualifier, ShipDateDateQualifierNumber,
                                 new XAttribute(EDIHelperFunctions.Desc,
                                 EDIHelperFunctions.ShipDateString)),
                                 new XElement(EDIHelperFunctions.Date, ShipDate)),
@@ -59,8 +60,8 @@ namespace ASNService
                                 new XElement(EDIHelperFunctions.ShipmentTotals,
                                 new XElement(EDIHelperFunctions.ShipmentTotalCube, ShipmentTotalCubeValue),
                                 new XElement(EDIHelperFunctions.ShipmentPackagingCode, EDIHelperFunctions.CartonType),
-                                new XElement(ShipmentTotalCases, NumberOfBoxesForOrder()),
-                                new XElement(ShipmentTotalWeight, GetWeight)),
+                                new XElement(ShipmentTotalCases, GetShippingWeightOrBoxCount( ShippingInfoType.BoxCount   )),
+                                new XElement(ShipmentTotalWeight, GetShippingWeightOrBoxCount( ShippingInfoType.ShippingWeight  ))),
                                 new XElement(MethodOfPayment, EDIHelperFunctions.DF),
                                 new XElement(FOBLocationQualifier, EDIHelperFunctions.DE),
                                 new XElement(FOBDescription, EDIHelperFunctions.RETAILLOCATON),
@@ -78,7 +79,7 @@ namespace ASNService
                      new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Phone),
                      new XElement(EDIHelperFunctions.PhoneEmail, cContactInfo.PhoneNumber),
                      new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Email),
-                     new XElement(EDIHelperFunctions.EMAILADDRESS, cContactInfo.EmailAddress));
+                     new XElement(EDIHelperFunctions.PhoneEmail, cContactInfo.EmailAddress));
 
 
         }
@@ -166,7 +167,7 @@ namespace ASNService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                cAddreessDomain = UoW.ShipFrom.Find(t => t.BillAndShipToCodes == "ShipFrom").FirstOrDefault();
+                cAddreessDomain = UoW.ShipFrom.Find(t => t.BillAndShipToCodes ==  EDIHelperFunctions.ShipFrom).FirstOrDefault();
                 if (cAddreessDomain != null)
                 {
                     return cAddreessDomain;
@@ -184,8 +185,10 @@ namespace ASNService
             DCInformation ShipTo = GetShipToAddress();
             return new XElement(NAME,
                     new XElement(EDIHelperFunctions.BillAndShipToCode, EDIHelperFunctions.ShipTo),
-                    new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, Store ),
+                    new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, Store),
                     new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipTo),
+                    new XElement(EDIHelperFunctions.NameComponent, TargetStores),
+                    new XElement(EDIHelperFunctions.CompanyName, TargetStores),
                     new XElement(EDIHelperFunctions.CompanyName, string.Format("{0} {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber)),
                     new XElement(EDIHelperFunctions.Address, ShipTo.Address),
                     new XElement(EDIHelperFunctions.City, ShipTo.City),
@@ -196,15 +199,35 @@ namespace ASNService
 
         private DCInformation GetShipToAddress()
         {
-            throw new NotImplementedException();
+            DCInformation cDCInformation  = null;
+
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+
+                string DCNumber  = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == Store)
+                                                        .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
+
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID   == DCNumber.Replace(@"'", "")).FirstOrDefault();
+                    
+                if (cDCInformation  != null)
+                {
+                    return cDCInformation ;
+                }
+                else
+                {
+                    throw new ExceptionsEDI(string.Format("{0}{1}{2}", EDIHelperFunctions.Help, EDIHelperFunctions.Space, ErrorCodes.HSAErro41));
+                }
+            }
         }
 
         public void BuildASN()
         {
+           
+            #region Test Header
             var File = new XElement(FILE,
-                new XElement(EDIHelperFunctions.DOCUMENT,
-                BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
-            SaveASN(File);
+                new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));     
+            #endregion
+            //SaveASN(File);
             File.Save(path);
         }
 
@@ -221,7 +244,7 @@ namespace ASNService
 
         XElement BuildPickStruture()
         {
-            int BoxTotal = NumberOfBoxesForOrder();
+            int BoxTotal = GetShippingWeightOrBoxCount( ShippingInfoType.BoxCount );
             int Packtotal = NumberOfPickesForOrder();
             List<Store > cInbound850Current = GetOrders();
             List<SkuItem> Skus = GetSKUInfo(cInbound850Current);
@@ -303,23 +326,24 @@ namespace ASNService
         XElement BuildOrderTotals()
         {
             return new XElement(ORDERTOTALS,
-                    new XElement(OrderTotalCases, NumberOfBoxesForOrder()),
-                     new XElement(OrderTotalWeight, GetWeight));
+                    new XElement(OrderTotalCases, GetShippingWeightOrBoxCount( ShippingInfoType.BoxCount   )),
+                     new XElement(OrderTotalWeight, GetShippingWeightOrBoxCount( ShippingInfoType.ShippingWeight )));
 
         }
         private string GetPODate()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store cInbound850 = UoW.AddEDI850 .Find(t => t.PONumber  == PO).Where(x => x.OrderStoreNumber ==  Store )
-                                                                         .Where(x => x.ASNStatus  == (int)ASNStatus.ReadyForASN ).FirstOrDefault();
+                Store cInbound850 = UoW.AddEDI850 .Find(t => t.PONumber  == PO)
+                                                 .Where(x => x.OrderStoreNumber ==  Store )
+                                                 .Where(x => x.ASNStatus  == (int)ASNStatus.ReadyForASN ).FirstOrDefault();
                 if (cInbound850 != null)
                 {
                     return cInbound850.PODate.ToString(toFormat);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro45));
                 }
             }
 
@@ -330,15 +354,16 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store store = UoW.AddEDI850.Find(t => t.PONumber  == PO).Where(t => t.ASNStatus  == (int)ASNStatus.ReadyForASN )
-                                                                            .Where(t => t.OrderStoreNumber == Store ).FirstOrDefault();
+                Store store = UoW.AddEDI850.Find(t => t.PONumber  == PO)
+                                           .Where(t => t.ASNStatus  == (int)ASNStatus.ReadyForASN )
+                                           .Where(t => t.OrderStoreNumber == Store ).FirstOrDefault();
                 if (!string.IsNullOrEmpty( store.DocumentId))
                 {
                     return  store.DocumentId;
                 }
                 else
                 {
-                    throw new ExceptionsEDI(string.Format("{0}{1}{2}", EDIHelperFunctions.Help, EDIHelperFunctions.Space, ErrorCodes.HSAErro45));
+                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro45));
                 }
             }
             
@@ -361,7 +386,7 @@ namespace ASNService
 
         #endregion
             #region Class functions 
-        public int NumberOfBoxesForOrder()
+        public int GetShippingWeightOrBoxCount(ShippingInfoType ShippingInfo )
         {
 
             int dTotalWeight = 0;
@@ -374,8 +399,26 @@ namespace ASNService
                 {
                     dTotalWeight += item.QtyOrdered;
                 }
+
+                switch (ShippingInfo )
+                {
+                    case ShippingInfoType.ShippingWeight:
+                        return (dTotalWeight / InnersPerPacksSize) + BOXWEIGHT;
+                        
+
+                    case ShippingInfoType.BoxCount:
+                        return GetNumberofBoxes(dTotalWeight / InnersPerPacksSize);
+                        
+                    default:
+                        return 0;
+                        
+                }
+
+                
+                
+                
             }
-            return GetNumberofBoxes(dTotalWeight / InnersPerPacksSize);
+            
         }
 
         private int GetNumberofBoxes(int packs )
@@ -452,13 +495,37 @@ namespace ASNService
             return EDIHelperFunctions.VPS + EDIHelperFunctions.RandomString(EDIHelperFunctions.shiplength);
 
         }
+
+        #region Header functions
+        private string  GetCustomerNumber()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
+                Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                             .Where(t => t.OrderStoreNumber == Store)
+                                             .FirstOrDefault();
+                if (cEDI850 != null)
+                {
+                    return cEDI850.CustomerNumber;
+                }
+
+                throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro47));
+            }
+
+        }
+
+
         public string GetCompanyCode()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
+                List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
                 Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
                                              .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                             .Where(t => t.OrderStoreNumber == Store).FirstOrDefault();
+                                             .Where(t => t.OrderStoreNumber == Store)
+                                             .FirstOrDefault();
                 if (cEDI850 != null)
                 {
                     return cEDI850.CompanyCode;
@@ -468,7 +535,7 @@ namespace ASNService
             }
 
         }
-
+        #endregion
 
         #endregion
 

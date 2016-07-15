@@ -68,9 +68,11 @@ namespace EDIService
                     cShippingInfo.Address = reader.GetValue((int)DCAddressInfo.Address).ToString();
                     cShippingInfo.City = reader.GetValue((int)DCAddressInfo.City).ToString();
                     cShippingInfo.State = reader.GetValue((int)DCAddressInfo.State).ToString();
-                    cShippingInfo.StoreID = reader.GetValue((int)DCAddressInfo.StoreID).ToString();
                     cShippingInfo.PostalCode = reader.GetValue((int)DCAddressInfo.PostalCode).ToString();
                     cShippingInfo.BillAndShipToCodes = reader.GetValue((int)DCAddressInfo.BillAndShipToCodes).ToString();
+                    cShippingInfo.StoreID = reader.GetValue((int)DCAddressInfo.StoreID).ToString();
+                    
+                    
                     lisShippingInfo.Add(cShippingInfo);
                 }
             }
@@ -166,6 +168,7 @@ namespace EDIService
                     cEDI850Domain.PODate = reader.GetDateTime((int)Inbound850Mapping.PODate);
                     cEDI850Domain.DTS = DateTime.Now;
                     cEDI850Domain.PickStatus = (int) PickStatus.Open;
+                    cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
                     cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
                     cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
                     cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
