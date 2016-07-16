@@ -234,10 +234,16 @@ namespace Helpers
 
         }
 
+        public enum SSCCStatus : int
+        {
+            Used = 1,
+            NotUsed = 2,
+        }
         public enum ShippingInfoType : int
         {
             BoxCount = 1,
             ShippingWeight = 2,
+            PickCount = 3,
 
         }
 
@@ -286,6 +292,17 @@ namespace Helpers
             OriginalLine = 63,
         }
 
+
+        public class SSCCPostions
+        {
+            public const string COMPANYCODE = "0190829";
+            public const string APPLICATINIDENTIFER = "00";
+            public const string EXTENSIONDIGIT = "0";
+            public const int SSCCLENGTH = 17;
+            public const int SCCNUMBERNOTUSED = 0;
+
+
+        }
 
     }
 }

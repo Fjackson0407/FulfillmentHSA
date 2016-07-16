@@ -21,7 +21,8 @@ namespace ASNService
         public string ConnectionString { get; set; }
         public string PO { get; set; }
         public string Store { get; set; }
-
+        public StoreOrderDetail CurentStoreOrderDetail { get; set; }
+        public Guid  CurrentID { get; set; }
         public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store)
         {
             PO = _PO;
@@ -225,10 +226,44 @@ namespace ASNService
            
             #region Test Header
             var File = new XElement(FILE,
-                new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));     
+                new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
             #endregion
             //SaveASN(File);
+            List<Store>  lisStore = UpdatePo();
+            SaveForInventory(lisStore);
             File.Save(path);
+        }
+
+        private void SaveForInventory(List<Store> lisStore)
+        {
+            if (lisStore != null && lisStore.Count > 0)
+            {
+                using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+                {
+                    StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
+                    foreach (Store  store in lisStore )
+                    {
+                        cStoreOrderDetail.Id = Guid.NewGuid();
+                        cStoreOrderDetail.Store = store;
+                    }
+                }
+            }
+
+        }
+
+        private List<Store> UpdatePo()
+        {
+
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+
+                List<Store> lisStore = UoW.AddEDI850.Find(x => x.PONumber == PO)
+               .Where(t => t.OrderStoreNumber == Store)
+               .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
+                lisStore.ForEach(t => t.ASNStatus = (int)ASNStatus.HasASN);
+               int Result = UoW.AddEDI850.SaveChange();
+                return lisStore;
+            }
         }
 
         private XElement  BuildOrderLevel()
@@ -245,7 +280,7 @@ namespace ASNService
         XElement BuildPickStruture()
         {
             int BoxTotal = GetShippingWeightOrBoxCount( ShippingInfoType.BoxCount );
-            int Packtotal = NumberOfPickesForOrder();
+            int Packtotal = GetShippingWeightOrBoxCount(ShippingInfoType.PickCount);
             List<Store > cInbound850Current = GetOrders();
             List<SkuItem> Skus = GetSKUInfo(cInbound850Current);
             XElement Picks;
@@ -277,23 +312,47 @@ namespace ASNService
 
         private List<XElement> GetBoxesforOrder(int boxTotal)
         {
-            throw new NotImplementedException();
+
+            List<XElement> Cartons = new List<XElement>();
+            List<BarcodeForBox> lisNewSSCC = GetSSCCForNewOrder(boxTotal);
+            //Make a boxes for a order that has a new SSCC 
+            foreach (BarcodeForBox item in lisNewSSCC)
+            {
+                XElement CartonForASN = new XElement(PICKPACKSTRUTURE,
+                    new XElement(EDIHelperFunctions.Carton,
+                    new XElement(Marks,
+                    new XElement(UCC128, item.UC128)),
+                    new XElement(Quantities,
+                    new XElement(QtyQualifier, "ZZ"),
+                    new XElement(QtyUOM, Each),
+                    new XElement(Qty, QtyUOMSize))));
+                Cartons.Add(CartonForASN);
+            }
+
+            return Cartons;
         }
 
-        private List<SkuItem> GetSKUInfo(List<Store> cInbound850Current)
+        private List<BarcodeForBox> GetSSCCForNewOrder(int boxTotal)
         {
-            throw new NotImplementedException();
+            List<BarcodeForBox> lisNewSSCC = new List<BarcodeForBox>();
+            if (boxTotal < 1)
+            {
+                return null;
+            }
+            for (int i = 0; i < boxTotal; i++)
+            {
+                using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+                {
+                    string sBarCode = string.Empty;
+                    sBarCode = UoW.SSCCBarcode.GetNextSequenceNumber(SSCCStatus.NotUsed);
+                    BarcodeForBox cNewSSCC = new BarcodeForBox() { UC128 = sBarCode };
+                    lisNewSSCC.Add(cNewSSCC);
+                }
+            }
+
+            return lisNewSSCC;
         }
 
-        private int NumberOfPickesForOrder()
-        {
-            throw new NotImplementedException();
-        }
-
-        private List<Store> GetOrders()
-        {
-            throw new NotImplementedException();
-        }
 
         XElement GetPick(SkuItem sku, int iCustomerLineNumber)
         {
@@ -385,7 +444,19 @@ namespace ASNService
         }
 
         #endregion
-            #region Class functions 
+        #region Class functions 
+
+        private List<Store> GetOrders()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+
+                return  UoW.AddEDI850.Find(t => t.PONumber  == PO).Where(x => x.ASNStatus  == (int)ASNStatus.ReadyForASN )
+                                                                    .Where(X => X.OrderStoreNumber == Store).ToList();
+            }
+            
+        }
+
         public int GetShippingWeightOrBoxCount(ShippingInfoType ShippingInfo )
         {
 
@@ -402,6 +473,10 @@ namespace ASNService
 
                 switch (ShippingInfo )
                 {
+                    case ShippingInfoType.PickCount:
+                        return (dTotalWeight / InnersPerPacksSize);
+
+
                     case ShippingInfoType.ShippingWeight:
                         return (dTotalWeight / InnersPerPacksSize) + BOXWEIGHT;
                         
@@ -413,9 +488,6 @@ namespace ASNService
                         return 0;
                         
                 }
-
-                
-                
                 
             }
             
@@ -496,7 +568,36 @@ namespace ASNService
 
         }
 
-        #region Header functions
+        private List<SkuItem> GetSKUInfo(List<Store> lisStores)
+        {
+            List<SkuItem> lisSku = new List<SkuItem>();
+            SkuItem cSkuItem = null;
+
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                if (lisStores != null && lisStores.Count > 0)
+                {
+                    foreach (Store store in lisStores)
+                    {
+                        string StoreUpc = store.UPCode.Replace(@"'", "");
+                        cSkuItem = UoW.Sku.Find(t => t.ProductUPC == StoreUpc).FirstOrDefault();
+                        if (cSkuItem != null)
+                        {
+                            lisSku.Add(cSkuItem);
+                        }
+                    }
+                    return lisSku;
+                }
+                else
+                {
+                    throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro23));
+                }
+
+            }
+        }
+
+
+
         private string  GetCustomerNumber()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -528,6 +629,7 @@ namespace ASNService
                                              .FirstOrDefault();
                 if (cEDI850 != null)
                 {
+                    CurrentID = cEDI850.Id;
                     return cEDI850.CompanyCode;
                 }
 
@@ -537,7 +639,7 @@ namespace ASNService
         }
         #endregion
 
-        #endregion
+  
 
     }
 }

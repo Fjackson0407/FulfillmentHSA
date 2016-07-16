@@ -33,6 +33,8 @@ namespace Repository.DataSource
         public virtual DbSet<ShipFromInformation> ShipFromInformation { get; set; }
         public virtual DbSet<ContactType> ContactType { get; set; }
 
+        public virtual DbSet<SSCC> SSCC { get; set;  }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 

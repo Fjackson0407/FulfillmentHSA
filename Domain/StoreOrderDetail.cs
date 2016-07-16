@@ -16,16 +16,7 @@ namespace Domain
         }
 
         public Guid  Id { get; set; }
-        public decimal OrderAmount { get; set; }
-
-        public int QtyOrdered { get; set; }
-
-        public string UnitofMeasure { get; set; }
-
-        public decimal UnitPrice { get; set; }
-
-        public string CustomerLine { get; set; }
-
+        
         public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set; }
         public int  QtyPacked  { get; set; }
 
@@ -34,8 +25,7 @@ namespace Domain
         public Guid? CartonFK { get; set; }
 
         public virtual Carton Carton { get; set; }
-        public string OrderCases { get; set; }
-
+        
 
         public virtual Store Store { get; set;  }
         public Guid? StorFK { get; set; }

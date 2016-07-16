@@ -19,7 +19,7 @@ namespace Domain
 
         public string CompanyCode { get; set; }
 
-
+        public string  UPCode  { get; set; }
         public string CustomerNumber { get; set; }
 
         public string PONumber { get; set; }
