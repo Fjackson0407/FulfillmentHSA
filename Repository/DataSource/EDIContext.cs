@@ -23,9 +23,9 @@ namespace Repository.DataSource
         public virtual DbSet<DCInformation> DCInformation { get; set;  }
         public virtual DbSet<Store> EDI850 { get; set; }
         
-         
+         public virtual DbSet<OperatorObj> Operator { get; set; }
         public virtual DbSet<StoreOrderDetail> StoreOrderDetail { get; set; }
-
+        public virtual DbSet<SkuItem> SkuItem { get; set; }
         public virtual DbSet<Carton> Carton { get; set; }
 
         public virtual DbSet<SerialRageNumber> SerialRageNumber { get; set;  }
@@ -42,12 +42,6 @@ namespace Repository.DataSource
                 .HasMany(s => s.StoreOrderDetail)
                 .WithOptional(s => s.Carton)
                 .HasForeignKey(s => s.CartonFK)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<StoreOrderDetail>()
-                .HasMany(x => x.SkuItem)
-                .WithOptional(x => x.StoreOrderDetail)
-                .HasForeignKey(x => x.StoreOrderDetailFK)
                 .WillCascadeOnDelete();
 
 

@@ -53,6 +53,8 @@
     <Compile Include="Barcode\SSCCBarcode.cs" />
     <Compile Include="BaseClass\IRepositoryBase.cs" />
     <Compile Include="BaseClass\RepositoryBase.cs" />
+    <Compile Include="Cartons\Cartons.cs" />
+    <Compile Include="Cartons\ICartons.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ContactData856\ASNContact.cs" />
     <Compile Include="ContactData856\IASNContact.cs" />
@@ -62,7 +64,11 @@
     <Compile Include="Inbound850\AddEDI850.cs" />
     <Compile Include="Inbound850\IAddEDI850.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OperatorFolder\IOperator.cs" />
+    <Compile Include="OperatorFolder\Operator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialRageNumberFolder\ISerialRageNumber.cs" />
+    <Compile Include="SerialRageNumberFolder\SerialRageNumber.cs" />
     <Compile Include="Shipping\IShipFrom.cs" />
     <Compile Include="Shipping\ShipFrom.cs" />
     <Compile Include="SkuFolder\ISkus.cs" />

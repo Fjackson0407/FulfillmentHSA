@@ -17,6 +17,8 @@ public  class Carton
 
         public string UCC128 { get; set; }
 
+        public int Weight { get; set; }
+
         public virtual ICollection<StoreOrderDetail> StoreOrderDetail { get; set;  }
 
     }

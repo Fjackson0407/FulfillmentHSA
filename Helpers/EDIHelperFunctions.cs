@@ -236,8 +236,9 @@ namespace Helpers
 
         public enum SSCCStatus : int
         {
+            NotUsed = 0,
             Used = 1,
-            NotUsed = 2,
+            
         }
         public enum ShippingInfoType : int
         {

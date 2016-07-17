@@ -12,5 +12,6 @@ namespace Repository.Barcode
 public   interface ISSCCBarcode : IRepositoryBase<SSCC>
     {
         string GetNextSequenceNumber(SSCCStatus used);
+        int SaveChange();
     }
 }

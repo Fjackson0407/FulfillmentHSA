@@ -11,26 +11,35 @@ namespace Domain
 
         public StoreOrderDetail()
         {
-            SkuItem = new HashSet<SkuItem>();
+
             SerialRageNumber = new HashSet<SerialRageNumber>();
         }
 
         public Guid  Id { get; set; }
-        
-        public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set; }
-        public int  QtyPacked  { get; set; }
 
+        public int QtyOrdered { get; set; }
+        public string  DPCI { get; set; }
+
+        public string ItemDescription { get; set; }
+
+        public string  UPC { get; set; }
+
+        public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set; }
+      
         public Guid? SKUFK { get; set;  }
         
         public Guid? CartonFK { get; set; }
 
         public virtual Carton Carton { get; set; }
-        
 
+        public int  PickSize { get; set; }
+        public int QtyPacked { get; set; }
         public virtual Store Store { get; set;  }
         public Guid? StorFK { get; set; }
+        
+        
 
-        public virtual ICollection<SkuItem> SkuItem { get; set; }
+
 
     }
 }

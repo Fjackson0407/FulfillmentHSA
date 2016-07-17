@@ -50,7 +50,7 @@ namespace Domain
 
         public string OriginalLine { get; set; }
 
-        public virtual ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
+        public  ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
     }
 }
 

@@ -10,7 +10,7 @@ using static Helpers.EDIHelperFunctions;
 
 namespace Repository.Barcode
 {
-  public  class SSCCBarcode : RepositoryBase<SSCC>, ISSCCBarcode
+    public class SSCCBarcode : RepositoryBase<SSCC>, ISSCCBarcode
     {
 
         public SSCCBarcode(EDIContext context)
@@ -21,7 +21,6 @@ namespace Repository.Barcode
         {
             List<SSCC> First = this.GetAll().ToList();
             SSCC cSSCC = null;
-
             if (First.Count == 0)
             {
                 cSSCC = new SSCC();
@@ -31,6 +30,7 @@ namespace Repository.Barcode
                     cSSCC.SequenceNumber = 1;
                     cSSCC.Used = (int)SSCCStatus.NotUsed;
                 }
+
             }
             else
             {
@@ -41,8 +41,8 @@ namespace Repository.Barcode
             SSCC cSSCCNew = new SSCC();
             string sBarcode;
             sBarcode = string.Empty;
-            if (cSSCC != null)
-            {
+            
+            
                 sBarcode = SetBarcode(SSCCPostions.EXTENSIONDIGIT, SSCCPostions.COMPANYCODE, cSSCC.SequenceNumber.ToString());
                 int iEven = 0;
                 int iOdd = 0;
@@ -76,26 +76,28 @@ namespace Repository.Barcode
                     }
 
                 }
-                //Check before you add 
-                cSSCCNew = NewSequenceNumber(cSSCC.SequenceNumber);
-                this.Add(cSSCCNew);
-                if (First.Count == 0)
+            cSSCC.Used = (int)SSCCStatus.Used;
+            if (First.Count == 0)
                 {
-                    cSSCC.Used = (int)SSCCStatus.Used;
+                    
                     this.Add(cSSCC);
                 }
-                else
-                {
-                    cSSCC.Used = (int)SSCCStatus.Used;
-                    cSSCC.DTS = DateTime.Now;
-                    this.Context.SaveChanges();
-                }
+            else
+            {
+                this.SaveChange();
+            }
+
+            cSSCCNew = NewSequenceNumber(cSSCC.SequenceNumber);
+            this.Add(cSSCCNew);
+            this.Context.SaveChanges();
+
                 sBarcode += iDelta;
                 int LengthBefore = sBarcode.Length;
                 sBarcode = SSCCPostions.APPLICATINIDENTIFER + sBarcode;
                 int lengthAfter = sBarcode.Length;
 
-            }
+            
+
             return sBarcode;
         }
 
@@ -107,6 +109,11 @@ namespace Repository.Barcode
             cSSCC.DTS = DateTime.Now;
             cSSCC.SequenceNumber = sequenceNumber + 1;
             return cSSCC;
+        }
+
+        public int SaveChange()
+        {
+            return this.Context.SaveChanges();
         }
 
         private string SetBarcode(string ExtenstionDegit, string CompanyCode, string SequenceNumber)

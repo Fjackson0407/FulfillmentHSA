@@ -1,8 +1,11 @@
 ﻿using Repository.Barcode;
+using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DataSource;
 using Repository.DC;
 using Repository.Inbound850;
+using Repository.OperatorFolder;
+using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.SkuFolder;
 
@@ -28,6 +31,10 @@ namespace Repository.UOW
 
         public  IShipFrom ShipFrom { get; private set; }
         public IASNContact ASNContact { get; private set;  }
+         public  ICartons856 _Cartons { get; private set; }
+
+        public IOperator Operator { get; private set; }
+        public ISerialRage SerialRage { get; private set; }
         public UnitofWork(EDIContext cEDIContext)
         {
 
@@ -39,6 +46,8 @@ namespace Repository.UOW
             DCInfo = new DCInfo(_EDIContext);
             ShipFrom = new ShipFrom(_EDIContext);
             ASNContact = new ASNContact(_EDIContext);
+            _Cartons = new Cartons856(_EDIContext);
+            Operator = new Operator(_EDIContext);
         }
 
 

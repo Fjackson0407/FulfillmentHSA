@@ -30,10 +30,6 @@ namespace Domain
         public string  ProductUPC { get; set; }
         public string  PackageUPC { get; set; }
         
-        public Guid? StoreOrderDetailFK { get; set; }
-
-        public virtual StoreOrderDetail StoreOrderDetail { get; set;  }
-
 
     }
 }

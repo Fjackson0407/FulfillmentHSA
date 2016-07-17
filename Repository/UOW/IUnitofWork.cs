@@ -1,7 +1,10 @@
 ﻿using Repository.Barcode;
+using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DC;
 using Repository.Inbound850;
+using Repository.OperatorFolder;
+using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.SkuFolder;
 
@@ -20,12 +23,12 @@ namespace Repository.UOW
         ISkus Sku { get; }
 
         ISSCCBarcode SSCCBarcode { get; }
-
+        ISerialRage SerialRage { get; }
         IDCInfo DCInfo { get; }
         IShipFrom ShipFrom {get;  }
         IASNContact ASNContact { get; }
-
-
+        IOperator Operator { get; }
+        ICartons856 _Cartons { get;  }
         int Complate();
     }
 }
