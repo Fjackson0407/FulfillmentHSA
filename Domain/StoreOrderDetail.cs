@@ -32,7 +32,6 @@ namespace Domain
 
         public virtual Carton Carton { get; set; }
 
-        public int  PickSize { get; set; }
         public int QtyPacked { get; set; }
         public virtual Store Store { get; set;  }
         public Guid? StorFK { get; set; }

@@ -12,6 +12,7 @@ namespace Domain
         public Store()
         {
             StoreOrderDetail = new HashSet<StoreOrderDetail>();
+
         }
         public Guid Id { get; set; }
 
@@ -50,7 +51,10 @@ namespace Domain
 
         public string OriginalLine { get; set; }
 
-        public  ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
+        public ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
+
+        public virtual SkuItem SkuItem { get; set;  }
+        public Guid? SkuItemFK { get; set;  }
     }
 }
 

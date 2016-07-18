@@ -169,10 +169,7 @@ namespace ASNService
             }
 
         }
-
-
-
-
+        
         private List<Store> UpdatePo()
         {
 
@@ -259,21 +256,31 @@ namespace ASNService
                 iCartonWeightWithIems = (iQtyTotals / InnersPerPacksSizeInt) + BOXWEIGHT;
                 if (iCartonWeightWithIems >= (MAXLBS - 1))
                 {
-
+                    lisCarton.Add(_Carton);
                     _Carton = GetSSCCForNewOrder();
                     iQtyTotals = 0; //Reset totals for a new cartons
                     iCartonWeightWithIems = 0;
                 }
-                cStoreOrderDetail.Carton = _Carton;
-                cStoreOrderDetail.CartonFK = _Carton.Id;
-                cStoreOrderDetail.Id = Guid.NewGuid();
-                cStoreOrderDetail.QtyOrdered = item.QtyOrdered;
-                string ItemDescription = GetItemDescription(item.UPCode);
-                cStoreOrderDetail.ItemDescription = ItemDescription;
-                cStoreOrderDetail.QtyPacked = 0; 
-                _Carton.StoreOrderDetail.Add(cStoreOrderDetail);
+                else
+                {
+                    cStoreOrderDetail.Carton = _Carton;
+                    cStoreOrderDetail.CartonFK = _Carton.Id;
+                    cStoreOrderDetail.Id = Guid.NewGuid();
+                    cStoreOrderDetail.QtyOrdered = item.QtyOrdered;
+                    SkuItem ItemDescription = GetItemDescription(item.UPCode);
+                    cStoreOrderDetail.ItemDescription = ItemDescription.Product;
+                    cStoreOrderDetail.DPCI = ItemDescription.DPCI;
+                    cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
+                    cStoreOrderDetail.QtyPacked = 0;
+                    cStoreOrderDetail.SKUFK = ItemDescription.Id;
+                    _Carton.StoreOrderDetail.Add(cStoreOrderDetail);
+                    if (!lisCarton.Exists(t => t.Id == _Carton.Id))
+                    {
+                        lisCarton.Add(_Carton);
+                    }
+                }
                 _Carton.Weight = iCartonWeightWithIems;
-                lisCarton.Add(_Carton);
+                
             }
              SaveCarton(lisCarton);
 
@@ -282,11 +289,11 @@ namespace ASNService
             return Cartons;
         }
 
-        private string GetItemDescription(string uPCode)
+        private SkuItem GetItemDescription(string uPCode)
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                return UoW.Sku.Find(t => t.ProductUPC == uPCode.Replace(@"'", "")).FirstOrDefault().Product;
+                return UoW.Sku.Find(t => t.ProductUPC == uPCode.Replace(@"'", "")).FirstOrDefault();
             }
         }
 
@@ -297,7 +304,8 @@ namespace ASNService
                 if (lisCarton.Count > 0 )
                 {
                     UoW._Cartons.AddRage(lisCarton);
-                    UoW.Complate();
+                   int iResult =  UoW.Complate();
+                    //if iResult = 0 then throw a error 
                 }
             }
         }
@@ -418,6 +426,7 @@ namespace ASNService
                 string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
                                                         .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
+                List<DCInformation> lisDc = UoW.DCInfo.GetAll().ToList();
                 cDCInformation = UoW.DCInfo.Find(t => t.StoreID == DCNumber.Replace(@"'", "")).FirstOrDefault();
 
                 if (cDCInformation != null)
@@ -473,10 +482,7 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                string sBarCode = string.Empty;
-                sBarCode = UoW.SSCCBarcode.GetNextSequenceNumber(SSCCStatus.NotUsed);
-                return new Carton() { Id = Guid.NewGuid(), UCC128 = sBarCode };
-
+                return new Carton() { Id = Guid.NewGuid(), UCC128 = UoW.SSCCBarcode.GetNextSequenceNumber(SSCCStatus.NotUsed) };
             }
         }
 

@@ -8,7 +8,10 @@ namespace Domain
     public class SkuItem
     {
 
-      
+      public SkuItem()
+        {
+            Store = new HashSet<Store>();
+        }
         /******************************************************************************
 		* Member Variables
 		******************************************************************************/
@@ -29,7 +32,8 @@ namespace Domain
         public string  Item { get; set; }
         public string  ProductUPC { get; set; }
         public string  PackageUPC { get; set; }
-        
+
+       public virtual ICollection<Store> Store { get; set; }
 
     }
 }

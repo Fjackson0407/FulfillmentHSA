@@ -47,6 +47,8 @@
     <Compile Include="EDI850.cs" />
     <Compile Include="EmailNotification.cs" />
     <Compile Include="OperatorObj.cs" />
+    <Compile Include="ReportObjects\DCLevelSummary.cs" />
+    <Compile Include="ReportObjects\WeeklySummaryView.cs" />
     <Compile Include="SerialRageNumber.cs" />
     <Compile Include="ShipFromInformation.cs" />
     <Compile Include="SKUs.cs" />
@@ -61,6 +63,7 @@
       <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

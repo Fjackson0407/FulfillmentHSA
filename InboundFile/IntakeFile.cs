@@ -171,6 +171,9 @@ namespace EDIService
                     cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
                     cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
                     cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString();
+                    SkuItem cSkuItem =  GetSkuInfo(cEDI850Domain.UPCode);
+                    cEDI850Domain.SkuItemFK = cSkuItem.Id;
+                    //cEDI850Domain.SkuItem = cSkuItem;
                     cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
                     cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
                     cEDI850Domain.ShippingLocationNumber = reader.GetValue((int)Inbound850Mapping.LocationNumber).ToString();
@@ -189,6 +192,13 @@ namespace EDIService
             }
             return Invoice;
         }
-        
+
+        private SkuItem GetSkuInfo(string ProductUPC)
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                return  UoW.Sku.Find(t => t.ProductUPC == ProductUPC.Replace(@"'", "")).FirstOrDefault();
+            }
+        }
     }
 }

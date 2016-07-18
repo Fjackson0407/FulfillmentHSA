@@ -234,6 +234,9 @@ namespace Helpers
 
         }
 
+
+
+
         public enum SSCCStatus : int
         {
             NotUsed = 0,
@@ -302,6 +305,14 @@ namespace Helpers
             public const int SSCCLENGTH = 17;
             public const int SCCNUMBERNOTUSED = 0;
 
+
+        }
+
+        public class Brands
+        {
+            public const string MasterCard = "MasterCard";
+            public const string Visa = "Visa";
+            public const string AmericanExpress = "American Express";
 
         }
 

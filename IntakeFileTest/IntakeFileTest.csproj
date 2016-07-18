@@ -64,6 +64,14 @@
       <Project>{073bc609-49c1-46d3-a315-0860845f23e8}</Project>
       <Name>ASNService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FulfillmentService\FulfillmentService.csproj">
+      <Project>{a8fbf8d4-3c5f-4f61-a04f-06bba8a92591}</Project>
+      <Name>FulfillmentService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InboundFile\InboundFile.csproj">
       <Project>{B88EA99F-DE01-4A94-B033-2E6F79B5CC73}</Project>
       <Name>InboundFile</Name>
