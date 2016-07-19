@@ -205,43 +205,66 @@ namespace ASNService
             XElement Picks;
             XElement TotalCartones;
 
-            List<XElement> Cartons = GetBoxesforOrder(BoxTotal, cInbound850Current);
+            List<Carton> Cartons = BuildPickPackStructure( cInbound850Current);
+            TotalCartones = BuildPickPackStructureXML(Cartons);
             Picks = new XElement(PICKPACKSTRUTURE);
             int iBoxCount = 1;
             int iItemCount = 0;
-            XElement Carton = Cartons.Take(iBoxCount).FirstOrDefault();
+            //XElement Carton = Cartons.Take(iBoxCount).FirstOrDefault();
 
-            int iCustomerLineNumber = 1;
-            foreach (StoreOrderDetail sku in lisStoreOrderDetail)
+            //int iCustomerLineNumber = 1;
+            //foreach (StoreOrderDetail sku in lisStoreOrderDetail)
+            //{
+            //    if (iItemCount == MAXLBS)
+            //    {
+            //        TotalCartones = new XElement(Carton);
+            //        Carton = Cartons.Take(iBoxCount).FirstOrDefault();
+            //        iBoxCount--;
+            //    }
+
+            //    XElement Pick = GetPick(sku, iCustomerLineNumber);
+            //    Carton.Add(Pick);
+            //    iItemCount++;
+            //    iCustomerLineNumber++;
+
+
+            //}
+
+            return null ;
+        }
+
+        private XElement BuildPickPackStructureXML(List<Carton> cartons)
+        {
+
+            foreach (Carton item in cartons)
             {
-                if (iItemCount == MAXLBS)
-                {
-                    TotalCartones = new XElement(Carton);
-                    Carton = Cartons.Take(iBoxCount).FirstOrDefault();
-                    iBoxCount--;
-                }
+                return new XElement(PICKPACKSTRUTURE,
+                               new XElement(EDIHelperFunctions.Carton,
+                               new XElement(MARKS,
+                               new XElement(UCC128, item.UCC128)),
+                               new XElement(Quantities, QtyQualifierZZ),
+                               new XElement(QtyUOM, QtyQualifierZZ),
+                               new XElement(Qty, item.Weight)), AddItemsforPP(item.StoreOrderDetail));
 
-                XElement Pick = GetPick(sku, iCustomerLineNumber);
-                Carton.Add(Pick);
-                iItemCount++;
-                iCustomerLineNumber++;
 
 
             }
 
-            return Carton;
+            throw new NotImplementedException();
         }
 
 
-        private List<XElement> GetBoxesforOrder(int boxTotal, List<Store> lisStore)
+        private XElement AddItemsforPP( ICollection<StoreOrderDetail> lisStoreDetils )
         {
 
-            List<XElement> Cartons = new List<XElement>();
-            Carton cCarton = null;
+            throw new NotImplementedException();
+        }
+
+        private List<Carton> BuildPickPackStructure(List<Store> lisStore)
+        {
+
             List<Carton> lisCarton = new List<Domain.Carton>();
             int iQtyTotals = 0;
-            int iPacks = 0;
-            int icount = 1;
             int iCartonWeightWithIems = 0;
 
             Carton _Carton = new Domain.Carton();
@@ -286,7 +309,7 @@ namespace ASNService
 
 
 
-            return Cartons;
+            return lisCarton;
         }
 
         private SkuItem GetItemDescription(string uPCode)
@@ -422,12 +445,12 @@ namespace ASNService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-
+                //DCNumber.Replace(@"'", "")
                 string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
                                                         .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
                 List<DCInformation> lisDc = UoW.DCInfo.GetAll().ToList();
-                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == DCNumber.Replace(@"'", "")).FirstOrDefault();
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == "551").FirstOrDefault();
 
                 if (cDCInformation != null)
                 {
