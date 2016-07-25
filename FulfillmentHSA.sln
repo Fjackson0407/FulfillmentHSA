@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASNService", "ASNService\AS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FulfillmentService", "FulfillmentService\FulfillmentService.csproj", "{A8FBF8D4-3C5F-4F61-A04F-06BBA8A92591}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelService", "LabelService\LabelService.csproj", "{40F68EEC-14BA-468D-912F-66753A8506C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{A8FBF8D4-3C5F-4F61-A04F-06BBA8A92591}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8FBF8D4-3C5F-4F61-A04F-06BBA8A92591}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8FBF8D4-3C5F-4F61-A04F-06BBA8A92591}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40F68EEC-14BA-468D-912F-66753A8506C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40F68EEC-14BA-468D-912F-66753A8506C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40F68EEC-14BA-468D-912F-66753A8506C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40F68EEC-14BA-468D-912F-66753A8506C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,5 +91,6 @@ Global
 		{E3B83D68-C90C-4874-8E5F-DEC8D038BC7C} = {2FCEBD86-BEE3-4C16-B215-024E746A9F14}
 		{073BC609-49C1-46D3-A315-0860845F23E8} = {9592BA1B-9FE1-4357-84EB-EB8BF8526398}
 		{A8FBF8D4-3C5F-4F61-A04F-06BBA8A92591} = {9592BA1B-9FE1-4357-84EB-EB8BF8526398}
+		{40F68EEC-14BA-468D-912F-66753A8506C2} = {9592BA1B-9FE1-4357-84EB-EB8BF8526398}
 	EndGlobalSection
 EndGlobal

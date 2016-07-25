@@ -33,7 +33,7 @@ namespace EDIService
         }
 
 
-        public void AddEdi850()
+        public void ParseEDI850()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
@@ -172,21 +172,25 @@ namespace EDIService
                     cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
                     cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString();
                     SkuItem cSkuItem =  GetSkuInfo(cEDI850Domain.UPCode);
-                    cEDI850Domain.SkuItemFK = cSkuItem.Id;
-                    //cEDI850Domain.SkuItem = cSkuItem;
-                    cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
-                    cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
-                    cEDI850Domain.ShippingLocationNumber = reader.GetValue((int)Inbound850Mapping.LocationNumber).ToString();
-                    cEDI850Domain.VendorNumber = reader.GetValue((int)Inbound850Mapping.VendorNumber).ToString();
-                    cEDI850Domain.ShipDate = reader.GetDateTime((int)Inbound850Mapping.ShipDateOrder).ToString();
-                    cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
-                    cEDI850Domain.DCNumber = reader.GetValue((int)Inbound850Mapping.ShipToAddress).ToString();
-                    cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
-                    cEDI850Domain.OrderStoreNumber = reader.GetValue((int)Inbound850Mapping.OrderStoreNumber).ToString();
-                    cEDI850Domain.BillToAddress = reader.GetValue((int)Inbound850Mapping.BillToAddress).ToString();
-                    cEDI850Domain.DocumentId = reader.GetValue((int)Inbound850Mapping.DocumentId).ToString();
-                    cEDI850Domain.OriginalLine = reader.GetValue((int)Inbound850Mapping.OriginalLine).ToString();
-                    Invoice.Add(cEDI850Domain);
+                    if (cSkuItem != null)
+                    {
+
+                        cEDI850Domain.SkuItemFK = cSkuItem.Id;
+                        
+                        cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
+                        cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
+                        cEDI850Domain.ShippingLocationNumber = reader.GetValue((int)Inbound850Mapping.LocationNumber).ToString();
+                        cEDI850Domain.VendorNumber = reader.GetValue((int)Inbound850Mapping.VendorNumber).ToString();
+                        cEDI850Domain.ShipDate = reader.GetDateTime((int)Inbound850Mapping.ShipDateOrder).ToString();
+                        cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
+                        cEDI850Domain.DCNumber = reader.GetValue((int)Inbound850Mapping.ShipToAddress).ToString();
+                        cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
+                        cEDI850Domain.OrderStoreNumber = reader.GetValue((int)Inbound850Mapping.OrderStoreNumber).ToString();
+                        cEDI850Domain.BillToAddress = reader.GetValue((int)Inbound850Mapping.BillToAddress).ToString();
+                        cEDI850Domain.DocumentId = reader.GetValue((int)Inbound850Mapping.DocumentId).ToString();
+                        cEDI850Domain.OriginalLine = reader.GetValue((int)Inbound850Mapping.OriginalLine).ToString();
+                        Invoice.Add(cEDI850Domain);
+                    }
                 }
 
             }

@@ -136,6 +136,7 @@ namespace Helpers
         public const string InnersPerPacks = "InnersPerPacks";
         public const int InnersPerPacksSize = 25;
         public const int InnersPerPacksSizeInt = 25;
+        public const double  VisaMasterCardBundleWeight = .95;
         public const string ItemDescription = "ItemDescription";
         public const string SHIPPREDISTROTODC = "SHIP PREDISTRO TO DC";
         public const string VIN = "SVS Holid";
@@ -160,10 +161,29 @@ namespace Helpers
         public const string toFormat = "yyyy-MM-dd";
         public const string OrderTotalWeight = "OrderTotalWeight";
 
-
+        public const string ValidUSA = "Valid USA";
         public const string ShipFrom = "SF";
 
+        #region For CSV file 
 
+        public const string From = "From";
+
+        public const string Faddress = "Faddress";
+        public const string Fcity = "Fcity";
+        public const string Fstate = "Fstate";
+        public const string Fzip = "Fzip";
+        public const string To = "To";
+        public const string Taddress = "Taddress";
+        public const string Tcity = "Tcity";
+        public const string Tstate = "Tstate";
+        public const string Tzip = "Tzip";
+        public const string po = "po";
+        public const string StoreID = "StoreID";
+        public const string SSCC = "SSCC";
+        public const string DCLocation = "DCLocation";
+        public const string Comma = ",";
+        public const string LineBreak = "\n";
+        #endregion
 
         /// <summary>
         /// Get ID for new ship for 
@@ -195,11 +215,10 @@ namespace Helpers
             HSAErro21 = 21, //Missing  Interchange 
             HSAErro23 = 23, //Missing  SKU
             HSAErro25 = 25, //Missing  SSCCC sequence 
-            HSAErro27 = 27, //Missing  DC number
+            HSAErro27 = 27, //Missing  DC number/address
             HSAErro29 = 29, //Missing    OrderCases
             HSAErro31 = 31, //Missing    shipping location 
             HSAErro33 = 33, //Missing    Sku File 
-            HSAErro35 = 35, //Duplicate PO's 
             HSAErro37 = 37, //Missing Store number 
             HSAErro39 = 39, //Missing Shipping Location number 
             HSAErro41 = 41, //Missing ship from address 
@@ -207,6 +226,8 @@ namespace Helpers
             HSAErro45 = 45, //Missing  doc Id
             HSAErro47 = 47, //Missing CustomerNumber
             HSAErro49 = 49, //Missing PO Date
+            HSAErro51 = 51, //Bad PO Format
+            HSAErro53 = 53, //Missing OrderStoreNumber
 
         }
         #endregion

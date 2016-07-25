@@ -15,6 +15,7 @@ namespace Domain
             SerialRageNumber = new HashSet<SerialRageNumber>();
         }
 
+        public int CustomerLineNumber { get; set; }
         public Guid  Id { get; set; }
 
         public int QtyOrdered { get; set; }

@@ -68,6 +68,10 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EDIException\EDIException.csproj">
+      <Project>{2A29F2C0-09D7-447E-BE1D-C36CF62CABED}</Project>
+      <Name>EDIException</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FulfillmentService\FulfillmentService.csproj">
       <Project>{a8fbf8d4-3c5f-4f61-a04f-06bba8a92591}</Project>
       <Name>FulfillmentService</Name>
@@ -75,6 +79,10 @@
     <ProjectReference Include="..\InboundFile\InboundFile.csproj">
       <Project>{B88EA99F-DE01-4A94-B033-2E6F79B5CC73}</Project>
       <Name>InboundFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabelService\LabelService.csproj">
+      <Project>{40f68eec-14ba-468d-912f-66753a8506c2}</Project>
+      <Name>LabelService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

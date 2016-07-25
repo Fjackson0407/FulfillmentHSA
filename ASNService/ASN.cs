@@ -23,14 +23,15 @@ namespace ASNService
         public string CurrentStore { get; set; }
         public StoreOrderDetail CurentStoreOrderDetail { get; set; }
         public Guid CurrentID { get; set; }
+        public string CurrentDCNumber { get; private set; }
 
-
-        public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store)
+        public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store, string _DCNumber)
         {
             PO = _PO;
             path = _path;
             ConnectionString = _ConnectionString;
             CurrentStore = _Store;
+            CurrentDCNumber = _DCNumber;
 
         }
 
@@ -148,8 +149,8 @@ namespace ASNService
                 new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
             #endregion
             //SaveASN(File);
-            List<Store> lisStore = UpdatePo();
-            SaveForInventory(lisStore);
+            //List<Store> lisStore = UpdatePo();
+            //    SaveForInventory(lisStore);
             File.Save(path);
         }
 
@@ -169,7 +170,7 @@ namespace ASNService
             }
 
         }
-        
+
         private List<Store> UpdatePo()
         {
 
@@ -198,39 +199,10 @@ namespace ASNService
 
         XElement BuildPickStruture()
         {
-            int BoxTotal = GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount);
-            int Packtotal = GetShippingWeightOrBoxCount(ShippingInfoType.PickCount);
             List<Store> cInbound850Current = GetOrders();
             List<StoreOrderDetail> lisStoreOrderDetail = GetSKUInfo(cInbound850Current);
-            XElement Picks;
-            XElement TotalCartones;
-
-            List<Carton> Cartons = BuildPickPackStructure( cInbound850Current);
-            TotalCartones = BuildPickPackStructureXML(Cartons);
-            Picks = new XElement(PICKPACKSTRUTURE);
-            int iBoxCount = 1;
-            int iItemCount = 0;
-            //XElement Carton = Cartons.Take(iBoxCount).FirstOrDefault();
-
-            //int iCustomerLineNumber = 1;
-            //foreach (StoreOrderDetail sku in lisStoreOrderDetail)
-            //{
-            //    if (iItemCount == MAXLBS)
-            //    {
-            //        TotalCartones = new XElement(Carton);
-            //        Carton = Cartons.Take(iBoxCount).FirstOrDefault();
-            //        iBoxCount--;
-            //    }
-
-            //    XElement Pick = GetPick(sku, iCustomerLineNumber);
-            //    Carton.Add(Pick);
-            //    iItemCount++;
-            //    iCustomerLineNumber++;
-
-
-            //}
-
-            return null ;
+            List<Carton> Cartons = BuildPickPackStructure(cInbound850Current);
+            return BuildPickPackStructureXML(Cartons);
         }
 
         private XElement BuildPickPackStructureXML(List<Carton> cartons)
@@ -242,31 +214,94 @@ namespace ASNService
                                new XElement(EDIHelperFunctions.Carton,
                                new XElement(MARKS,
                                new XElement(UCC128, item.UCC128)),
-                               new XElement(Quantities, QtyQualifierZZ),
+                               new XElement(Quantities,
+                               new XElement(QtyQualifier, QtyQualifierZZ),
                                new XElement(QtyUOM, QtyQualifierZZ),
-                               new XElement(Qty, item.Weight)), AddItemsforPP(item.StoreOrderDetail));
-
-
+                               new XElement(Qty, item.Weight))), BuildItemDetail(item.StoreOrderDetail));
 
             }
 
-            throw new NotImplementedException();
+            return null;
         }
 
 
-        private XElement AddItemsforPP( ICollection<StoreOrderDetail> lisStoreDetils )
+        private XElement BuildItemDetail(ICollection<StoreOrderDetail> lisStoreDetils)
+        {
+            return  BuildSingleItem(lisStoreDetils);
+        }
+
+        private XElement ProcessItemelements(XElement lisElements )
         {
 
-            throw new NotImplementedException();
+            return null; 
         }
 
+        private XElement BuildSingleItem(ICollection<StoreOrderDetail> items)
+        {
+                    XElement my = new XElement("StoreOrderDetail",
+                    from i in  items 
+                    select new XElement("StoreOrderDetail",
+                                                            
+                    new XElement(CustomerLineNumber, i.CustomerLineNumber  ),
+                                    new XElement(ItemIDs,
+                                    new XElement(IdQualifier, UP),
+                                    new XElement(ID, i.UPC)),
+                                    new XElement(ItemIDs,
+                                    new XElement(IdQualifier, VN),
+                                    new XElement(ID, "SVS Holida")),
+                                    new XElement(ItemIDs,
+                                    new XElement(IdQualifier, CU),
+                                    new XElement(ID, i.DPCI)),
+                                    new XElement(Quantities,
+                                    new XElement(QtyQualifier, QtyQualifierZZ),
+                                    new XElement(QtyUOM, QtyUOMSize),
+                                    new XElement(Qty, QtyUOMSize)),
+                                    new XElement(PackSize, InnersPerPacksSize),
+                                    new XElement(Inners, EachesPerInnerInt),
+                                    new XElement(EachesPerInner, EachesPerInnerInt),
+                                    new XElement(InnersPerPacks, InnersPerPacksSize),
+                                    new XElement(ItemDescription, i.ItemDescription)));
+
+            return my ;
+        }
+
+
+        private XElement BuildSingleItem(StoreOrderDetail item, int LineNumber)
+        {
+            return new XElement(ITEM,
+                            new XElement(CustomerLineNumber, LineNumber),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, UP),
+                            new XElement(ID, item.UPC)),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, VN),
+                            new XElement(ID, "SVS Holida")),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, CU),
+                            new XElement(ID, item.DPCI)),
+                            new XElement(Quantities,
+                            new XElement(QtyQualifier, QtyQualifierZZ),
+                            new XElement(QtyUOM, QtyUOMSize),
+                            new XElement(Qty, QtyUOMSize)),
+                            new XElement(PackSize, InnersPerPacksSize),
+                            new XElement(Inners, EachesPerInnerInt),
+                            new XElement(EachesPerInner, EachesPerInnerInt),
+                            new XElement(InnersPerPacks, InnersPerPacksSize),
+                            new XElement(ItemDescription, item.ItemDescription));
+
+        }
+        /// <summary>
+        /// I need to review this 
+        /// </summary>
+        /// <param name="lisStore"></param>
+        /// <returns></returns>
         private List<Carton> BuildPickPackStructure(List<Store> lisStore)
         {
 
             List<Carton> lisCarton = new List<Domain.Carton>();
             int iQtyTotals = 0;
             int iCartonWeightWithIems = 0;
-
+            int CustomerLineNumber = 1; 
             Carton _Carton = new Domain.Carton();
 
 
@@ -286,11 +321,15 @@ namespace ASNService
                 }
                 else
                 {
+
+
                     cStoreOrderDetail.Carton = _Carton;
                     cStoreOrderDetail.CartonFK = _Carton.Id;
                     cStoreOrderDetail.Id = Guid.NewGuid();
                     cStoreOrderDetail.QtyOrdered = item.QtyOrdered;
                     SkuItem ItemDescription = GetItemDescription(item.UPCode);
+                    cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
+                    CustomerLineNumber++;
                     cStoreOrderDetail.ItemDescription = ItemDescription.Product;
                     cStoreOrderDetail.DPCI = ItemDescription.DPCI;
                     cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
@@ -303,9 +342,9 @@ namespace ASNService
                     }
                 }
                 _Carton.Weight = iCartonWeightWithIems;
-                
+
             }
-             SaveCarton(lisCarton);
+            SaveCarton(lisCarton);
 
 
 
@@ -320,14 +359,14 @@ namespace ASNService
             }
         }
 
-        private void SaveCarton(List<Carton>  lisCarton)
+        private void SaveCarton(List<Carton> lisCarton)
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                if (lisCarton.Count > 0 )
+                if (lisCarton.Count > 0)
                 {
                     UoW._Cartons.AddRage(lisCarton);
-                   int iResult =  UoW.Complate();
+                    int iResult = UoW.Complate();
                     //if iResult = 0 then throw a error 
                 }
             }
@@ -368,6 +407,7 @@ namespace ASNService
 
         XElement BuildOrderTotals()
         {
+            int t = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight);
             return new XElement(ORDERTOTALS,
                     new XElement(OrderTotalCases, GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount)),
                      new XElement(OrderTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight)));
@@ -450,7 +490,7 @@ namespace ASNService
                                                         .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
                 List<DCInformation> lisDc = UoW.DCInfo.GetAll().ToList();
-                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == "551").FirstOrDefault();
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == "556").FirstOrDefault();
 
                 if (cDCInformation != null)
                 {
@@ -550,7 +590,10 @@ namespace ASNService
             {
                 List<Store> Stores = UoW.AddEDI850.Find(t => t.PONumber == PO)
                              .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                             .Where(t => t.OrderStoreNumber == CurrentStore).ToList();
+                             .Where(t => t.OrderStoreNumber == CurrentStore)
+                             .Distinct()
+                             .ToList();
+
                 foreach (Store item in Stores)
                 {
                     dTotalWeight += item.QtyOrdered;
@@ -563,6 +606,7 @@ namespace ASNService
 
 
                     case ShippingInfoType.ShippingWeight:
+                        int f = (dTotalWeight / InnersPerPacksSize);
                         return (dTotalWeight / InnersPerPacksSize) + BOXWEIGHT;
 
 
