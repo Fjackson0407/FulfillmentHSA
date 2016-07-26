@@ -16,8 +16,16 @@ namespace LabelService
 
     public class LabelMaker
     {
+        /// <summary>
+        /// Connection string to database 
+        /// </summary>
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// CSV file for lables 
+        /// </summary>
         public string  Path { get; set; }
+
         public LabelMaker(string _ConnectionString, string _Path)
         {
             ConnectionString = _ConnectionString;
@@ -29,8 +37,8 @@ namespace LabelService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
-                List<Label> lisLabels = LoadPO(lisStores);  //Works 
+                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).Take(4).ToList();
+                List<Label> lisLabels = LoadPO(_lisStores);  //Works 
                 List<Label> lisDC = LoadDC(lisLabels); //DC Number
                 List<Label> lisLabelsWithST = LoadShipFrom(lisDC); //From 
                 List<Label> lisLabelsWithTO = AddTargetName(lisLabelsWithST); //Adxd target name for the label
@@ -38,9 +46,15 @@ namespace LabelService
                 List<Label> lisDCAddress = LoadDCAndAddress(LisStores); //DC Number 
                 List<Label> lisSSCC = LoadSSCCforLabels(lisDCAddress); //Get SSCC  
                 string CSVFiile = ConvertToString(lisSSCC);
+                UpdateOrders(_lisStores);
                 SavetoFile(CSVFiile);
 
             }
+        }
+
+        private void UpdateOrders(List<Store> lisStores)
+        {
+            throw new NotImplementedException();
         }
 
         private void SavetoFile(string cSVFiile)

@@ -1,43 +1,60 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Domain
-//{
-//    public class StoreObj
-//    {
+namespace Domain
+{
+    public class Store
+    {
 
-//        public StoreObj()
-//        {
-//            StoreOrderDetail = new HashSet<StoreOrderDetail>();
-//        }
-//      public Guid Id { get; set; }
+        public Store()
+        {
+            StoreOrderDetail = new HashSet<StoreOrderDetail>();
 
-//        public int ASNStatus { get; set; }
+        }
+        public Guid Id { get; set; }
 
-//        public int PickStatus { get; set; }
+        public DateTime DTS { get; set; }
 
-//        public DateTime CancelDate { get; set; }
+        public string CompanyCode { get; set; }
 
-//        public string OrderStoreNumber { get; set; }
+        public string  UPCode  { get; set; }
+        public string CustomerNumber { get; set; }
 
-        
-//        public string BillToAddress { get; set; }
+        public string PONumber { get; set; }
 
-//        public int QtyOrdered { get; set; }
+        public string ShippingLocationNumber { get; set; }
 
-//        public string  DocumentId { get; set; }
+        public string VendorNumber { get; set; }
 
-//        public string OriginalLine { get; set; } 
+        public DateTime   PODate { get; set; }
 
-       
-//        public Guid? EDIFK { get; set; }
+        public string  ShipDate { get; set; }
 
-//        public virtual EDI850 EDI850 { get; set; }
+        public string  CancelDate { get; set; }
 
-//        public virtual ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
+        public string DCNumber { get; set; }
 
-//    }
-//}
+        public int ASNStatus { get; set; }
+
+        public int PickStatus { get; set; }
+
+        public string OrderStoreNumber { get; set; }
+
+        public string BillToAddress { get; set; }
+
+        public int QtyOrdered { get; set; }
+
+        public string DocumentId { get; set; }
+
+        public string OriginalLine { get; set; }
+
+        public ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
+         public ICollection<Bill> BOL { get; set; }
+        public virtual SkuItem SkuItem { get; set;  }
+        public Guid? SkuItemFK { get; set;  }
+    }
+}
+

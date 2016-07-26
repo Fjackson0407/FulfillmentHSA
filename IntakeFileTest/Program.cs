@@ -20,47 +20,72 @@ namespace IntakeFileTest
             string ConStringHome = @"Data Source=SUPERMANPC\SUPERMANDB;Initial Catalog=EDIHSA;Integrated Security=True";
 
             string path = @"D:\Testing\w20.csv";
-            string path2 = @"D:\Testing\Full.xml";
             string AmexPath = @"D:\Testing\Amex\W1.csv";
             string po = "0290-9624723-0579";  // "0290 -8987645-0551";   // "0290 -8987645-0554";                                   // "0290 -8987645-0554";                  //               "0290 -8987645-0554"; 
             string po2 = "0290-5429221-0556";  // "0290 -8987645-0553"; //this is for home only will not work at work 
-            string Store = "0656"; //Make function to get stores from po 
+            string Store = "2324"; //Make function to get stores from po 
+
+            string DemoVisaFile = @"D:\Testing\VisaDemo\MCV1.csv";
+            string DemoXMLFile = @"D:\Testing\VisaDemo\TestXML2324.xml";
+            string DemoPO = "0290-3963900-0579";
+            //*********************************** Add Data *********************************************************************************************************
+
+            //try
+            //{
+
+            //    EDIPOService cEDIPOService = new EDIPOService(DemoVisaFile, ConnectionString);
+            //    cEDIPOService.ParseEDI850();
+
+            //}
+            //catch (ExceptionsEDI ex)
+            //{
+            //    string tgest = ex.Message.ToString();
+            //}
+
+
+
 
 
             //*********************************** Add Data *********************************************************************************************************
 
+            //*********************************** Make Lables *********************************************************************************************************
+
+            //try
+            //{
+
+            //    string FilePath = @"D:\Testing\Amex\Lables\AmexLabelsSmall.csv";
+            //    LabelMaker cLabelMaker = new LabelMaker(ConnectionString, FilePath);
+            //    cLabelMaker.GetAllOrders();
+
+
+            //}
+            //catch (ExceptionsEDI ex)
+            //{
+            //    string tgest = ex.Message.ToString();
+            //}
+
+
+
+            //*********************************** Make Lables *********************************************************************************************************
+
+            //*********************************** Make ASN *********************************************************************************************************
+
             try
             {
 
-                EDIPOService cEDIPOService = new EDIPOService(AmexPath, ConnectionString);
-                cEDIPOService.ParseEDI850();
+                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0579");
+                cASNBuild.BuildASN();
+
 
             }
-            catch (ExceptionsEDI ex)
+            catch (ExceptionsEDI ex )
             {
                 string tgest = ex.Message.ToString();
             }
 
         
 
-
-
-        //*********************************** Add Data *********************************************************************************************************
-
-        //*********************************** Make Lables *********************************************************************************************************
-
-        string FilePath = @"D:\Testing\Amex\Lables\AmexLabels.csv";
-        LabelMaker cLabelMaker = new LabelMaker(ConnectionString , FilePath );
-        cLabelMaker.GetAllOrders();
-
-        //*********************************** Make Lables *********************************************************************************************************
-
-        //*********************************** Make ASN *********************************************************************************************************
-
-        //   ASNBuild cASNBuild = new ASNBuild(path2, ConnectionString, po2, Store, "0556");
-        //    cASNBuild.BuildASN();
-
-        //*********************************** Make ASN *********************************************************************************************************
+            //*********************************** Make ASN *********************************************************************************************************
+        }
     }
-}
 }

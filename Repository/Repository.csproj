@@ -53,6 +53,8 @@
     <Compile Include="Barcode\SSCCBarcode.cs" />
     <Compile Include="BaseClass\IRepositoryBase.cs" />
     <Compile Include="BaseClass\RepositoryBase.cs" />
+    <Compile Include="BillOfLading\BOL.cs" />
+    <Compile Include="BillOfLading\IBOL.cs" />
     <Compile Include="Cartons\Cartons.cs" />
     <Compile Include="Cartons\ICartons.cs" />
     <Compile Include="Class1.cs" />

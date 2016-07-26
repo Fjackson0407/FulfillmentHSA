@@ -1,4 +1,5 @@
 ﻿using Repository.Barcode;
+using Repository.BillOfLading;
 using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DC;
@@ -21,7 +22,7 @@ namespace Repository.UOW
 
         IAddEDI850 AddEDI850 { get; }
         ISkus Sku { get; }
-
+        IBOL Bol { get; }
         ISSCCBarcode SSCCBarcode { get; }
         ISerialRage SerialRage { get; }
         IDCInfo DCInfo { get; }

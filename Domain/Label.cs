@@ -15,7 +15,7 @@ public  class Label
 
         public string  To { get; set; }
         public string  SSCC { get; set; }
-
+        public string  CardType { get; set; }
         public string  From { get; set; }
 
         public string  Faddress { get; set; }

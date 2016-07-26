@@ -1,4 +1,5 @@
 ﻿using Repository.Barcode;
+using Repository.BillOfLading;
 using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DataSource;
@@ -35,6 +36,7 @@ namespace Repository.UOW
 
         public IOperator Operator { get; private set; }
         public ISerialRage SerialRage { get; private set; }
+        public IBOL Bol { get; private set;  }
         public UnitofWork(EDIContext cEDIContext)
         {
 

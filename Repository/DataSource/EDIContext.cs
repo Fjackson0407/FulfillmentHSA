@@ -59,6 +59,13 @@ namespace Repository.DataSource
                 .HasForeignKey(t => t.StorFK)
                 .WillCascadeOnDelete();
 
+            modelBuilder.Entity<Store>()
+                .HasMany(t => t.BOL)
+                .WithOptional(t => t.Store)
+                .HasForeignKey(t => t.StorFK)
+                .WillCascadeOnDelete();
+
+
             modelBuilder.Entity<SkuItem>()
                     .HasMany(t => t.Store)
                     .WithOptional(t => t.SkuItem)

@@ -123,13 +123,13 @@ namespace Repository.Barcode
 
             if (string.IsNullOrEmpty(ExtenstionDegit) || string.IsNullOrEmpty(CompanyCode) || string.IsNullOrEmpty(SequenceNumber))
             {
-                sResult = string.Empty;
+                sResult = string.Empty; //Throw error 
             }
             else
             {
                 while (ExtenstionDegit.Length + CompanyCode.Length + SequenceNumber.Length != SSCCPostions.SSCCLENGTH)
                 {
-                    SequenceNumber = ZERO + SequenceNumber;
+                    SequenceNumber =  ZERO +  SequenceNumber;
                 }
                 sResult = ExtenstionDegit + CompanyCode + SequenceNumber;
             }

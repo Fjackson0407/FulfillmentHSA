@@ -15,6 +15,8 @@ public  class Carton
         }
         public Guid  Id { get; set; }
 
+        public int Qty { get; set; }
+
         public string UCC128 { get; set; }
 
         public int Weight { get; set; }

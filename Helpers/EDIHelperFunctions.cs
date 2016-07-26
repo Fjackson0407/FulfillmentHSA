@@ -24,7 +24,7 @@ namespace Helpers
         public const string CARTON = "Carton";
         public const string ITEM = "Item";
         public const string CUSTOMERNUMBER = "CustomerNumber";
-        public const string DocumentType = "Direction";
+        public const string DocumentType = "DocumentType";
         public const string PURCHASEORDERSOURCEID = "PurchaseOrderSourceID";
         public const string IDS = "IDs";
         public const string ORDERTOTALS = "OrderTotals";
