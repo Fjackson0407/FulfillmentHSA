@@ -23,11 +23,11 @@ namespace IntakeFileTest
             string AmexPath = @"D:\Testing\Amex\W1.csv";
             string po = "0290-9624723-0579";  // "0290 -8987645-0551";   // "0290 -8987645-0554";                                   // "0290 -8987645-0554";                  //               "0290 -8987645-0554"; 
             string po2 = "0290-5429221-0556";  // "0290 -8987645-0553"; //this is for home only will not work at work 
-            string Store = "2324"; //Make function to get stores from po 
+            string Store = "3201"; //Make function to get stores from po 
 
             string DemoVisaFile = @"D:\Testing\VisaDemo\MCV1.csv";
-            string DemoXMLFile = @"D:\Testing\VisaDemo\TestXML2324.xml";
-            string DemoPO = "0290-3963900-0579";
+            string DemoXMLFile = @"D:\Testing\VisaDemo\TestXML3201.xml";
+            string DemoPO = "0290-3963900-0555";
             //*********************************** Add Data *********************************************************************************************************
 
             //try
@@ -73,7 +73,7 @@ namespace IntakeFileTest
             try
             {
 
-                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0579");
+                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0555");
                 cASNBuild.BuildASN();
 
 

@@ -50,6 +50,7 @@ namespace Repository.UOW
             ASNContact = new ASNContact(_EDIContext);
             _Cartons = new Cartons856(_EDIContext);
             Operator = new Operator(_EDIContext);
+            Bol = new BOL(_EDIContext);
         }
 
 

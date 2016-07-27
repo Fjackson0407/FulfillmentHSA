@@ -9,7 +9,7 @@ namespace Domain
   public   class Bill
     {
         public Guid ID { get; set; }
-        public string  BOLNumber { get; set; }
+        public int   BOLNumber { get; set; }
         public virtual Store Store { get; set; }
         public Guid? StorFK { get; set; }
 

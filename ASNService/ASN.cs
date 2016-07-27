@@ -47,7 +47,8 @@ namespace ASNService
                new XElement(EDIHelperFunctions.Version, VersionNumber),
               new XElement(EDIHelperFunctions.Footprint, ASN),
               new XElement(ShipmentID, GetNewShipmentID()),
-             new XElement(EDIHelperFunctions.ShippingLocationNumber, CurrentStore));
+             new XElement(EDIHelperFunctions.ShippingLocationNumber,   new XCData(CurrentStore)    ),
+             new XElement(InternalDocumentNumber, GetDocID() ));
 
         }
 
@@ -55,6 +56,7 @@ namespace ASNService
         XElement BuildShipmentLevel()
         {
             return new XElement(EDIHelperFunctions.ShipmentLevel,
+                   new XElement(TransactionSetPurposeCode, "00"),
                                 new XElement(EDIHelperFunctions.DateLoop,
                                 new XElement(EDIHelperFunctions.DateQualifier, ShipDateDateQualifierNumber,
                                 new XAttribute(EDIHelperFunctions.Desc,
@@ -67,24 +69,56 @@ namespace ASNService
                                 new XElement(EDIHelperFunctions.ShipmentPackagingCode, EDIHelperFunctions.CartonType),
                                 new XElement(ShipmentTotalCases, GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount)),
                                 new XElement(ShipmentTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight))),
+                                BuildCarrier(), BuildBOL(),
                                 new XElement(MethodOfPayment, EDIHelperFunctions.DF),
-                                new XElement(FOBLocationQualifier, EDIHelperFunctions.DE),
-                                new XElement(FOBDescription, EDIHelperFunctions.RETAILLOCATON),
+                                new XElement(FOBLocationQualifier, "OR"),
+                                new XElement(FOBDescription, new XCData(EDIHelperFunctions.FOBDescription2)),
                                 BuildShipFrom(), BuildShipTo(),
                                 new XElement(EDIHelperFunctions.VendorCode, GetVendorCode()),
                                 BuildContactType());
+        }
+
+        private XElement  BuildTransportationMethod()
+        {
+            return new XElement(TransportationMethod, TransportationMethodType);
+        }
+
+        private XElement BuildCarrier()
+        {
+            return new XElement(Carrier,
+                new XElement(CarrierCode,  new XCData( NFIL)),
+             new XElement(CarrierType, CarrierTypeVaule),
+             BuildTransportationMethod());
+
+        }
+
+        private XElement BuildBOL()
+        {
+            int  BOLNumber = GetNewBOLID();
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == PO).FirstOrDefault();
+                Bill cBill = new Bill();
+                cBill.ID = Guid.NewGuid();
+                cBill.Store = cStore;
+                cBill.BOLNumber = BOLNumber;
+                UoW.Bol.Add(cBill);
+                int Result = UoW.Complate();
+
+            }
+            return new XElement(BillOfLadingNumber, new XCData(BOLNumber.ToString()));
         }
 
         private XElement BuildContactType()
         {
             ContactType cContactInfo = GetContactInfo();
             return new XElement(EDIHelperFunctions.ContactType,
-                     new XElement(EDIHelperFunctions.FunctionCode, EDIHelperFunctions.CUST),
-                     new XElement(EDIHelperFunctions.ContactName, cContactInfo.FullName),
-                     new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Phone),
-                     new XElement(EDIHelperFunctions.PhoneEmail, cContactInfo.PhoneNumber),
+                     new XElement(EDIHelperFunctions.FunctionCode,  new XCData(EDIHelperFunctions.CUST)),
+                     new XElement(EDIHelperFunctions.ContactName,  new XCData( cContactInfo.FullName)),
+                     new XElement(EDIHelperFunctions.ContactQualifier,  EDIHelperFunctions.Phone),
+                     new XElement(EDIHelperFunctions.PhoneEmail,  new XCData( cContactInfo.PhoneNumber)),
                      new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Email),
-                     new XElement(EDIHelperFunctions.PhoneEmail, cContactInfo.EmailAddress));
+                     new XElement(EDIHelperFunctions.PhoneEmail,  new XCData(cContactInfo.EmailAddress)));
 
 
         }
@@ -96,11 +130,11 @@ namespace ASNService
             return new XElement(NAME, new XElement(BillAndShipToCode, EDIHelperFunctions.ShipFrom),
                 new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, ShipFrom.DUNSOrLocationNumber),
                 new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipFrom),
-                new XElement(EDIHelperFunctions.NameComponent, EDIHelperFunctions.ValidName),
-                new XElement(EDIHelperFunctions.CompanyName, EDIHelperFunctions.ValidName),
-                new XElement(EDIHelperFunctions.Address, ShipFrom.Address),
-                new XElement(EDIHelperFunctions.City, ShipFrom.City),
-                new XElement(EDIHelperFunctions.State, ShipFrom.State),
+                new XElement(EDIHelperFunctions.NameComponent,  new XCData( EDIHelperFunctions.ValidName)),
+                new XElement(EDIHelperFunctions.CompanyName,  new XCData( EDIHelperFunctions.ValidName)),
+                new XElement(EDIHelperFunctions.Address,  new XCData(ShipFrom.Address)),
+                new XElement(EDIHelperFunctions.City,  new XCData( ShipFrom.City)),
+                new XElement(EDIHelperFunctions.State,  new XCData(ShipFrom.State)),
                 new XElement(EDIHelperFunctions.Zip, ShipFrom.PostalCode));
 
         }
@@ -129,13 +163,13 @@ namespace ASNService
             DCInformation ShipTo = GetShipToAddress();
             return new XElement(NAME,
                     new XElement(EDIHelperFunctions.BillAndShipToCode, EDIHelperFunctions.ShipTo),
-                    new XElement(EDIHelperFunctions.DUNSOrLocationNumberString,  DCNumber   ),
+                    new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, DCNumber),
                     new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipTo),
-                    new XElement(EDIHelperFunctions.CompanyName, string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber)),
-                    new XElement(EDIHelperFunctions.Address, ShipTo.Address),
-                    new XElement(EDIHelperFunctions.City, ShipTo.City),
-                    new XElement(EDIHelperFunctions.State, ShipTo.State),
-                    new XElement(EDIHelperFunctions.Zip, ShipTo.PostalCode),
+                    new XElement(EDIHelperFunctions.CompanyName,  new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber))),
+                    new XElement(EDIHelperFunctions.Address,  new XCData( ShipTo.Address)),
+                    new XElement(EDIHelperFunctions.City,  new XCData(ShipTo.City)),
+                    new XElement(EDIHelperFunctions.State, new XCData( ShipTo.State)),
+                    new XElement(EDIHelperFunctions.Zip,  new XCData(ShipTo.PostalCode)),
                     new XElement(EDIHelperFunctions.Country, EDIHelperFunctions.US));
 
         }
@@ -147,6 +181,7 @@ namespace ASNService
             var File = new XElement(FILE,
                 new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
             #endregion
+            File.NextNode 
             //SaveASN(File);
             //List<Store> lisStore = UpdatePo();
             //    SaveForInventory(lisStore);
@@ -189,7 +224,7 @@ namespace ASNService
         {
             return new XElement(ORDERLEVEL,
                    new XElement(IDS,
-                   new XElement(EDIHelperFunctions.PurchaseOrderNumber, PO),
+                   new XElement(EDIHelperFunctions.PurchaseOrderNumber,  new XCData( PO)),
                    new XElement(EDIHelperFunctions.PURCHASEORDERSOURCEID, GetDocID()),
                    new XElement(EDIHelperFunctions.PurchaseOrderDate, GetPODate())),
                    BuildOrderTotals(), BuildPickStruture());
@@ -212,10 +247,10 @@ namespace ASNService
                 return new XElement(PICKPACKSTRUTURE,
                                new XElement(EDIHelperFunctions.Carton,
                                new XElement(MARKS,
-                               new XElement(UCC128, item.UCC128)),
+                               new XElement(UCC128, new XCData( item.UCC128))),
                                new XElement(Quantities,
                                new XElement(QtyQualifier, QtyQualifierZZ),
-                               new XElement(QtyUOM, Each ),
+                               new XElement(QtyUOM, Each),
                                new XElement(Qty, item.Qty))), BuildItemDetail(item.StoreOrderDetail));
 
             }
@@ -226,36 +261,36 @@ namespace ASNService
 
         private XElement BuildItemDetail(ICollection<StoreOrderDetail> lisStoreDetils)
         {
-            return  BuildSingleItem(lisStoreDetils);
+            return BuildSingleItem(lisStoreDetils);
         }
 
         private XElement BuildSingleItem(ICollection<StoreOrderDetail> items)
         {
-                    XElement ItemElement = new XElement(ITEM,
-                    from i in  items 
-                    select new XElement(ITEM,
-                                                            
-                    new XElement(CustomerLineNumber, i.CustomerLineNumber  ),
-                                    new XElement(ItemIDs,
-                                    new XElement(IdQualifier, UP),
-                                    new XElement(ID, i.UPC)),
-                                    new XElement(ItemIDs,
-                                    new XElement(IdQualifier, VN),
-                                    new XElement(ID, "SVS Holida")),
-                                    new XElement(ItemIDs,
-                                    new XElement(IdQualifier, CU),
-                                    new XElement(ID, i.DPCI)),
-                                    new XElement(Quantities,
-                                    new XElement(QtyQualifier, "39"),
-                                    new XElement(QtyUOM, Each ),
-                                    new XElement(Qty, QtyUOMSize)),
-                                    new XElement(PackSize, InnersPerPacksSize),
-                                    new XElement(Inners, EachesPerInnerInt),
-                                    new XElement(EachesPerInner, EachesPerInnerInt),
-                                    new XElement(InnersPerPacks, InnersPerPacksSize),
-                                    new XElement(ItemDescription, i.ItemDescription)));
+            XElement ItemElement = new XElement(ITEM,
+            from i in items
+            select new XElement(ITEM,
 
-            return ItemElement ;
+            new XElement(CustomerLineNumber, i.CustomerLineNumber),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, UP),
+                            new XElement(ID, new XCData( i.UPC))),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, VN),
+                            new XElement(ID,  new XCData( "SVS Holida"))),
+                            new XElement(ItemIDs,
+                            new XElement(IdQualifier, CU),
+                            new XElement(ID, new XCData( i.DPCI))),
+                            new XElement(Quantities,
+                            new XElement(QtyQualifier, "39"),
+                            new XElement(QtyUOM, Each),
+                            new XElement(Qty, QtyUOMSize)),
+                            new XElement(PackSize, InnersPerPacksSize),
+                            new XElement(Inners, EachesPerInnerInt),
+                            new XElement(EachesPerInner, EachesPerInnerInt),
+                            new XElement(InnersPerPacks, InnersPerPacksSize),
+                            new XElement(ItemDescription, new XCData( i.ItemDescription))));
+
+            return ItemElement;
         }
 
 
@@ -294,7 +329,7 @@ namespace ASNService
             List<Carton> lisCarton = new List<Domain.Carton>();
             int iQtyTotals = 0;
             int iCartonWeightWithIems = 0;
-            int CustomerLineNumber = 1; 
+            int CustomerLineNumber = 1;
             Carton _Carton = new Domain.Carton();
 
 
@@ -483,8 +518,8 @@ namespace ASNService
                 string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
                                                         .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
-                
-                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == CurrentDCNumber ).FirstOrDefault();
+
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == CurrentDCNumber).FirstOrDefault();
 
                 if (cDCInformation != null)
                 {
@@ -691,6 +726,12 @@ namespace ASNService
         {
             return EDIHelperFunctions.VPS + EDIHelperFunctions.RandomString(EDIHelperFunctions.shiplength);
 
+        }
+
+        private int GetNewBOLID()
+        {
+            Random cRandom = new Random();
+            return cRandom.Next(100000, 100000000);
         }
 
         private List<StoreOrderDetail> GetSKUInfo(List<Store> lisStores)

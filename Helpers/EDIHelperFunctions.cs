@@ -69,7 +69,6 @@ namespace Helpers
         public const string ContactQualifier = "ContactQualifier";
         public const string PhoneEmail = "PhoneEmail";
         public const string TotalWeight = "TotalWeight";
-        public const string BillOfLadingNumber = "BillOfLadingNumber";
         public const string FOBLocationQualifier = "FOBLocationQualifier";
         public const string TransactionSetPurposeCode = "TransactionSetPurposeCode";
         public const string Inners = "Inners";
@@ -78,6 +77,7 @@ namespace Helpers
         public const string Outbound = "Outbound";
         public const string Footprint = "Footprint";
         public const int shiplength = 8;
+        public const int BOLlength = 10;
         public const string Version = "Version";
         public const string VersionNumber = "3.5";
         public const string ShippingLocationNumber = "ShippingLocationNumber";
@@ -147,8 +147,10 @@ namespace Helpers
         public const string QtyQualifierZZ = "ZZ";
         public const int PackWeight = 1;
         public const string ShipmentTotalCube = "ShipmentTotalCube";
-        public const string ShipmentTotalCubeValue = "0.000";
-        public const string RETAILLOCATON = "RETAIL LOCATON";
+        public const string ShipmentTotalCubeValue = "0.0000";
+        public const string TransportationMethod = "TransportationMethod";
+        public const string TransportationMethodType = "U";
+        public const string FOBDescription2 = "Saint Paul  MN";
         public const string FOBDescription = "FOBDescription";
         public const int PACKWEIGHT = 1;
         public const int MAXLBS = 60;
@@ -163,6 +165,14 @@ namespace Helpers
 
         public const string ValidUSA = "Valid USA";
         public const string ShipFrom = "SF";
+        public const string Carrier = "Carrier";
+        public const string CarrierCode = "CarrierCode";
+        public const string CarrierType = "CarrierType";
+        public const string BillOfLadingNumber = "BillOfLadingNumber";
+        public const string NFIL = "NFIL";
+        public const string CarrierTypeVaule = "M";
+
+
 
         #region For CSV file 
 
