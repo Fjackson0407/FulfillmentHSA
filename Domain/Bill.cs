@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-  public   class Bill
+  public   class BOLForASN 
     {
         public Guid ID { get; set; }
         public int   BOLNumber { get; set; }

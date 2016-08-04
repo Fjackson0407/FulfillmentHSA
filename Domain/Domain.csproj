@@ -45,6 +45,9 @@
     <Compile Include="Carton.cs" />
     <Compile Include="ContactType.cs" />
     <Compile Include="DCInformation .cs" />
+    <Compile Include="EmailRecipient.cs" />
+    <Compile Include="MaxWeight.cs" />
+    <Compile Include="RegKeys.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="EmailNotification.cs" />
     <Compile Include="Label.cs" />
@@ -57,6 +60,8 @@
     <Compile Include="SSCC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoreOrderDetail.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserOrders.cs" />
     <Compile Include="XmlSerializer\StoreOrderDetailSerializer.cs" />
   </ItemGroup>
   <ItemGroup>

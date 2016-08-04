@@ -37,7 +37,7 @@ namespace LabelService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).Take(4).ToList();
+                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
                 List<Label> lisLabels = LoadPO(_lisStores);  //Works 
                 List<Label> lisDC = LoadDC(lisLabels); //DC Number
                 List<Label> lisLabelsWithST = LoadShipFrom(lisDC); //From 

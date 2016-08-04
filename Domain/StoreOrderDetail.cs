@@ -36,8 +36,10 @@ namespace Domain
         public int QtyPacked { get; set; }
         public virtual Store Store { get; set;  }
         public Guid? StorFK { get; set; }
-        
-        
+
+        public virtual UserOrders UserOrders { get; set; }
+        public Guid? UserOrdersFK { get; set; }
+
 
 
 

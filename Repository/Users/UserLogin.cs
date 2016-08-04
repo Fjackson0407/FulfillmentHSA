@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BillOfLading
+namespace Repository.Users
 {
-   public  class BOL : RepositoryBase<Bill>, IBOL 
+  public   class UserLogin : RepositoryBase<UserTable>, IUserLogin 
     {
-          public BOL(EDIContext context )
+        public UserLogin(EDIContext context )
             :base(context ) { }
 
-        public int SaveChanges()
+        public int SaveChange()
         {
             return this.Context.SaveChanges();
         }

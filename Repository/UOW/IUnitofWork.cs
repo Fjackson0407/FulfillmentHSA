@@ -1,5 +1,6 @@
 ﻿using Repository.Barcode;
-using Repository.BillOfLading;
+using Repository.BillOfLadingFolder;
+using Repository.BoxWeight;
 using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DC;
@@ -8,7 +9,8 @@ using Repository.OperatorFolder;
 using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.SkuFolder;
-
+using Repository.UserOrderFolder;
+using Repository.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,10 @@ namespace Repository.UOW
         IASNContact ASNContact { get; }
         IOperator Operator { get; }
         ICartons856 _Cartons { get;  }
+        IUserLogin User { get; }
+        IUserOrderLog UserOrderLog { get; }
+
+        IMaxCartonWeight MaxCartonWeight { get;  }
         int Complate();
     }
 }

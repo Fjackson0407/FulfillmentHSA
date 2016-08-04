@@ -1,5 +1,6 @@
 ﻿using Repository.Barcode;
-using Repository.BillOfLading;
+using Repository.BillOfLadingFolder;
+using Repository.BoxWeight;
 using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DataSource;
@@ -9,7 +10,8 @@ using Repository.OperatorFolder;
 using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.SkuFolder;
-
+using Repository.UserOrderFolder;
+using Repository.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +39,19 @@ namespace Repository.UOW
         public IOperator Operator { get; private set; }
         public ISerialRage SerialRage { get; private set; }
         public IBOL Bol { get; private set;  }
+
+        public IUserLogin User { get; private set;  }
+
+        public IUserOrderLog UserOrderLog { get; private set; }
+
+        public IMaxCartonWeight MaxCartonWeight { get; private set;}
+
         public UnitofWork(EDIContext cEDIContext)
         {
 
             _EDIContext = cEDIContext;
             AddEDI850 = new AddEDI850(_EDIContext);
-            
+            User = new UserLogin(_EDIContext);
             Sku = new Skus(_EDIContext);
             SSCCBarcode = new SSCCBarcode(_EDIContext);
             DCInfo = new DCInfo(_EDIContext);
@@ -51,6 +60,9 @@ namespace Repository.UOW
             _Cartons = new Cartons856(_EDIContext);
             Operator = new Operator(_EDIContext);
             Bol = new BOL(_EDIContext);
+            UserOrderLog = new UserOrderLog(_EDIContext);
+            MaxCartonWeight = new MaxCartonWeight(_EDIContext);
+
         }
 
 

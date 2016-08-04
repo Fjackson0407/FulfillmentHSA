@@ -35,6 +35,14 @@ namespace Repository.DataSource
 
         public virtual DbSet<SSCC> SSCC { get; set;  }
 
+        public virtual DbSet<UserTable> User { get; set;  }
+
+        public virtual  DbSet<BOLForASN> BillOfLading { get; set; }
+
+        public virtual DbSet<UserOrders> UserOrders { get; set;  }
+
+        public virtual DbSet<MaxWeight> MaxWeight { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 
@@ -45,7 +53,7 @@ namespace Repository.DataSource
                 .WillCascadeOnDelete();
 
 
-            
+
             modelBuilder.Entity<StoreOrderDetail>()
                 .HasMany(t => t.SerialRageNumber)
                 .WithOptional(j => j.StoreOrderDetail)
@@ -57,6 +65,20 @@ namespace Repository.DataSource
                 .HasMany(t => t.StoreOrderDetail)
                 .WithOptional(j => j.Store)
                 .HasForeignKey(t => t.StorFK)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<UserOrders>()
+                .HasMany(t => t.StoreOrderDetail)
+                .WithOptional(t => t.UserOrders)
+                .HasForeignKey(t => t.UserOrdersFK)
+                .WillCascadeOnDelete();
+
+
+
+            modelBuilder.Entity<UserOrders>()
+                .HasMany(t => t.User)
+                .WithOptional(t => t.Orders)
+                .HasForeignKey(t => t.OrdersFK)
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<Store>()
@@ -73,8 +95,8 @@ namespace Repository.DataSource
                     .WillCascadeOnDelete();
 
 
-
         }
+        
 
     }
 }

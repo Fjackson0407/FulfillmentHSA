@@ -52,9 +52,17 @@
       <Project>{2a29f2c0-09d7-447e-be1d-c36cf62cabed}</Project>
       <Name>EDIException</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{47c222ba-6413-4c06-b08c-73e9f05ba2b5}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
-      <Project>{e3b83d68-c90c-4874-8e5f-dec8d038bc7c}</Project>
+      <Project>{E3B83D68-C90C-4874-8E5F-DEC8D038BC7C}</Project>
       <Name>LumenWorks.Framework.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{8eb6338d-94fa-42a1-88a9-c621ee340abb}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

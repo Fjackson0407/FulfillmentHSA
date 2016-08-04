@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BillOfLading
+namespace Repository.BoxWeight
 {
-   public  interface IBOL : IRepositoryBase<Bill>
+    public interface  IMaxCartonWeight : IRepositoryBase<MaxWeight >
     {
         int SaveChanges();
     }

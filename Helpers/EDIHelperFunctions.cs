@@ -11,10 +11,40 @@ namespace Helpers
 
         #region Strings
         public const string Help = "Please contact system administrator or call 651 348-5113  for  assistance ";
+        public const string SOFTWARE = "Software";
+        public const string EDI = "EDI";
+        public const string CONNECTIONSTRING = "ConnectionString";
+        public const string HSA = "HSA";
+        public const string EDIFLOER = "EDIInboundFile";
+        public const string HSAFOLDEROLCATION = "EDIInboundFileHSASide";
+        const string SLASH = "\\";
+        public const string SoftwareNode = SOFTWARE + SLASH + EDI;
+        public const string HSA_NOT_FOUND = "HSA not found";
+        public const string RETAILLOCATON = "RETAIL LOCATON";
+        public const string CONNECTION_STRING_NOPT_FOUND = "SQL Connection not found";
+        public const string PASSWORD_NOT_FOUND = "Passwowrd not found";
+        public const string USERNAME_NOT_FOUND = "Username not found";
+        public const string INBOUND_FOLDER_NOT_FOUND = "Folder location not feonud";
+        public const string EMAIL_ADDRESS_NOT_FOUND = "Email Address not found";
+        public const string RECIPIENTS_NOT_FOUNND = "Recipients not found";
+        public const string SMTP_NOT_FOUND = "SMTP not found";
+        public const string USERNAME = "UserName";
+        public const string PASSWORD = "Password";
+        public const string EMAILADDRESS = "EmailAddress";
+        public const string SMTP = "SMTP";
+        public const string RECIPIENTS = "Recipients";
+        public const string DepartmentNumberString = "DepartmentNumber";
+        public const string DepartmentNumber = "290";
+        public const string DivisionNumberString = "DivisionNumber";
+        public const string DivisionNumber = "290";
+        public const string ReleaseNumberString = "ReleaseNumber";
+        public const string ReleaseNumber = "D";
+        public const string dotNetFourPath = "Microsoft";
+        public const string KEY2 = @"HKEY_LOCAL_MACHINE\SOFTWARE\VALID USA";
+
         #endregion
 
         #region "856 Upload xml"
-        public const string EMAILADDRESS = "EmailAddress";
         public const string FILE = "File";
         public const string DOCUMENT = "Document";
         public const string HEADER = "Header";
@@ -23,6 +53,7 @@ namespace Helpers
         public const string PICKPACKSTRUTURE = "PickPackStructure";
         public const string CARTON = "Carton";
         public const string ITEM = "Item";
+        public const string ITEMS = "Items";
         public const string CUSTOMERNUMBER = "CustomerNumber";
         public const string DocumentType = "DocumentType";
         public const string PURCHASEORDERSOURCEID = "PurchaseOrderSourceID";
@@ -38,14 +69,14 @@ namespace Helpers
         public const string TargetStores = "TARGET STORES";
         public const string EDI856 = "856";
         public const string ASN = "ASN";
-        
+
         public const string PALLET = "Pallet";
         public const string TARE = "Tare";
         public const string NAME = "Name";
         public const string BillAndShipToCode = "BillAndShipToCode";
         public const string DUNSQualifier = "DUNSQualifier";
         public const string ShipTo = "ST";
-        
+
         public const string DescShipTo = "Ship To";
         public const string DescShipFrom = "Ship From";
         /// <summary>
@@ -136,7 +167,7 @@ namespace Helpers
         public const string InnersPerPacks = "InnersPerPacks";
         public const int InnersPerPacksSize = 25;
         public const int InnersPerPacksSizeInt = 25;
-        public const double  VisaMasterCardBundleWeight = .95;
+        public const double VisaMasterCardBundleWeight = .95;
         public const string ItemDescription = "ItemDescription";
         public const string SHIPPREDISTROTODC = "SHIP PREDISTRO TO DC";
         public const string VIN = "SVS Holid";
@@ -156,7 +187,7 @@ namespace Helpers
         public const int MAXLBS = 60;
         public const double MINLBS = 2;
         public const int BOXWEIGHT = 1;
-        
+
         public const string ErrorCode = "Error Code";
         public const string Space = " ";
         public const string Case1 = "1";
@@ -222,7 +253,7 @@ namespace Helpers
             HSAErro15 = 15, //Missing company qty
             HSAErro17 = 17, //Missing Vendor code 
             HSAErro19 = 19, //Missing Contact info 
-            HSAErro21 = 21, //Missing  Interchange 
+            HSAErro21 = 21, //Missing rchange 
             HSAErro23 = 23, //Missing  SKU
             HSAErro25 = 25, //Missing  SSCCC sequence 
             HSAErro27 = 27, //Missing  DC number/address
@@ -238,14 +269,16 @@ namespace Helpers
             HSAErro49 = 49, //Missing PO Date
             HSAErro51 = 51, //Bad PO Format
             HSAErro53 = 53, //Missing OrderStoreNumber
+            HSAErro55 = 55, //Already haas ASN
+            HSAErro57 = 57, //From lerngth out of rage 
 
         }
         #endregion
 
         public enum ASNStatus : int
         {
-            ReadyForASN = 1, 
-            HasASN = 2, 
+            ReadyForASN = 1,
+            HasASN = 2,
             ErrorASN = 3
         }
 
@@ -265,14 +298,31 @@ namespace Helpers
 
         }
 
+        public enum LabelMappingLength : int
+        {
 
+            From = 15,
+            Faddress = 20,
+            Fcity = 10,
+            Fstate = 2,
+            Fzip = 10,
+            PO = 20,
+            SSCC = 20,
+            StoreID = 5,
+            To = 15,
+            Taddress = 30,
+            Tcity = 15,
+            Tstate = 2,
+            Tzip = 10,
+            DC = 5,
+        }
 
 
         public enum SSCCStatus : int
         {
             NotUsed = 0,
             Used = 1,
-            
+
         }
         public enum ShippingInfoType : int
         {
@@ -325,6 +375,35 @@ namespace Helpers
             ShipToAddress = 51,
             DocumentId = 52,
             OriginalLine = 63,
+        }
+
+
+        public enum LabelMapAmex : int
+        {
+
+            PurchaseOrderID = 15,
+            PoNumber = 16,
+            BillToStore = 18,
+            PoShipToStore = 19,
+            CartonID = 27,
+
+
+
+        }
+
+
+
+        public enum LabelMapVisa : int
+        {
+
+            PurchaseOrderID = 69,
+            PoNumber = 70,
+            BillToStore = 92,
+            PoShipToStore = 44,
+            CartonID = 128,
+
+
+
         }
 
 

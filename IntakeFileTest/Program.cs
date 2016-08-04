@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TempLables;
 
 namespace IntakeFileTest
 {
@@ -23,17 +24,43 @@ namespace IntakeFileTest
             string AmexPath = @"D:\Testing\Amex\W1.csv";
             string po = "0290-9624723-0579";  // "0290 -8987645-0551";   // "0290 -8987645-0554";                                   // "0290 -8987645-0554";                  //               "0290 -8987645-0554"; 
             string po2 = "0290-5429221-0556";  // "0290 -8987645-0553"; //this is for home only will not work at work 
-            string Store = "3201"; //Make function to get stores from po 
+            string Store = "1175"; //Make function to get stores from po 
 
-            string DemoVisaFile = @"D:\Testing\VisaDemo\MCV1.csv";
-            string DemoXMLFile = @"D:\Testing\VisaDemo\TestXML3201.xml";
-            string DemoPO = "0290-3963900-0555";
+            string DemoVisaFile = @"D:\Testing\VisaDemo\Doc1.csv";
+            string DemoAmxFile = @"D:\Testing\BigOrder\w2.csv";
+            string DemoXMLFile = @"D:\Testing\VisaDemo\ASN\TestX0579.xml";
+            string DemoPO = "0290-7029784-0579";        //"0290-9540383-0551";
+
+
+            //********************************************** MAKE LABELS *********************************************************************
+
+            //try
+            //{
+            //    string FilePathAmex = @"D:\Testing\Lables\Monday080116\Amex.csv";
+
+            //    string FilePathVisa = @"D:\Testing\Lables\Monday080116\VMC.csv";
+
+            //    string NewFile = @"D:\Testing\Lables\Monday080116\LabelsVisa.csv";
+
+            //    MCLable cMCLable = new MCLable(FilePathVisa, ConnectionString, NewFile);
+            //    cMCLable.MakeLabelsVisaMaster();
+
+
+            //}
+            //catch (ExceptionsEDI ex)
+            //{
+            //    string tgest = ex.Message.ToString();
+            //}
+
+
+
+            //******************************************************************************************************************
             //*********************************** Add Data *********************************************************************************************************
 
             //try
             //{
 
-            //    EDIPOService cEDIPOService = new EDIPOService(DemoVisaFile, ConnectionString);
+            //    EDIPOService cEDIPOService = new EDIPOService(DemoAmxFile, ConnectionString);
             //    cEDIPOService.ParseEDI850();
 
             //}
@@ -54,7 +81,8 @@ namespace IntakeFileTest
             //{
 
             //    string FilePath = @"D:\Testing\Amex\Lables\AmexLabelsSmall.csv";
-            //    LabelMaker cLabelMaker = new LabelMaker(ConnectionString, FilePath);
+            //    string MSPath = @"D:\Testing\Lables\mc.csv";
+            //    LabelMaker cLabelMaker = new LabelMaker(ConnectionString, MSPath);
             //    cLabelMaker.GetAllOrders();
 
 
@@ -73,17 +101,17 @@ namespace IntakeFileTest
             try
             {
 
-                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0555");
+                ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0579");
                 cASNBuild.BuildASN();
 
 
             }
-            catch (ExceptionsEDI ex )
+            catch (ExceptionsEDI ex)
             {
                 string tgest = ex.Message.ToString();
             }
 
-        
+
 
             //*********************************** Make ASN *********************************************************************************************************
         }

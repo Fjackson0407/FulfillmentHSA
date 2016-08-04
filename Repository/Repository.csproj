@@ -53,8 +53,10 @@
     <Compile Include="Barcode\SSCCBarcode.cs" />
     <Compile Include="BaseClass\IRepositoryBase.cs" />
     <Compile Include="BaseClass\RepositoryBase.cs" />
-    <Compile Include="BillOfLading\BOL.cs" />
-    <Compile Include="BillOfLading\IBOL.cs" />
+    <Compile Include="BillOfLadingFolder\BOL.cs" />
+    <Compile Include="BillOfLadingFolder\IBOL.cs" />
+    <Compile Include="BoxWeight\IMaxCartonWeight.cs" />
+    <Compile Include="BoxWeight\MaxCartonWeight.cs" />
     <Compile Include="Cartons\Cartons.cs" />
     <Compile Include="Cartons\ICartons.cs" />
     <Compile Include="Class1.cs" />
@@ -79,6 +81,10 @@
     <Compile Include="StoreInbound\Store.cs" />
     <Compile Include="UOW\IUnitofWork.cs" />
     <Compile Include="UOW\UnitofWork.cs" />
+    <Compile Include="UserOrderFolder\IUserOrderLog.cs" />
+    <Compile Include="UserOrderFolder\UserOrderLog.cs" />
+    <Compile Include="Users\IUserLogin.cs" />
+    <Compile Include="Users\UserLogin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,7 +93,7 @@
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
+      <Project>{63DF732A-2564-4297-9883-E799AD982F83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
