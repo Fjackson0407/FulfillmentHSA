@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.PackSize
 {
-    public interface  IMaxCartonWeight : IRepositoryBase<MaxWeightFullBox >
+   public  interface IPackSizeForBundles: IRepositoryBase<Pack>
     {
-        int SaveChanges();
+        int SaveChange();
     }
 }

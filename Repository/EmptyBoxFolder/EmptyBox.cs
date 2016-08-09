@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.EmptyBoxFolder
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+ public  class EmptyBox: RepositoryBase<EmptyBoxWeight> , IEmptyBox 
     {
-
-        public MaxCartonWeight(EDIContext context)
+        public EmptyBox(EDIContext context)
             : base(context) { }
-
 
         public int SaveChanges()
         {

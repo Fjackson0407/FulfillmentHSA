@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.EmptyBoxFolder
 {
-    public interface  IMaxCartonWeight : IRepositoryBase<MaxWeightFullBox >
+  public   interface IEmptyBox : IRepositoryBase<EmptyBoxWeight>
     {
         int SaveChanges();
     }

@@ -37,6 +37,7 @@ namespace Helpers
         public const string DepartmentNumber = "290";
         public const string DivisionNumberString = "DivisionNumber";
         public const string DivisionNumber = "290";
+        public const string Weight = "WT";
         public const string ReleaseNumberString = "ReleaseNumber";
         public const string ReleaseNumber = "D";
         public const string dotNetFourPath = "Microsoft";
@@ -45,6 +46,9 @@ namespace Helpers
         #endregion
 
         #region "856 Upload xml"
+        public const string Measurement = "Measurement";
+        public const string MeasureQual = "MeasureQual";
+        public const string MeasureValue = "MeasureValue";
         public const string FILE = "File";
         public const string DOCUMENT = "Document";
         public const string HEADER = "Header";
@@ -79,6 +83,8 @@ namespace Helpers
 
         public const string DescShipTo = "Ship To";
         public const string DescShipFrom = "Ship From";
+        public const string VisaMastercard = "VisaMastercard";
+        public const string Amex = "Amex";
         /// <summary>
         /// This is for the stor number 
         /// </summary>
@@ -124,7 +130,7 @@ namespace Helpers
         public const string Date = "Date";
         public const string ShipmentTotals = "ShipmentTotals";
         public const string ShipmentPackagingCode = "ShipmentPackagingCode";
-        public const string CartonType = "CTN25";
+       // public const string CartonType = "CTN25";
         public const string ShipmentTotalCases = "ShipmentTotalCases";
         public const string ShipmentTotalWeight = "ShipmentTotalWeight";
         public const string MethodOfPayment = "MethodOfPayment";
@@ -165,8 +171,8 @@ namespace Helpers
         public const string EachesPerInner = "EachesPerInner";
         public const int EachesPerInnerInt = 1;
         public const string InnersPerPacks = "InnersPerPacks";
-        public const int InnersPerPacksSize = 25;
-        public const int InnersPerPacksSizeInt = 25;
+       // public const int InnersPerPacksSize = 25;
+        //public const int InnersPerPacksSizeInt = 25;
         public const double VisaMasterCardBundleWeight = .95;
         public const string ItemDescription = "ItemDescription";
         public const string SHIPPREDISTROTODC = "SHIP PREDISTRO TO DC";
@@ -184,7 +190,7 @@ namespace Helpers
         public const string FOBDescription2 = "Saint Paul  MN";
         public const string FOBDescription = "FOBDescription";
         public const int PACKWEIGHT = 1;
-        public const int MAXLBS = 60;
+        //public const int MAXLBS = 60;
         public const double MINLBS = 2;
         public const int BOXWEIGHT = 1;
 
@@ -271,6 +277,7 @@ namespace Helpers
             HSAErro53 = 53, //Missing OrderStoreNumber
             HSAErro55 = 55, //Already haas ASN
             HSAErro57 = 57, //From lerngth out of rage 
+            HSAErro59 = 59, //No orders to process 
 
         }
         #endregion

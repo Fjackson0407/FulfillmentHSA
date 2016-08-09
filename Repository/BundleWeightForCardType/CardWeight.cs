@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.BundleWeightForCardType
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+  public   class CardWeight : RepositoryBase<BundleWeight> ,ICardWeight
     {
-
-        public MaxCartonWeight(EDIContext context)
+        public CardWeight(EDIContext context)
             : base(context) { }
-
 
         public int SaveChanges()
         {

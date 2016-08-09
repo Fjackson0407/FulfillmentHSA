@@ -25,6 +25,7 @@ namespace LabelService
         /// CSV file for lables 
         /// </summary>
         public string  Path { get; set; }
+        public int InnersPerPacksSizeInt { get; private set; }
 
         public LabelMaker(string _ConnectionString, string _Path)
         {
@@ -37,7 +38,7 @@ namespace LabelService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
+                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNFile  !=null ).ToList();
                 List<Label> lisLabels = LoadPO(_lisStores);  //Works 
                 List<Label> lisDC = LoadDC(lisLabels); //DC Number
                 List<Label> lisLabelsWithST = LoadShipFrom(lisDC); //From 
@@ -172,7 +173,7 @@ namespace LabelService
                     StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
                     iQty += _Store.QtyOrdered;
                     int iCartonWeightWithIems = ((int)(VisaMasterCardBundleWeight * iQty ) / InnersPerPacksSizeInt) + BOXWEIGHT;
-                    if (iCartonWeightWithIems >= (MAXLBS - 1))
+                    if (iCartonWeightWithIems >= (20 - 1))
                     {
                         lisCarton.Add(_Carton);
                         _Carton = GetSSCCForNewOrder();

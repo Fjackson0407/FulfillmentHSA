@@ -1,14 +1,20 @@
-﻿using Repository.Barcode;
+﻿using Repository.ASNCartonTypes;
+using Repository.ASNOut;
+using Repository.Barcode;
 using Repository.BillOfLadingFolder;
 using Repository.BoxWeight;
+using Repository.BundleWeightForCardType;
 using Repository.Cartons;
 using Repository.ContactData856;
 using Repository.DataSource;
 using Repository.DC;
+using Repository.EmptyBoxFolder;
 using Repository.Inbound850;
 using Repository.OperatorFolder;
+using Repository.PackSize;
 using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
+using Repository.ShipProduct;
 using Repository.SkuFolder;
 using Repository.UserOrderFolder;
 using Repository.Users;
@@ -46,6 +52,16 @@ namespace Repository.UOW
 
         public IMaxCartonWeight MaxCartonWeight { get; private set;}
 
+        public IPackSizeForBundles PackSizeForBundles { get; private set;  }
+
+        public ICartonTypeForASN CartonType { get; private set;  }
+
+        public IASNFile ASNFile { get; private set; }
+
+        public IShipDateRequest ShipDateRequest { get; private set; }
+
+         public  ICardWeight CardWeight { get; private set;  }
+        public IEmptyBox EmptyBox { get; private set; }
         public UnitofWork(EDIContext cEDIContext)
         {
 
@@ -62,10 +78,18 @@ namespace Repository.UOW
             Bol = new BOL(_EDIContext);
             UserOrderLog = new UserOrderLog(_EDIContext);
             MaxCartonWeight = new MaxCartonWeight(_EDIContext);
-
+            PackSizeForBundles = new PackSizeForBundles(_EDIContext);
+            CartonType = new CartonTypeForASN(_EDIContext);
+            ASNFile = new ASNFile(_EDIContext);
+            ShipDateRequest = new ShipDateRequest(_EDIContext);
+            CardWeight = new CardWeight(_EDIContext);
+            EmptyBox = new EmptyBox(_EDIContext);
         }
 
-
+        /// <summary>
+        /// This function will save the data to theee 
+        /// </summary>
+        /// <returns></returns>
         public int Complate()
         {
             return _EDIContext.SaveChanges();

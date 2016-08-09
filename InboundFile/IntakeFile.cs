@@ -169,7 +169,6 @@ namespace EDIService
                     cEDI850Domain.DTS = DateTime.Now;
                     cEDI850Domain.PickStatus = (int) PickStatus.Open;
                     cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
-                    cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
                     cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString();
                     SkuItem cSkuItem =  GetSkuInfo(cEDI850Domain.UPCode);
                     if (cSkuItem != null)

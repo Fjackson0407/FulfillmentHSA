@@ -41,8 +41,14 @@ namespace Repository.DataSource
 
         public virtual DbSet<UserOrders> UserOrders { get; set;  }
 
-        public virtual DbSet<MaxWeight> MaxWeight { get; set; }
+        public virtual DbSet<MaxWeightFullBox> MaxWeight { get; set; }
+        public virtual DbSet<Pack> Pack { get; set; }
+        public virtual DbSet<CartonType> CartonType { get; set;  }
 
+        public virtual DbSet<ASNFileOutBound> ASNFile { get; set; }
+        public virtual DbSet<ShipDate> ShipDate { get; set;  }
+        public virtual DbSet<BundleWeight> BundleWeight { get; set;  }
+        public virtual DbSet<EmptyBoxWeight> EmptyBoxWeight { get; set;  }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 
@@ -52,7 +58,9 @@ namespace Repository.DataSource
                 .HasForeignKey(s => s.CartonFK)
                 .WillCascadeOnDelete();
 
-
+            modelBuilder.Entity<BundleWeight>()
+                .HasOptional(t => t.store)
+                .WithOptionalDependent();
 
             modelBuilder.Entity<StoreOrderDetail>()
                 .HasMany(t => t.SerialRageNumber)

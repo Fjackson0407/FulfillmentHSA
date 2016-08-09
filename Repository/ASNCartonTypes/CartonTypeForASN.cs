@@ -7,18 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.ASNCartonTypes
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+    public class CartonTypeForASN: RepositoryBase<CartonType>, ICartonTypeForASN 
     {
 
-        public MaxCartonWeight(EDIContext context)
-            : base(context) { }
+        public CartonTypeForASN(EDIContext context)
+            :base(context )
+        { }
 
-
-        public int SaveChanges()
+        public int SaveChange()
         {
             return this.Context.SaveChanges();
         }
+
+
     }
 }

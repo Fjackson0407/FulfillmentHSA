@@ -137,7 +137,7 @@ namespace TempLables
         }
 
 
-        public void MakeLabelsAmex()
+        public void Visa()
         {
 
             using (CsvReader csv = new CsvReader(new StreamReader(FilePath), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
@@ -169,7 +169,11 @@ namespace TempLables
                     cLables.Tcity = cDCInformation.City;
                     cLables.Tstate = cDCInformation.State;
                     cLables.Tzip = cDCInformation.PostalCode;
-                    lisLables.Add(cLables);
+                    Label Temp = lisLables.Find(t => t.SSCC == cLables.SSCC);
+                    if (Temp == null )
+                    {
+                        lisLables.Add(cLables);
+                    }
                 }
 
                 string CSVString = ConvertToString(lisLables);

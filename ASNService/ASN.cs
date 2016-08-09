@@ -24,12 +24,19 @@ namespace ASNService
         public StoreOrderDetail CurentStoreOrderDetail { get; set; }
         public Guid CurrentID { get; set; }
         public string CurrentDCNumber { get; private set; }
+        public int NumberofCardsInBundle { get; private set; }
+
+        public string m_CartonTypeForASN { get; private set; }
+
+        public int m_MaxWeightForCarton { get; private set; }
+
+        public int m_EmptyBoxWeight { get; set; }
 
         public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store, string _DCNumber)
         {
-            if (POHasASN(_ConnectionString, _PO , _DCNumber, _Store ))
+            if (!NoASN(_ConnectionString, _PO, _DCNumber, _Store))
             {
-                throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro55));
+                throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAErro55));
             }
 
             PO = _PO;
@@ -37,22 +44,70 @@ namespace ASNService
             ConnectionString = _ConnectionString;
             CurrentStore = _Store;
             CurrentDCNumber = _DCNumber;
+            SetPackSize();
+            SetMaxCartonWeight();
+            SetCartonType();
+            SetEmptyBoxWeight();
+        }
+
+
+        private void SetEmptyBoxWeight()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                m_EmptyBoxWeight = UoW.EmptyBox.Find(t => t.InUse == true).FirstOrDefault().Weight;
+            }
+        }
+
+
+        private void SetCartonType()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                m_CartonTypeForASN = UoW.CartonType.Find(t => t.InUse == true).FirstOrDefault().Type;
+            }
+        }
+
+        private void SetMaxCartonWeight()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                m_MaxWeightForCarton = UoW.MaxCartonWeight.Find(t => t.InUse == true).FirstOrDefault().Max;
+            }
+        }
+
+        private void SetPackSize()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                NumberofCardsInBundle = UoW.PackSizeForBundles.Find(t => t.InUse == true).FirstOrDefault().Size;
+
+            }
 
         }
 
-        private bool POHasASN(string _ConnectionString, string _PO, string _DCNumber, string _Store)
+        /// <summary>
+        /// Check to see if the po has a ASN if not then process the order 
+        /// </summary>
+        /// <param name="_ConnectionString"></param>
+        /// <param name="_PO"></param>
+        /// <param name="_DCNumber"></param>
+        /// <param name="_Store"></param>
+        /// <returns></returns>
+        private bool NoASN(string _ConnectionString, string _PO, string _DCNumber, string _Store)
         {
             using (var UoW = new UnitofWork(new EDIContext(_ConnectionString)))
             {
-                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO ).Where(x => x.ASNStatus == (int)ASNStatus.HasASN)
+                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO).Where(x => x.ASNFile == null)
                                                                     .Where(X => X.OrderStoreNumber == _Store).FirstOrDefault();
-                if (cStore == null )
+                if (cStore == null)
                 {
-                    return false ;
+                    return false;
                 }
                 else
                 {
-                    return true ; 
+                    CurrentID = cStore.Id;
+                    return true;
                 }
             }
 
@@ -71,12 +126,15 @@ namespace ASNService
               new XElement(EDIHelperFunctions.Footprint, ASN),
               new XElement(ShipmentID, GetNewShipmentID()),
              new XElement(EDIHelperFunctions.ShippingLocationNumber, new XCData(CurrentStore)));
-             
+
         }
 
 
         XElement BuildShipmentLevel()
         {
+           double Boxcount =   GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount);
+            double Weight  = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight );
+
             return new XElement(EDIHelperFunctions.ShipmentLevel,
                    new XElement(TransactionSetPurposeCode, "00"),
                                 new XElement(EDIHelperFunctions.DateLoop,
@@ -88,7 +146,7 @@ namespace ASNService
                                  GetMilitaryTime()),
                                 new XElement(EDIHelperFunctions.ShipmentTotals,
                                 new XElement(EDIHelperFunctions.ShipmentTotalCube, ShipmentTotalCubeValue),
-                                new XElement(EDIHelperFunctions.ShipmentPackagingCode, EDIHelperFunctions.CartonType),
+                                new XElement(EDIHelperFunctions.ShipmentPackagingCode, m_CartonTypeForASN),
                                 new XElement(ShipmentTotalCases, GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount)),
                                 new XElement(ShipmentTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight))),
                                 BuildCarrier(), BuildBOL(),
@@ -100,22 +158,22 @@ namespace ASNService
                                 BuildContactType());
         }
 
-        private string   GetMilitaryTime()
+        private string GetMilitaryTime()
         {
             return DateTime.Now.ToString("HH:mm");
         }
-  private XElement BuildCarrier()
+        private XElement BuildCarrier()
         {
             return new XElement(Carrier,
                 new XElement(CarrierCode, new XCData(NFIL)),
              new XElement(CarrierType, CarrierTypeVaule));
-              
+
 
         }
 
         private XElement BuildBOL()
         {
-            int  BOLNumber = GetNewBOLID();
+            int BOLNumber = GetNewBOLID();
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 Store cStore = UoW.AddEDI850.Find(t => t.PONumber == PO).FirstOrDefault();
@@ -134,12 +192,12 @@ namespace ASNService
         {
             ContactType cContactInfo = GetContactInfo();
             return new XElement(EDIHelperFunctions.ContactType,
-                     new XElement(EDIHelperFunctions.FunctionCode,  new XCData(EDIHelperFunctions.CUST)),
-                     new XElement(EDIHelperFunctions.ContactName,  new XCData( cContactInfo.FullName)),
-                     new XElement(EDIHelperFunctions.ContactQualifier,  EDIHelperFunctions.Phone),
-                     new XElement(EDIHelperFunctions.PhoneEmail,  new XCData( cContactInfo.PhoneNumber)),
+                     new XElement(EDIHelperFunctions.FunctionCode, new XCData(EDIHelperFunctions.CUST)),
+                     new XElement(EDIHelperFunctions.ContactName, new XCData(cContactInfo.FullName)),
+                     new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Phone),
+                     new XElement(EDIHelperFunctions.PhoneEmail, new XCData(cContactInfo.PhoneNumber)),
                      new XElement(EDIHelperFunctions.ContactQualifier, EDIHelperFunctions.Email),
-                     new XElement(EDIHelperFunctions.PhoneEmail,  new XCData(cContactInfo.EmailAddress)));
+                     new XElement(EDIHelperFunctions.PhoneEmail, new XCData(cContactInfo.EmailAddress)));
 
 
         }
@@ -151,11 +209,11 @@ namespace ASNService
             return new XElement(NAME, new XElement(BillAndShipToCode, EDIHelperFunctions.ShipFrom),
                 new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, ShipFrom.DUNSOrLocationNumber),
                 new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipFrom),
-                new XElement(EDIHelperFunctions.NameComponent,  new XCData( EDIHelperFunctions.ValidName)),
-                new XElement(EDIHelperFunctions.CompanyName,  new XCData( EDIHelperFunctions.ValidName)),
-                new XElement(EDIHelperFunctions.Address,  new XCData(ShipFrom.Address)),
-                new XElement(EDIHelperFunctions.City,  new XCData( ShipFrom.City)),
-                new XElement(EDIHelperFunctions.State,  ShipFrom.State),
+                new XElement(EDIHelperFunctions.NameComponent, new XCData(EDIHelperFunctions.ValidName)),
+                new XElement(EDIHelperFunctions.CompanyName, new XCData(EDIHelperFunctions.ValidName)),
+                new XElement(EDIHelperFunctions.Address, new XCData(ShipFrom.Address)),
+                new XElement(EDIHelperFunctions.City, new XCData(ShipFrom.City)),
+                new XElement(EDIHelperFunctions.State, ShipFrom.State),
                 new XElement(EDIHelperFunctions.Zip, ShipFrom.PostalCode));
 
         }
@@ -186,44 +244,45 @@ namespace ASNService
                     new XElement(EDIHelperFunctions.BillAndShipToCode, EDIHelperFunctions.ShipTo),
                     new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, DCNumber),
                     new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipTo),
-                    new XElement(EDIHelperFunctions.NameComponent , new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber))),
-                    new XElement(EDIHelperFunctions.CompanyName,  new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber))),
-                    new XElement(EDIHelperFunctions.Address,  new XCData( ShipTo.Address)),
-                    new XElement(EDIHelperFunctions.City,  new XCData(ShipTo.City)),
-                    new XElement(EDIHelperFunctions.State,  ShipTo.State),
-                    new XElement(EDIHelperFunctions.Zip,  ShipTo.PostalCode),
+                    new XElement(EDIHelperFunctions.NameComponent, new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber))),
+                    new XElement(EDIHelperFunctions.CompanyName, new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, DCNumber))),
+                    new XElement(EDIHelperFunctions.Address, new XCData(ShipTo.Address)),
+                    new XElement(EDIHelperFunctions.City, new XCData(ShipTo.City)),
+                    new XElement(EDIHelperFunctions.State, ShipTo.State),
+                    new XElement(EDIHelperFunctions.Zip, ShipTo.PostalCode),
                     new XElement(EDIHelperFunctions.Country, EDIHelperFunctions.US));
 
         }
 
         public void BuildASN()
         {
-
-            
             var File = new XElement(FILE,
-                new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
-            //     List<Store> lisStore = UpdatePo();
-            //    SaveForInventory(lisStore);
+                      new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
+            SaveASNtoDB(File);
             File.Save(path);
         }
-        
-    
 
-        private List<Store> UpdatePo()
+        /// <summary>
+        /// Save the ASN to the database.
+        /// </summary>
+        /// <param name="file"></param>
+        private void SaveASNtoDB(XElement file)
         {
-
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
+                Store cStore = UoW.AddEDI850.Find(t => t.Id == CurrentID).FirstOrDefault();
+                cStore.ASNFile = file.ToString();
+                UoW.AddEDI850.SaveChange();
+                UoW.Complate();
 
-                List<Store> lisStore = UoW.AddEDI850.Find(x => x.PONumber == PO)
-               .Where(t => t.OrderStoreNumber == CurrentStore)
-               .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
-                lisStore.ForEach(t => t.ASNStatus = (int)ASNStatus.HasASN);
-                int Result = UoW.AddEDI850.SaveChange();
-                return lisStore;
             }
         }
 
+
+        /// <summary>
+        /// ths is for order detail 
+        /// </summary>
+        /// <returns></returns>
         private XElement BuildOrderLevel()
         {
 
@@ -236,47 +295,59 @@ namespace ASNService
                    new XElement(EDIHelperFunctions.StoreNumber, new XCData(CurrentStore)),
                    new XElement(EDIHelperFunctions.DepartmentNumberString, EDIHelperFunctions.DepartmentNumber),
                    new XElement(EDIHelperFunctions.DivisionNumberString, EDIHelperFunctions.DivisionNumber),
-                   new XElement(EDIHelperFunctions.ReleaseNumberString, EDIHelperFunctions.ReleaseNumber )), 
+                   new XElement(EDIHelperFunctions.ReleaseNumberString, EDIHelperFunctions.ReleaseNumber)),
                    BuildOrderTotals(), BuildPickStruture());
 
         }
 
         XElement BuildPickStruture()
         {
-            List<Store> cInbound850Current = GetOrders();
-            List<StoreOrderDetail> lisStoreOrderDetail = GetSKUInfo(cInbound850Current);
-            List<Carton> Cartons = BuildPickPackStructure(cInbound850Current);
+            List<Store> Orders = GetOrders();
+            if (Orders.Count == 0)
+            {
+                throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro59));
+            }
+            //List<StoreOrderDetail> lisStoreOrderDetail = GetSKUInfo(Orders);
+            List<Carton> Cartons = BuildPickPackStructure(Orders);
             return BuildPickPackStructureXML(Cartons);
-            
+
         }
 
         private XElement BuildPickPackStructureXML(List<Carton> cartons)
         {
-            Carton _carton =  cartons.FirstOrDefault();
-            
-            var _Car =  new XElement(PICKPACKSTRUTURE,
-                             new XElement(EDIHelperFunctions.Carton,
-                             new XElement(MARKS,
-                             new XElement(UCC128, new XCData(_carton.UCC128))),
-                             new XElement(Quantities,
-                             new XElement(QtyQualifier, QtyQualifierZZ),
-                             new XElement(QtyUOM, QtyQualifierZZ),
-                             new XElement(Qty, _carton.Qty))));
+            Carton _carton = cartons.FirstOrDefault();
+            List<XElement> lisElements = new List<XElement>();
+            foreach (Carton item in cartons)
+            {
 
-                BuildItemDetail(_carton.StoreOrderDetail, _Car);
-            
-            return _Car; 
+
+                var _Car = new XElement(PICKPACKSTRUTURE,
+                                 new XElement(EDIHelperFunctions.Carton,
+                                 new XElement(MARKS,
+                                 new XElement(UCC128, new XCData(item.UCC128))),
+                                 new XElement(Quantities,
+                                 new XElement(QtyQualifier, QtyQualifierZZ),
+                                 new XElement(QtyUOM, QtyQualifierZZ),
+                                 new XElement(Qty, _carton.Qty)),
+                                 new XElement(EDIHelperFunctions.Measurement,
+                                 new XElement(EDIHelperFunctions.MeasureQual, EDIHelperFunctions.Weight),
+                                 new XElement(EDIHelperFunctions.MeasureValue, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight)))));
+
+                lisElements.Add(BuildItemDetail(_carton.StoreOrderDetail, _Car));
+            }
+
+            return null;
         }
 
-        private XElement  BuildItemDetail(ICollection<StoreOrderDetail> storeOrderDetail, XElement _Car)
+        private XElement BuildItemDetail(ICollection<StoreOrderDetail> storeOrderDetail, XElement _Car)
         {
-            return BuildSingleItem(storeOrderDetail , _Car ); ;
+            return BuildSingleItem(storeOrderDetail, _Car); ;
         }
 
         private XElement BuildItemDetail(ICollection<StoreOrderDetail> lisStoreDetils)
         {
-           return  BuildSingleItem(lisStoreDetils);
-            
+            return BuildSingleItem(lisStoreDetils);
+
         }
 
         private XElement BuildSingleItem(ICollection<StoreOrderDetail> items, XElement _Carton)
@@ -299,13 +370,18 @@ namespace ASNService
                             new XElement(QtyQualifier, "39"),
                             new XElement(QtyUOM, Each),
                             new XElement(Qty, QtyUOMSize)),
-                            new XElement(PackSize, InnersPerPacksSize),
+                            new XElement(PackSize, NumberofCardsInBundle),
                             new XElement(Inners, EachesPerInnerInt),
                             new XElement(EachesPerInner, EachesPerInnerInt),
-                            new XElement(InnersPerPacks, InnersPerPacksSize),
+                            new XElement(InnersPerPacks, NumberofCardsInBundle),
                             new XElement(ItemDescription, new XCData(i.ItemDescription))));
 
             return _Carton;
+        }
+
+        private int GetPackSize()
+        {
+            throw new NotImplementedException();
         }
 
         private XElement BuildSingleItem(ICollection<StoreOrderDetail> items)
@@ -317,22 +393,22 @@ namespace ASNService
             new XElement(CustomerLineNumber, i.CustomerLineNumber),
                             new XElement(ItemIDs,
                             new XElement(IdQualifier, UP),
-                            new XElement(ID, new XCData( i.UPC))),
+                            new XElement(ID, new XCData(i.UPC))),
                             new XElement(ItemIDs,
                             new XElement(IdQualifier, VN),
-                            new XElement(ID,  new XCData( "SVS Holida"))),
+                            new XElement(ID, new XCData("SVS Holida"))),
                             new XElement(ItemIDs,
                             new XElement(IdQualifier, CU),
-                            new XElement(ID, new XCData( i.DPCI))),
+                            new XElement(ID, new XCData(i.DPCI))),
                             new XElement(Quantities,
                             new XElement(QtyQualifier, "39"),
                             new XElement(QtyUOM, Each),
                             new XElement(Qty, QtyUOMSize)),
-                            new XElement(PackSize, InnersPerPacksSize),
+                            new XElement(PackSize, NumberofCardsInBundle),
                             new XElement(Inners, EachesPerInnerInt),
                             new XElement(EachesPerInner, EachesPerInnerInt),
-                            new XElement(InnersPerPacks, InnersPerPacksSize),
-                            new XElement(ItemDescription, new XCData( i.ItemDescription))));
+                            new XElement(InnersPerPacks, NumberofCardsInBundle),
+                            new XElement(ItemDescription, new XCData(i.ItemDescription))));
 
             return ItemElement;
         }
@@ -355,10 +431,10 @@ namespace ASNService
                             new XElement(QtyQualifier, QtyQualifierZZ),
                             new XElement(QtyUOM, QtyUOMSize),
                             new XElement(Qty, QtyUOMSize)),
-                            new XElement(PackSize, InnersPerPacksSize),
+                            new XElement(PackSize, NumberofCardsInBundle),
                             new XElement(Inners, EachesPerInnerInt),
                             new XElement(EachesPerInner, EachesPerInnerInt),
-                            new XElement(InnersPerPacks, InnersPerPacksSize),
+                            new XElement(InnersPerPacks, NumberofCardsInBundle),
                             new XElement(ItemDescription, item.ItemDescription));
 
         }
@@ -369,66 +445,77 @@ namespace ASNService
         /// <returns></returns>
         private List<Carton> BuildPickPackStructure(List<Store> lisStore)
         {
-
             List<Carton> lisCarton = new List<Domain.Carton>();
-            int iQtyTotals = 0;
-            int iCartonWeightWithIems = 0;
-            int CustomerLineNumber = 1;
-            Carton _Carton = new Domain.Carton();
-
-
-            _Carton = GetSSCCForNewOrder();
+            int MaxWeightForBox = GetMaxWeight();
 
             foreach (Store item in lisStore)
             {
                 StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
-                iQtyTotals += item.QtyOrdered;
-                iCartonWeightWithIems = (iQtyTotals / InnersPerPacksSizeInt) + BOXWEIGHT;
-                if (iCartonWeightWithIems >= (MAXLBS - 1))
-                {
-                    lisCarton.Add(_Carton);
-                    _Carton = GetSSCCForNewOrder();
-                    iQtyTotals = 0; //Reset totals for a new cartons
-                    iCartonWeightWithIems = 0;
-                }
-                else
-                {
-
-
-                    cStoreOrderDetail.Carton = _Carton;
-                    cStoreOrderDetail.CartonFK = _Carton.Id;
-                    cStoreOrderDetail.Id = Guid.NewGuid();
-                    cStoreOrderDetail.QtyOrdered = item.QtyOrdered;
-                    SkuItem ItemDescription = GetItemDescription(item.UPCode);
-                    cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
-                        CustomerLineNumber++;
-                    cStoreOrderDetail.ItemDescription = ItemDescription.Product;
-                    cStoreOrderDetail.DPCI = ItemDescription.DPCI;
-                    cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
-                    cStoreOrderDetail.QtyPacked = 0;
-                    cStoreOrderDetail.SKUFK = ItemDescription.Id;
-                    using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-                    {
-                        Store cStore = UoW.AddEDI850.Find(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
-                        cStoreOrderDetail.StorFK = cStore.Id;
-                        
-                    }
-
-                    _Carton.StoreOrderDetail.Add(cStoreOrderDetail);
-                    if (!lisCarton.Exists(t => t.Id == _Carton.Id))
-                    {
-                        lisCarton.Add(_Carton);
-                    }
-                }
-                _Carton.Weight = iCartonWeightWithIems;
-                _Carton.Qty = iQtyTotals;
-
+                List<Carton> lisSubCarton = FillBox(item, MaxWeightForBox);
+                lisCarton.AddRange(lisSubCarton);
             }
             SaveCarton(lisCarton);
-
-
-
             return lisCarton;
+        }
+
+        private List<Carton> FillBox(Store cStore, int MaxWeght)
+        {
+            List<StoreOrderDetail> lisStoreDetails = new List<StoreOrderDetail>();
+            int OrderWeight = (cStore.QtyOrdered / NumberofCardsInBundle);  //80 pounds
+            int CurrentWeight = 0;
+            int CustomerLineNumber = 1;
+            List<Carton> lisCarton = new List<Domain.Carton>();
+            Carton cCarton;
+
+            if (cStore.QtyOrdered == 0)
+            {
+                //Throw 
+            }
+            cCarton = GetSSCCForNewOrder();
+            while (OrderWeight > 0) //Keep adding items to box untill QtyOrdered = 0
+            {
+                SkuItem ItemDescription = GetItemDescription(cStore.UPCode);
+                if (CurrentWeight >= MaxWeght)
+                {
+                    cCarton.Qty = CurrentWeight;
+                    CurrentWeight = 0;
+                    lisCarton.Add(cCarton);
+                    cCarton = GetSSCCForNewOrder();
+                }
+
+                CurrentWeight += 1;
+                StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
+                cStoreOrderDetail.Id = Guid.NewGuid();
+                cStoreOrderDetail.QtyOrdered = CurrentWeight;
+                cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
+                cStoreOrderDetail.ItemDescription = ItemDescription.Product;
+                cStoreOrderDetail.DPCI = ItemDescription.DPCI;
+                cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
+                cStoreOrderDetail.QtyPacked = 0;
+                cStoreOrderDetail.StorFK = cStore.Id;
+                cStoreOrderDetail.SKUFK = ItemDescription.Id;
+                // cStoreOrderDetail.CartonFK = cCarton.Id;
+                cCarton.StoreOrderDetail.Add(cStoreOrderDetail);
+                OrderWeight -= 1;
+
+
+
+            }
+            cCarton.Qty = CurrentWeight;
+            lisCarton.Add(cCarton);
+            return lisCarton;
+        }
+        /// <summary>
+        /// This function will get the weight for a box
+        /// </summary>
+        /// <returns></returns>
+        private int GetMaxWeight()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                return UoW.MaxCartonWeight.Find(t => t.InUse == true).FirstOrDefault().Max;
+            }
+
         }
 
         private SkuItem GetItemDescription(string uPCode)
@@ -477,7 +564,7 @@ namespace ASNService
                          new XElement(PackSize, QtyUOMSize),
                          new XElement(Inners, one),
                          new XElement(EachesPerInner, one),
-                         new XElement(InnersPerPacks, InnersPerPacksSize),
+                         new XElement(InnersPerPacks, NumberofCardsInBundle),
                          new XElement(ItemDescription, sku.Product));
             }
 
@@ -487,7 +574,7 @@ namespace ASNService
 
         XElement BuildOrderTotals()
         {
-            int t = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight);
+            double t = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight);
             return new XElement(ORDERTOTALS,
                     new XElement(OrderTotalCases, GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount)),
                      new XElement(OrderTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight)));
@@ -521,16 +608,15 @@ namespace ASNService
             string sVendorCode = string.Empty;
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store _Store = UoW.AddEDI850.Find(t => t.PONumber == PO).Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                                                           .Where(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
-                sVendorCode = _Store?.VendorNumber;
+                Store _Store = UoW.AddEDI850.Find(t => t.Id  == CurrentID).FirstOrDefault();
+                
                 if (!string.IsNullOrEmpty(_Store.VendorNumber))
                 {
                     return _Store.VendorNumber;
                 }
                 else
                 {
-                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro17));
+                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAErro17));
                 }
             }
         }
@@ -549,7 +635,7 @@ namespace ASNService
                     }
                     else
                     {
-                        throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro27));
+                        throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAErro27));
                     }
                 }
 
@@ -566,8 +652,7 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 //DCNumber.Replace(@"'", "")
-                string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
-                                                        .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
+                string DCNumber = UoW.AddEDI850.Find(x => x.Id == CurrentID).FirstOrDefault().DCNumber;
 
 
                 cDCInformation = UoW.DCInfo.Find(t => t.StoreID == CurrentDCNumber).FirstOrDefault();
@@ -578,7 +663,7 @@ namespace ASNService
                 }
                 else
                 {
-                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help,  ErrorCodes.HSAErro41));
+                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAErro41));
                 }
             }
         }
@@ -587,9 +672,9 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store cInbound850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                                 .Where(x => x.OrderStoreNumber == CurrentStore)
-                                                 .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault();
+                Store cInbound850 = UoW.AddEDI850.Find(t => t.Id == CurrentID)
+                                                 .FirstOrDefault();
+
                 if (cInbound850 != null)
                 {
                     return cInbound850.PODate.ToString(toFormat);
@@ -606,9 +691,8 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store store = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                           .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                           .Where(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
+                Store store = UoW.AddEDI850.Find(t => t.Id == CurrentID)
+                                           .FirstOrDefault();
                 if (!string.IsNullOrEmpty(store.DocumentId))
                 {
                     return store.DocumentId;
@@ -656,42 +740,45 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
 
-                return UoW.AddEDI850.Find(t => t.PONumber == PO).Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                                                    .Where(X => X.OrderStoreNumber == CurrentStore).ToList();
+                return UoW.AddEDI850.Find(t => t.PONumber == PO).Where(x => x.Id == CurrentID).ToList();
             }
 
         }
 
-        public int GetShippingWeightOrBoxCount(ShippingInfoType ShippingInfo)
+        public double GetShippingWeightOrBoxCount(ShippingInfoType ShippingInfo)
         {
 
-            int dTotalWeight = 0;
+            double dTotalWeight = 0;
+            double BundleWeight = 0;
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> Stores = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                             .Where(t => t.OrderStoreNumber == CurrentStore)
-                             .Distinct()
-                             .ToList();
+                List<Store> Stores = UoW.AddEDI850.Find(t => t.Id == CurrentID)
+                                        .Distinct()
+                                        .ToList();
 
+                BundleWeight = Stores.FirstOrDefault().PkgWeight.Weigtht;
                 foreach (Store item in Stores)
                 {
                     dTotalWeight += item.QtyOrdered;
-                }
 
-                switch (ShippingInfo)
+                }
+                dTotalWeight *= BundleWeight;
+                double result = dTotalWeight;
+                switch (ShippingInfo) 
                 {
                     case ShippingInfoType.PickCount:
-                        return (dTotalWeight / InnersPerPacksSize);
+
+                        return (dTotalWeight / (double)NumberofCardsInBundle);
 
 
                     case ShippingInfoType.ShippingWeight:
-                        int f = (dTotalWeight / InnersPerPacksSize);
-                        return (dTotalWeight / InnersPerPacksSize) + BOXWEIGHT;
+
+                        return (dTotalWeight / NumberofCardsInBundle) + BOXWEIGHT;
 
 
                     case ShippingInfoType.BoxCount:
-                        return GetNumberofBoxes(dTotalWeight / InnersPerPacksSize);
+
+                        return GetNumberofBoxes(dTotalWeight / (double)NumberofCardsInBundle);
 
                     default:
                         return 0;
@@ -704,7 +791,7 @@ namespace ASNService
 
         }
 
-        private int GetNumberofBoxes(int packs)
+        private int GetNumberofBoxes(double packs)
         {
 
             int iCount = 0;
@@ -712,7 +799,7 @@ namespace ASNService
             {
                 return 0;
             }
-            if (packs <= EDIHelperFunctions.MINLBS || packs <= (EDIHelperFunctions.MAXLBS - 1))
+            if (packs <= EDIHelperFunctions.MINLBS || packs <= (m_MaxWeightForCarton - 1))
             {
                 iCount++;
                 return iCount;
@@ -721,9 +808,9 @@ namespace ASNService
             else
             {
 
-                while (packs >= (MAXLBS - 1))
+                while (packs >= (m_MaxWeightForCarton - 1))
                 {
-                    packs = packs - MAXLBS;
+                    packs = packs - m_MaxWeightForCarton;
                     iCount++;
                 }
                 if (packs >= 1)
@@ -744,10 +831,15 @@ namespace ASNService
         {
             get
             {
-                return DateTime.Today.ToString(toFormat);
+                using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+                {
+                    return UoW.ShipDateRequest.Find(t => t.InUse == true).FirstOrDefault().ASNShip;
+                }
+
             }
 
         }
+
 
         public double GetWeight
         {
@@ -757,14 +849,13 @@ namespace ASNService
 
                 using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
                 {
-                    List<Store> Stores = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                                        .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                                       .Where(t => t.OrderStoreNumber == CurrentStore).ToList();
+                    List<Store> Stores = UoW.AddEDI850.Find(t => t.Id == CurrentID)
+                                                        .ToList();
                     foreach (Store item in Stores)
                     {
                         dTotal += item.QtyOrdered;
                     }
-                    double dPackTotal = dTotal / InnersPerPacksSize;
+                    double dPackTotal = dTotal / NumberofCardsInBundle;
                     dPackTotal += BOXWEIGHT;
                     return dPackTotal;
                 }
@@ -824,11 +915,7 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
-                Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                             .Where(t => t.OrderStoreNumber == CurrentStore)
-                                             .FirstOrDefault();
+                Store cEDI850 = UoW.AddEDI850.Find(t => t.Id == CurrentID).FirstOrDefault();
                 if (cEDI850 != null)
                 {
                     return cEDI850.CustomerNumber;
@@ -845,10 +932,8 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
-                Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
-                                             .Where(t => t.OrderStoreNumber == CurrentStore)
-                                             .FirstOrDefault();
+                Store cEDI850 = UoW.AddEDI850.Find(t => t.Id == CurrentID)
+                                              .FirstOrDefault();
                 if (cEDI850 != null)
                 {
                     CurrentID = cEDI850.Id;

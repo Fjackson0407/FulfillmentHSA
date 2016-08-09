@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-   public  class MaxWeightFullBox
+    public class Pack
     {
-        public Guid  Id { get; set; }
-        public int Max { get; set; }
+        public Guid Id { get; set; }
+        public int Size { get; set; }
+        public bool InUse { get; set; }
         public DateTime  DTS { get; set; }
-        public bool  InUse { get; set; }
+
+
     }
 }

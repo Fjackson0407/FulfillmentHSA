@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.ASNOut
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+    public class ASNFile : RepositoryBase<ASNFileOutBound> , IASNFile 
     {
 
-        public MaxCartonWeight(EDIContext context)
-            : base(context) { }
-
+        public ASNFile(EDIContext context )
+            :base(context )
+        { }
 
         public int SaveChanges()
         {
             return this.Context.SaveChanges();
         }
+
     }
 }

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.ShipProduct
 {
-    public interface  IMaxCartonWeight : IRepositoryBase<MaxWeightFullBox >
+    public interface  IShipDateRequest : IRepositoryBase<ShipDate>
     {
-        int SaveChanges();
+        int SaveChange();
     }
 }

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.ASNCartonTypes
 {
-    public interface  IMaxCartonWeight : IRepositoryBase<MaxWeightFullBox >
+  public   interface ICartonTypeForASN : IRepositoryBase<CartonType>
     {
-        int SaveChanges();
+        int SaveChange();
     }
 }

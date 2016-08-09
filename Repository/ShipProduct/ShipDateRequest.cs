@@ -7,16 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.ShipProduct
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+  public  class ShipDateRequest : RepositoryBase<ShipDate>, IShipDateRequest 
     {
-
-        public MaxCartonWeight(EDIContext context)
+        public ShipDateRequest(EDIContext context)
             : base(context) { }
-
-
-        public int SaveChanges()
+        
+        public int SaveChange()
         {
             return this.Context.SaveChanges();
         }

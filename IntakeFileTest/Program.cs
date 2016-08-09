@@ -19,31 +19,27 @@ namespace IntakeFileTest
         {
             string ConnectionString = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSA;Integrated Security=True";
             string ConStringHome = @"Data Source=SUPERMANPC\SUPERMANDB;Initial Catalog=EDIHSA;Integrated Security=True";
-
+            string RemoteConnectionString = @"Data Source=CCPC08\VALIDDB;Database=EDIHSA;User Id=VaildUser;Password = ABC123";
             string path = @"D:\Testing\w20.csv";
             string AmexPath = @"D:\Testing\Amex\W1.csv";
             string po = "0290-9624723-0579";  // "0290 -8987645-0551";   // "0290 -8987645-0554";                                   // "0290 -8987645-0554";                  //               "0290 -8987645-0554"; 
             string po2 = "0290-5429221-0556";  // "0290 -8987645-0553"; //this is for home only will not work at work 
-            string Store = "1175"; //Make function to get stores from po 
-
-            string DemoVisaFile = @"D:\Testing\VisaDemo\Doc1.csv";
-            string DemoAmxFile = @"D:\Testing\BigOrder\w2.csv";
-            string DemoXMLFile = @"D:\Testing\VisaDemo\ASN\TestX0579.xml";
-            string DemoPO = "0290-7029784-0579";        //"0290-9540383-0551";
 
 
             //********************************************** MAKE LABELS *********************************************************************
 
             //try
             //{
-            //    string FilePathAmex = @"D:\Testing\Lables\Monday080116\Amex.csv";
+            //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\Amex.csv";
+            //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AmexLabels.csv";
 
-            //    string FilePathVisa = @"D:\Testing\Lables\Monday080116\VMC.csv";
+            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\Visa.csv";
+            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabels.csv";
 
-            //    string NewFile = @"D:\Testing\Lables\Monday080116\LabelsVisa.csv";
 
-            //    MCLable cMCLable = new MCLable(FilePathVisa, ConnectionString, NewFile);
-            //    cMCLable.MakeLabelsVisaMaster();
+
+            //    MCLable cMCLable = new MCLable(FilePathVisa, ConnectionString, NewFileVisa);
+            //    cMCLable.Visa();
 
 
             //}
@@ -97,11 +93,16 @@ namespace IntakeFileTest
             //*********************************** Make Lables *********************************************************************************************************
 
             //*********************************** Make ASN *********************************************************************************************************
+            string Store = "3004"; //Make function to get stores from po 
+            string DCNumber = "0590";
+            string ConnectionStringASN = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSA;Integrated Security=True";
+            string DemoXMLFile = @"D:\Testing\ASN\UploadASN3004.xml";
+            string DemoPO = "0290-7029784-0590";        //"0290-9540383-0551";
 
             try
             {
 
-                ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionString, DemoPO, Store, "0579");
+                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringASN , DemoPO, Store, DCNumber  );
                 cASNBuild.BuildASN();
 
 

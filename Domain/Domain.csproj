@@ -40,14 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASNFile.cs" />
     <Compile Include="Barcode.cs" />
     <Compile Include="Bill.cs" />
+    <Compile Include="BundleWeight.cs" />
     <Compile Include="Carton.cs" />
+    <Compile Include="CartonType.cs" />
     <Compile Include="ContactType.cs" />
     <Compile Include="DCInformation .cs" />
     <Compile Include="EmailRecipient.cs" />
+    <Compile Include="EmptyBoxWeight.cs" />
     <Compile Include="MaxWeight.cs" />
+    <Compile Include="Pack.cs" />
     <Compile Include="RegKeys.cs" />
+    <Compile Include="ShipDate.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="EmailNotification.cs" />
     <Compile Include="Label.cs" />
@@ -62,7 +68,6 @@
     <Compile Include="StoreOrderDetail.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserOrders.cs" />
-    <Compile Include="XmlSerializer\StoreOrderDetailSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Helpers\Helpers.csproj">

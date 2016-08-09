@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml;
 namespace Domain
 {
-   public  class MaxWeightFullBox
+    public class ASNFileOutBound
     {
-        public Guid  Id { get; set; }
-        public int Max { get; set; }
+        public Guid Id { get; set; }
+        public string File { get; set; }
         public DateTime  DTS { get; set; }
-        public bool  InUse { get; set; }
+
     }
 }

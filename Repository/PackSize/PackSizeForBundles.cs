@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.BoxWeight
+namespace Repository.PackSize
 {
-   public  class MaxCartonWeight : RepositoryBase<MaxWeightFullBox> , IMaxCartonWeight
+   public  class PackSizeForBundles: RepositoryBase<Pack>, IPackSizeForBundles 
     {
 
-        public MaxCartonWeight(EDIContext context)
-            : base(context) { }
-
-
-        public int SaveChanges()
+        public PackSizeForBundles(EDIContext context)
+            : base(context)
+        { }
+        public int SaveChange()
         {
             return this.Context.SaveChanges();
         }
+
     }
 }
