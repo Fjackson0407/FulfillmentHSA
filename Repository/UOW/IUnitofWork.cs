@@ -9,6 +9,7 @@ using Repository.ContactData856;
 using Repository.DC;
 using Repository.EmptyBoxFolder;
 using Repository.Inbound850;
+using Repository.MinWeightFolder;
 using Repository.OperatorFolder;
 using Repository.PackSize;
 using Repository.SerialRageNumberFolder;
@@ -47,6 +48,8 @@ namespace Repository.UOW
         IShipDateRequest ShipDateRequest { get; }
         ICardWeight CardWeight { get; }
         IEmptyBox EmptyBox { get; }
+        IMinWeightShipBox MinWeightShipBox { get; }
+
         int Complate();
     }
 }

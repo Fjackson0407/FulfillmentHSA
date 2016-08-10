@@ -29,6 +29,7 @@ namespace ASNService
         public string m_CartonTypeForASN { get; private set; }
 
         public int m_MaxWeightForCarton { get; private set; }
+        public int m_MinWeightForCarton { get; private set; }
 
         public int m_EmptyBoxWeight { get; set; }
 
@@ -48,8 +49,16 @@ namespace ASNService
             SetMaxCartonWeight();
             SetCartonType();
             SetEmptyBoxWeight();
+            SetMinCartonWeight();
         }
 
+        private void SetMinCartonWeight()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                m_MinWeightForCarton = UoW.MinWeightShipBox.Find(t => t.InUse == true).FirstOrDefault().MinWeight;
+            }
+        }
 
         private void SetEmptyBoxWeight()
         {
@@ -98,7 +107,7 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(_ConnectionString)))
             {
-                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO).Where(x => x.ASNFile == null)
+                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO).Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
                                                                     .Where(X => X.OrderStoreNumber == _Store).FirstOrDefault();
                 if (cStore == null)
                 {
@@ -132,8 +141,9 @@ namespace ASNService
 
         XElement BuildShipmentLevel()
         {
-           double Boxcount =   GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount);
-            double Weight  = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight );
+            double Boxcount = GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount);
+            double Weight = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight);
+
 
             return new XElement(EDIHelperFunctions.ShipmentLevel,
                    new XElement(TransactionSetPurposeCode, "00"),
@@ -258,24 +268,7 @@ namespace ASNService
         {
             var File = new XElement(FILE,
                       new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
-            SaveASNtoDB(File);
             File.Save(path);
-        }
-
-        /// <summary>
-        /// Save the ASN to the database.
-        /// </summary>
-        /// <param name="file"></param>
-        private void SaveASNtoDB(XElement file)
-        {
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-            {
-                Store cStore = UoW.AddEDI850.Find(t => t.Id == CurrentID).FirstOrDefault();
-                cStore.ASNFile = file.ToString();
-                UoW.AddEDI850.SaveChange();
-                UoW.Complate();
-
-            }
         }
 
 
@@ -461,45 +454,70 @@ namespace ASNService
         private List<Carton> FillBox(Store cStore, int MaxWeght)
         {
             List<StoreOrderDetail> lisStoreDetails = new List<StoreOrderDetail>();
-            int OrderWeight = (cStore.QtyOrdered / NumberofCardsInBundle);  //80 pounds
+            int OrderWeight = (cStore.QtyOrdered / NumberofCardsInBundle);
             int CurrentWeight = 0;
             int CustomerLineNumber = 1;
             List<Carton> lisCarton = new List<Domain.Carton>();
             Carton cCarton;
+            bool bNewCarton = false;
 
             if (cStore.QtyOrdered == 0)
             {
                 //Throw 
             }
             cCarton = GetSSCCForNewOrder();
+            SkuItem ItemDescription = GetItemDescription(cStore.UPCode);
+            //Set the weight for the carton 
+            if (OrderWeight <= MaxWeght)
+            {
+                cCarton.Qty = OrderWeight;
+                CurrentWeight = OrderWeight;
+            }
+            else
+            {
+                cCarton.Qty = MaxWeght;
+                CurrentWeight = MaxWeght;
+            }
+
+
             while (OrderWeight > 0) //Keep adding items to box untill QtyOrdered = 0
             {
-                SkuItem ItemDescription = GetItemDescription(cStore.UPCode);
-                if (CurrentWeight >= MaxWeght)
+                if (bNewCarton)
                 {
-                    cCarton.Qty = CurrentWeight;
-                    CurrentWeight = 0;
                     lisCarton.Add(cCarton);
                     cCarton = GetSSCCForNewOrder();
+                    bNewCarton = false; 
                 }
+                
 
-                CurrentWeight += 1;
                 StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
                 cStoreOrderDetail.Id = Guid.NewGuid();
                 cStoreOrderDetail.QtyOrdered = CurrentWeight;
+                cCarton.Weight = CurrentWeight; 
                 cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
                 cStoreOrderDetail.ItemDescription = ItemDescription.Product;
                 cStoreOrderDetail.DPCI = ItemDescription.DPCI;
                 cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
                 cStoreOrderDetail.QtyPacked = 0;
-                cStoreOrderDetail.StorFK = cStore.Id;
+                //cStoreOrderDetail.StorFK = cStore.Id;
+                cStoreOrderDetail.Store = cStore;
                 cStoreOrderDetail.SKUFK = ItemDescription.Id;
                 // cStoreOrderDetail.CartonFK = cCarton.Id;
                 cCarton.StoreOrderDetail.Add(cStoreOrderDetail);
-                OrderWeight -= 1;
+                if (OrderWeight >= MaxWeght)
+                {
+                    OrderWeight -= MaxWeght;
+                    bNewCarton = true;
+                    CurrentWeight = OrderWeight;
+                }
+                else
+                {
+                    OrderWeight -= CurrentWeight;
+                    
+                }
 
 
-
+                CustomerLineNumber++;
             }
             cCarton.Qty = CurrentWeight;
             lisCarton.Add(cCarton);
@@ -574,7 +592,6 @@ namespace ASNService
 
         XElement BuildOrderTotals()
         {
-            double t = GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight);
             return new XElement(ORDERTOTALS,
                     new XElement(OrderTotalCases, GetShippingWeightOrBoxCount(ShippingInfoType.BoxCount)),
                      new XElement(OrderTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight)));
@@ -608,8 +625,8 @@ namespace ASNService
             string sVendorCode = string.Empty;
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store _Store = UoW.AddEDI850.Find(t => t.Id  == CurrentID).FirstOrDefault();
-                
+                Store _Store = UoW.AddEDI850.Find(t => t.Id == CurrentID).FirstOrDefault();
+
                 if (!string.IsNullOrEmpty(_Store.VendorNumber))
                 {
                     return _Store.VendorNumber;
@@ -652,7 +669,8 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 //DCNumber.Replace(@"'", "")
-                string DCNumber = UoW.AddEDI850.Find(x => x.Id == CurrentID).FirstOrDefault().DCNumber;
+                string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
+                                                        .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
 
                 cDCInformation = UoW.DCInfo.Find(t => t.StoreID == CurrentDCNumber).FirstOrDefault();
@@ -672,9 +690,9 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store cInbound850 = UoW.AddEDI850.Find(t => t.Id == CurrentID)
-                                                 .FirstOrDefault();
-
+                Store cInbound850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                                 .Where(x => x.OrderStoreNumber == CurrentStore)
+                                                 .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault();
                 if (cInbound850 != null)
                 {
                     return cInbound850.PODate.ToString(toFormat);
@@ -691,8 +709,9 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store store = UoW.AddEDI850.Find(t => t.Id == CurrentID)
-                                           .FirstOrDefault();
+                Store store = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                           .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                           .Where(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
                 if (!string.IsNullOrEmpty(store.DocumentId))
                 {
                     return store.DocumentId;
@@ -740,9 +759,9 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
 
-                return UoW.AddEDI850.Find(t => t.PONumber == PO).Where(x => x.Id == CurrentID).ToList();
+                return UoW.AddEDI850.Find(t => t.PONumber == PO).Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                                                    .Where(X => X.OrderStoreNumber == CurrentStore).ToList();
             }
-
         }
 
         public double GetShippingWeightOrBoxCount(ShippingInfoType ShippingInfo)
@@ -752,9 +771,12 @@ namespace ASNService
             double BundleWeight = 0;
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> Stores = UoW.AddEDI850.Find(t => t.Id == CurrentID)
-                                        .Distinct()
-                                        .ToList();
+                List<Store> Stores = UoW.AddEDI850.Find(t => t.PONumber == PO)
+
+                              .Where(x => x.OrderStoreNumber == CurrentStore)
+                              .Distinct()
+                              .ToList();
+
 
                 BundleWeight = Stores.FirstOrDefault().PkgWeight.Weigtht;
                 foreach (Store item in Stores)
@@ -764,7 +786,7 @@ namespace ASNService
                 }
                 dTotalWeight *= BundleWeight;
                 double result = dTotalWeight;
-                switch (ShippingInfo) 
+                switch (ShippingInfo)
                 {
                     case ShippingInfoType.PickCount:
 
@@ -799,7 +821,7 @@ namespace ASNService
             {
                 return 0;
             }
-            if (packs <= EDIHelperFunctions.MINLBS || packs <= (m_MaxWeightForCarton - 1))
+            if (packs <= m_MinWeightForCarton || packs <= (m_MaxWeightForCarton - 1))
             {
                 iCount++;
                 return iCount;
@@ -849,8 +871,9 @@ namespace ASNService
 
                 using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
                 {
-                    List<Store> Stores = UoW.AddEDI850.Find(t => t.Id == CurrentID)
-                                                        .ToList();
+                    List<Store> Stores = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                                        .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                                       .Where(t => t.OrderStoreNumber == CurrentStore).ToList();
                     foreach (Store item in Stores)
                     {
                         dTotal += item.QtyOrdered;
@@ -915,7 +938,11 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                Store cEDI850 = UoW.AddEDI850.Find(t => t.Id == CurrentID).FirstOrDefault();
+                List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
+                Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                             .Where(t => t.OrderStoreNumber == CurrentStore)
+                                             .FirstOrDefault();
                 if (cEDI850 != null)
                 {
                     return cEDI850.CustomerNumber;
@@ -932,8 +959,10 @@ namespace ASNService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 List<Store> lisStore = UoW.AddEDI850.GetAll().ToList();
-                Store cEDI850 = UoW.AddEDI850.Find(t => t.Id == CurrentID)
-                                              .FirstOrDefault();
+                Store cEDI850 = UoW.AddEDI850.Find(t => t.PONumber == PO)
+                                             .Where(t => t.ASNStatus == (int)ASNStatus.ReadyForASN)
+                                             .Where(t => t.OrderStoreNumber == CurrentStore)
+                                             .FirstOrDefault();
                 if (cEDI850 != null)
                 {
                     CurrentID = cEDI850.Id;

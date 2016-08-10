@@ -49,7 +49,8 @@ namespace Domain
 
         public string OriginalLine { get; set; }
 
-        public string  ASNFile { get; set; }
+        public int ASNStatus { get; set; }
+
         public ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
          public ICollection<BOLForASN> BOL { get; set; }
         public virtual SkuItem SkuItem { get; set;  }

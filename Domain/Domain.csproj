@@ -51,6 +51,7 @@
     <Compile Include="EmailRecipient.cs" />
     <Compile Include="EmptyBoxWeight.cs" />
     <Compile Include="MaxWeight.cs" />
+    <Compile Include="MinWeightForBox.cs" />
     <Compile Include="Pack.cs" />
     <Compile Include="RegKeys.cs" />
     <Compile Include="ShipDate.cs" />

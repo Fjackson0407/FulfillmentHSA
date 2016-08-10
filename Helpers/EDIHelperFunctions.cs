@@ -191,7 +191,7 @@ namespace Helpers
         public const string FOBDescription = "FOBDescription";
         public const int PACKWEIGHT = 1;
         //public const int MAXLBS = 60;
-        public const double MINLBS = 2;
+        //public const double MINLBS = 2;
         public const int BOXWEIGHT = 1;
 
         public const string ErrorCode = "Error Code";

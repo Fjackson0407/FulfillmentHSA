@@ -76,6 +76,8 @@
     <Compile Include="Inbound850\AddEDI850.cs" />
     <Compile Include="Inbound850\IAddEDI850.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MinWeightFolder\IMinWeightShipBox.cs" />
+    <Compile Include="MinWeightFolder\MinWeightShipBox.cs" />
     <Compile Include="OperatorFolder\IOperator.cs" />
     <Compile Include="OperatorFolder\Operator.cs" />
     <Compile Include="PackSize\IPackSizeForBundles.cs" />

@@ -10,6 +10,7 @@ using Repository.DataSource;
 using Repository.DC;
 using Repository.EmptyBoxFolder;
 using Repository.Inbound850;
+using Repository.MinWeightFolder;
 using Repository.OperatorFolder;
 using Repository.PackSize;
 using Repository.SerialRageNumberFolder;
@@ -62,6 +63,8 @@ namespace Repository.UOW
 
          public  ICardWeight CardWeight { get; private set;  }
         public IEmptyBox EmptyBox { get; private set; }
+
+        public  IMinWeightShipBox MinWeightShipBox { get; private set;  }
         public UnitofWork(EDIContext cEDIContext)
         {
 
@@ -84,6 +87,7 @@ namespace Repository.UOW
             ShipDateRequest = new ShipDateRequest(_EDIContext);
             CardWeight = new CardWeight(_EDIContext);
             EmptyBox = new EmptyBox(_EDIContext);
+            MinWeightShipBox = new MinWeightShipBox(_EDIContext);
         }
 
         /// <summary>

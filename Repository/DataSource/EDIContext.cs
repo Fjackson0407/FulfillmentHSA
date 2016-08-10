@@ -18,7 +18,8 @@ namespace Repository.DataSource
         public EDIContext(string ConnectionString)
             :base(ConnectionString )
         {
-
+            
+            
         }
         public virtual DbSet<DCInformation> DCInformation { get; set;  }
         public virtual DbSet<Store> EDI850 { get; set; }
@@ -49,6 +50,7 @@ namespace Repository.DataSource
         public virtual DbSet<ShipDate> ShipDate { get; set;  }
         public virtual DbSet<BundleWeight> BundleWeight { get; set;  }
         public virtual DbSet<EmptyBoxWeight> EmptyBoxWeight { get; set;  }
+        public virtual DbSet<MinWeightForShipping> MinWeightForShipping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 
