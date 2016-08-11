@@ -93,11 +93,11 @@ namespace IntakeFileTest
             //*********************************** Make Lables *********************************************************************************************************
 
             //*********************************** Make ASN *********************************************************************************************************
-            string Store = "69"; //Make function to get stores from po 
-            string DCNumber = "0590";
+            string Store = "623"; //Make function to get stores from po 
+            string DCNumber = "0587";
             string ConnectionStringASN = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSA;Integrated Security=True";
-            string DemoXMLFile = @"D:\Testing\ASN\UploadASN69.xml";
-            string DemoPO = "0290-7029784-0590";        //"0290-9540383-0551";
+            string DemoXMLFile = @"D:\Testing\ASN\UploadASN1488.xml";
+            string DemoPO = "0290-7029784-0587";        //"0290-9540383-0551";
 
             try
             {

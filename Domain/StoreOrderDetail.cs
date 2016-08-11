@@ -18,6 +18,8 @@ namespace Domain
         public int CustomerLineNumber { get; set; }
         public Guid  Id { get; set; }
 
+        public string  OrderStoreNumber  { get; set; }
+
         public int QtyOrdered { get; set; }
         public string  DPCI { get; set; }
 
@@ -34,9 +36,7 @@ namespace Domain
         public virtual Carton Carton { get; set; }
 
         public int QtyPacked { get; set; }
-        public virtual Store Store { get; set;  }
-        public Guid? StorFK { get; set; }
-
+        
 
 
 

@@ -16,6 +16,7 @@ using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.ShipProduct;
 using Repository.SkuFolder;
+using Repository.StoreDetailFolder;
 using Repository.UserOrderFolder;
 using Repository.Users;
 using System;
@@ -49,7 +50,7 @@ namespace Repository.UOW
         ICardWeight CardWeight { get; }
         IEmptyBox EmptyBox { get; }
         IMinWeightShipBox MinWeightShipBox { get; }
-
+        IStoreItemDetail StoreItemDetail { get; }
         int Complate();
     }
 }

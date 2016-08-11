@@ -9,11 +9,7 @@ namespace Domain
     public class Store
     {
 
-        public Store()
-        {
-            StoreOrderDetail = new HashSet<StoreOrderDetail>();
-
-        }
+       
         public Guid Id { get; set; }
 
         public DateTime DTS { get; set; }
@@ -55,8 +51,6 @@ namespace Domain
 
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
 
-
-        public ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
          public ICollection<BOLForASN> BOL { get; set; }
         public virtual SkuItem SkuItem { get; set;  }
         public Guid? SkuItemFK { get; set;  }

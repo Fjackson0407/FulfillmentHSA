@@ -109,8 +109,9 @@ namespace ASNService
         {
             using (var UoW = new UnitofWork(new EDIContext(_ConnectionString)))
             {
-                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO).Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN)
+                Store cStore = UoW.AddEDI850.Find(t => t.PONumber == _PO).Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN   )
                                                                     .Where(X => X.OrderStoreNumber == _Store).FirstOrDefault();
+                
                 if (cStore == null)
                 {
                     return false;
@@ -291,7 +292,6 @@ namespace ASNService
                 cASNFileOutBound.DTS = DateTime.Now;
 
                 lisStores.ForEach(s => s.ASNStatus = (int)ASNStatus.HasASN);
-                //lisStores.ForEach(s => s.ASNFileOutBoundFK = cASNFileOutBound.Id );
                 UoW.AddEDI850.SaveChange();
                 foreach (Store item in lisStores)
                 {
@@ -493,10 +493,10 @@ namespace ASNService
                     cStoreOrderDetail.DPCI = ItemDescription.DPCI;
                     cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
                     cStoreOrderDetail.QtyPacked = 0;
-                    cStoreOrderDetail.StorFK = cStore.Id;
+                    cStoreOrderDetail.OrderStoreNumber = cStore.OrderStoreNumber; 
                     cStoreOrderDetail.SKUFK = ItemDescription.Id;
                     cCarton.StoreOrderDetail.Add(cStoreOrderDetail);
-                    cStore.StoreOrderDetail.Add(cStoreOrderDetail);
+                    
                     CustomerLineNumber++;
                     if (OrderWeight >= MaxWeght)
                     {
@@ -511,8 +511,8 @@ namespace ASNService
                     }
 
                 }
-
             }
+         
             lisCarton.Add(cCarton);
             return lisCarton;
         }
@@ -544,20 +544,13 @@ namespace ASNService
             {
                 if (lisCarton.Count > 0)
                 {
-                    //foreach (Carton   item in lisCarton )
-                    //{
-                    //    foreach (StoreOrderDetail  OrderDetail  in item.StoreOrderDetail)
-                    //    {
-                    //        Store cStore =  UoW.AddEDI850.Find(t => t.Id == OrderDetail.Store.Id).First();
-                    //        cStore.
-                    //    }
-                    //}
-
+                    
                     UoW._Cartons.AddRage(lisCarton);
                     int iResult = UoW.Complate();
-                    //if iResult = 0 then throw a error 
+                   
                 }
             }
+         
         }
 
         XElement GetPick(StoreOrderDetail cStoreOrderDetail, int iCustomerLineNumber)
@@ -896,8 +889,8 @@ namespace ASNService
                         {
 
                             cStoreOrderDetail.Id = Guid.NewGuid();
-                            cStoreOrderDetail.Store = store;
-                            cStoreOrderDetail.SKUFK = cSkuItem.Id;
+                            
+                           cStoreOrderDetail.SKUFK = cSkuItem.Id;
                             lisStoreOrderDetail.Add(cStoreOrderDetail);
                         }
                     }
