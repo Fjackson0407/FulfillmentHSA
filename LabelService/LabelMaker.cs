@@ -172,7 +172,7 @@ namespace LabelService
                 {
                     StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
                     iQty += _Store.QtyOrdered;
-                    int iCartonWeightWithIems = ((int)(VisaMasterCardBundleWeight * iQty ) / InnersPerPacksSizeInt) + BOXWEIGHT;
+                    int iCartonWeightWithIems = ((int)(VisaMasterCardBundleWeight * iQty ) / InnersPerPacksSizeInt) + 1;
                     if (iCartonWeightWithIems >= (20 - 1))
                     {
                         lisCarton.Add(_Carton);

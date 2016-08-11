@@ -64,6 +64,12 @@ namespace Repository.DataSource
                 .HasOptional(t => t.store)
                 .WithOptionalDependent();
 
+            modelBuilder.Entity<ASNFileOutBound>()
+                .HasMany(s => s.Store)
+                .WithOptional(s => s.ASNFileOutBound)
+                .HasForeignKey(s => s.ASNFileOutBoundFK)
+                .WillCascadeOnDelete();
+
             modelBuilder.Entity<StoreOrderDetail>()
                 .HasMany(t => t.SerialRageNumber)
                 .WithOptional(j => j.StoreOrderDetail)
@@ -76,21 +82,7 @@ namespace Repository.DataSource
                 .WithOptional(j => j.Store)
                 .HasForeignKey(t => t.StorFK)
                 .WillCascadeOnDelete();
-
-            modelBuilder.Entity<UserOrders>()
-                .HasMany(t => t.StoreOrderDetail)
-                .WithOptional(t => t.UserOrders)
-                .HasForeignKey(t => t.UserOrdersFK)
-                .WillCascadeOnDelete();
-
-
-
-            modelBuilder.Entity<UserOrders>()
-                .HasMany(t => t.User)
-                .WithOptional(t => t.Orders)
-                .HasForeignKey(t => t.OrdersFK)
-                .WillCascadeOnDelete();
-
+            
             modelBuilder.Entity<Store>()
                 .HasMany(t => t.BOL)
                 .WithOptional(t => t.Store)

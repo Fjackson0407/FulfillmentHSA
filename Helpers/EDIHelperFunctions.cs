@@ -42,6 +42,8 @@ namespace Helpers
         public const string ReleaseNumber = "D";
         public const string dotNetFourPath = "Microsoft";
         public const string KEY2 = @"HKEY_LOCAL_MACHINE\SOFTWARE\VALID USA";
+        public const string PickPackStructure = "PickPackStructure";
+        public const string SVSOLVIS = "SVS OL VIS";
 
         #endregion
 
@@ -192,7 +194,7 @@ namespace Helpers
         public const int PACKWEIGHT = 1;
         //public const int MAXLBS = 60;
         //public const double MINLBS = 2;
-        public const int BOXWEIGHT = 1;
+        //public const int BOXWEIGHT = 1;
 
         public const string ErrorCode = "Error Code";
         public const string Space = " ";

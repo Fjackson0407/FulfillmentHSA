@@ -51,6 +51,11 @@ namespace Domain
 
         public int ASNStatus { get; set; }
 
+        public Guid? ASNFileOutBoundFK { get; set; }
+
+        public virtual ASNFileOutBound ASNFileOutBound { get; set; }
+
+
         public ICollection<StoreOrderDetail> StoreOrderDetail { get; set; }
          public ICollection<BOLForASN> BOL { get; set; }
         public virtual SkuItem SkuItem { get; set;  }
