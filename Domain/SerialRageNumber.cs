@@ -10,7 +10,7 @@ namespace Domain
     {
         public Guid  ID { get; set; }
         public string  SerialNumber { get; set; }
-
+        public string Serialbundle { get; set; }
         public virtual StoreInfoFromEDI850 StoreInfoFromEDI850 { get; set; }
         public Guid? StoreInfoFromEDI850FK { get; set; }
 

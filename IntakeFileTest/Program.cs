@@ -97,10 +97,10 @@ namespace IntakeFileTest
             //*********************************** Make Lables *********************************************************************************************************
 
             //*********************************** Make ASN *********************************************************************************************************
-            string Store = "1941"; //Make function to get stores from po 
+            string Store = "1114"; //Make function to get stores from po 
             const char dash = '-';
-            string DemoXMLFile = @"D:\Testing\ASN\ASN1941.xml";
-            string DemoPO = "0290-6396771-3808";
+            string DemoXMLFile = @"D:\Testing\ASN\ASN114.xml";
+            string DemoPO = "0290-7947639-0578";
             string[] POSplit = DemoPO.Split(dash);
             string DCNumber = POSplit[2];
 
