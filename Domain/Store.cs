@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Store
+    public class StoreInfoFromEDI850
     {
-
-       
+        public StoreInfoFromEDI850()
+        {
+            Carton = new HashSet<Carton>();
+            SerialRageNumber = new HashSet<SerialRageNumber>();
+        }
+        
         public Guid Id { get; set; }
 
         public DateTime DTS { get; set; }
@@ -48,13 +52,22 @@ namespace Domain
         public int ASNStatus { get; set; }
 
         public Guid? ASNFileOutBoundFK { get; set; }
-
+        public Guid? SKUFK { get; set; }
+        public int QtyPacked { get; set; }
+        public string DPCI { get; set; }
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
-
-         public ICollection<BOLForASN> BOL { get; set; }
+        public int CustomerLineNumber { get; set; }
+        public ICollection<BOLForASN> BOL { get; set; }
         public virtual SkuItem SkuItem { get; set;  }
         public Guid? SkuItemFK { get; set;  }
-        public virtual BundleWeight PkgWeight { get; set;  }
+      
+        public virtual  ICollection<Carton> Carton { get; set;  }
+        public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set;  }
+        public double  PkgWeight { get; set;  }
+        public string  User { get; set; }
+        public string  Label { get; set; }
+        public bool InUse { get; set; }
+
     }
 }
 

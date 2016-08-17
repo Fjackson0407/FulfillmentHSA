@@ -38,7 +38,7 @@ namespace EDIService
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
 
-                List<Store> Invoice = ParseFile();
+                List<StoreInfoFromEDI850> Invoice = ParseFile();
                 UoW.AddEDI850.AddRage(Invoice);
 
                 int Result = UoW.Complate();
@@ -136,11 +136,14 @@ namespace EDIService
         }
 
 
-        private List<Store> ParseFile()
+        private List<StoreInfoFromEDI850> ParseFile()
         {
 
-            List<Store> Invoice = new List<Store>();
+            List<StoreInfoFromEDI850> Invoice = new List<StoreInfoFromEDI850>();
+            BundleWeight AmexWeightGuid;
+            BundleWeight VisaWeightGuid;
 
+      
             using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
             {
                 if (csv == null)
@@ -150,7 +153,7 @@ namespace EDIService
 
                 csv.SupportsMultiline = true;
                 IDataReader reader = csv;
-                Store cEDI850Domain = null;
+                StoreInfoFromEDI850 cEDI850Domain = null;
 
                 string sPO = string.Empty;
 
@@ -161,23 +164,32 @@ namespace EDIService
 
                 while (reader.Read())
                 {
-                    cEDI850Domain = new Store();
+                    cEDI850Domain = new StoreInfoFromEDI850();
                     sPO = reader.GetValue((int)Inbound850Mapping.PONumber).ToString();
                     cEDI850Domain.Id = Guid.NewGuid();
                     cEDI850Domain.PONumber = sPO;
                     cEDI850Domain.PODate = reader.GetDateTime((int)Inbound850Mapping.PODate);
                     cEDI850Domain.DTS = DateTime.Now;
-                    cEDI850Domain.PickStatus = (int) PickStatus.Open;
+                    cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
+                    cEDI850Domain.PickStatus = (int)PickStatus.Open;
                     cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
                     cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString();
-                    SkuItem cSkuItem =  GetSkuInfo(cEDI850Domain.UPCode);
+                    SkuItem cSkuItem = GetSkuInfo(cEDI850Domain.UPCode);
                     if (cSkuItem != null)
                     {
 
                         cEDI850Domain.SkuItemFK = cSkuItem.Id;
-                        
+
                         cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
                         cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
+                        if (cEDI850Domain.CompanyCode == "STO08")
+                        {
+                            cEDI850Domain.PkgWeight = 0.95;
+                        }
+                        else
+                        {
+                            cEDI850Domain.PkgWeight = .70;
+                        }
                         cEDI850Domain.ShippingLocationNumber = reader.GetValue((int)Inbound850Mapping.LocationNumber).ToString();
                         cEDI850Domain.VendorNumber = reader.GetValue((int)Inbound850Mapping.VendorNumber).ToString();
                         cEDI850Domain.ShipDate = reader.GetDateTime((int)Inbound850Mapping.ShipDateOrder).ToString();

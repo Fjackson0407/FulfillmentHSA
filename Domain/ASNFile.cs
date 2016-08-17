@@ -10,12 +10,12 @@ namespace Domain
     {
         public ASNFileOutBound()
         {
-            Store = new HashSet<Store>();
+            Store = new HashSet<StoreInfoFromEDI850>();
         }
         public Guid Id { get; set; }
         public string File { get; set; }
         public DateTime  DTS { get; set; }
 
-        public virtual ICollection<Store> Store { get; set;  }
+        public virtual ICollection<StoreInfoFromEDI850> Store { get; set;  }
     }
 }

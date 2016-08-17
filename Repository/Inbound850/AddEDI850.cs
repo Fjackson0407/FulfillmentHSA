@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Inbound850
 {
-  public  class AddEDI850: RepositoryBase<Store>, IAddEDI850
+  public  class AddEDI850: RepositoryBase<StoreInfoFromEDI850>, IAddEDI850
     {
 
         public AddEDI850(EDIContext context)
@@ -20,8 +20,6 @@ namespace Repository.Inbound850
         {
             return this.Context.SaveChanges();
         }
-
-      
-
+     
     }
 }

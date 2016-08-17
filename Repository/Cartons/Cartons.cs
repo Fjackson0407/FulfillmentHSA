@@ -19,5 +19,18 @@ namespace Repository.Cartons
         {
             return this.Context.SaveChanges();
         }
+
+        public void AddNewCarton(List<Carton> NewCarton)
+        {
+            foreach (Carton CartonItem in NewCarton)
+            {
+                EDIContext.Carton.Attach(CartonItem );
+            }
+        }
+
+        public EDIContext EDIContext
+        {
+            get { return Context as EDIContext; }
+        }
     }
 }

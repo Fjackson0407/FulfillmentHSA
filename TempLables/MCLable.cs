@@ -215,10 +215,11 @@ namespace TempLables
                     cLables.Tcity = cDCInformation.City;
                     cLables.Tstate = cDCInformation.State;
                     cLables.Tzip = cDCInformation.PostalCode;
-                    //if (!lisLables.Exists(t => t.PONumber == cLables.PONumber))
-                    //{
+                    Label Temp = lisLables.Find(t => t.SSCC == cLables.SSCC);
+                    if (Temp == null)
+                    {
                         lisLables.Add(cLables);
-                    //}
+                    }
                 }
 
                 string CSVString = ConvertToString(lisLables);

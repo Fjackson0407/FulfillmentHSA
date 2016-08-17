@@ -18,14 +18,14 @@ namespace Repository.DataSource
         public EDIContext(string ConnectionString)
             :base(ConnectionString )
         {
-            
-            
+         //  this.Configuration.LazyLoadingEnabled = false;
+
         }
         public virtual DbSet<DCInformation> DCInformation { get; set;  }
-        public virtual DbSet<Store> EDI850 { get; set; }
+        public virtual DbSet<StoreInfoFromEDI850> EDI850 { get; set; }
         
          public virtual DbSet<OperatorObj> Operator { get; set; }
-        public virtual DbSet<StoreOrderDetail> StoreOrderDetail { get; set; }
+        
         public virtual DbSet<SkuItem> SkuItem { get; set; }
         public virtual DbSet<Carton> Carton { get; set; }
 
@@ -54,11 +54,27 @@ namespace Repository.DataSource
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 
-            modelBuilder.Entity<Carton>()
-                .HasMany(s => s.StoreOrderDetail)
-                .WithOptional(s => s.Carton)
-                .HasForeignKey(s => s.CartonFK)
+            modelBuilder.Entity<StoreInfoFromEDI850>()
+                .HasMany(s => s.Carton )
+                .WithOptional(s => s.StoreNumber)
+                .HasForeignKey(s => s.StoreNumberFK)
                 .WillCascadeOnDelete();
+
+
+            modelBuilder.Entity<StoreInfoFromEDI850>()
+                .HasMany(t => t.BOL)
+                .WithOptional(t => t.Store)
+                .HasForeignKey(t => t.StoreInfoFK)
+                .WillCascadeOnDelete();
+
+
+
+            modelBuilder.Entity<StoreInfoFromEDI850>()
+                .HasMany(t => t.SerialRageNumber)
+                .WithOptional(t => t.StoreInfoFromEDI850)
+                .HasForeignKey(t => t.StoreInfoFromEDI850FK)
+                .WillCascadeOnDelete();
+
 
             modelBuilder.Entity<BundleWeight>()
                 .HasOptional(t => t.store)
@@ -70,18 +86,7 @@ namespace Repository.DataSource
                 .HasForeignKey(s => s.ASNFileOutBoundFK)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<StoreOrderDetail>()
-                .HasMany(t => t.SerialRageNumber)
-                .WithOptional(j => j.StoreOrderDetail)
-                .HasForeignKey(t => t.StoreOrderDetailFK)
-                .WillCascadeOnDelete();
-            
-            modelBuilder.Entity<Store>()
-                .HasMany(t => t.BOL)
-                .WithOptional(t => t.Store)
-                .HasForeignKey(t => t.StorFK)
-                .WillCascadeOnDelete();
-
+          
 
             modelBuilder.Entity<SkuItem>()
                     .HasMany(t => t.Store)

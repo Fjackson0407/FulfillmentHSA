@@ -91,8 +91,6 @@
     <Compile Include="ShipProduct\ShipDateRequest.cs" />
     <Compile Include="SkuFolder\ISkus.cs" />
     <Compile Include="SkuFolder\Skus.cs" />
-    <Compile Include="StoreDetailFolder\IStoreItemDetail.cs" />
-    <Compile Include="StoreDetailFolder\StoreItemDetail.cs" />
     <Compile Include="StoreInbound\IStore.cs" />
     <Compile Include="StoreInbound\Store.cs" />
     <Compile Include="UOW\IUnitofWork.cs" />

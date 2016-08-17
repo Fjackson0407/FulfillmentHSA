@@ -17,7 +17,8 @@ namespace IntakeFileTest
     {
         static void Main(string[] args)
         {
-            string ConnectionString = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSA;Integrated Security=True";
+            string ConnectionStringWork = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSATest;Integrated Security=True";
+            
             string ConStringHome = @"Data Source=SUPERMANPC\SUPERMANDB;Initial Catalog=EDIHSA;Integrated Security=True";
             string RemoteConnectionString = @"Data Source=CCPC08\VALIDDB;Database=EDIHSA;User Id=VaildUser;Password = ABC123";
             string path = @"D:\Testing\w20.csv";
@@ -30,16 +31,16 @@ namespace IntakeFileTest
 
             //try
             //{
-            //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\Amex.csv";
-            //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AmexLabels.csv";
+            //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\w2.csv";
+            //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AmexLabelsW2.csv";
 
-            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\Visa.csv";
-            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabels.csv";
+            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\8.16.16 Visa ASN.csv";
+            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabelsWeek2.csv";
 
 
 
-            //    MCLable cMCLable = new MCLable(FilePathVisa, ConnectionString, NewFileVisa);
-            //    cMCLable.Visa();
+            //    MCLable cMCLable = new MCLable(FilePathVisa , ConnectionStringWork, NewFileVisa );
+            //    cMCLable.MakeLabelsVisaMaster();
 
 
             //}
@@ -55,9 +56,12 @@ namespace IntakeFileTest
 
             //try
             //{
-
-            //    EDIPOService cEDIPOService = new EDIPOService(DemoAmxFile, ConnectionString);
+            //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
+            //    string Amex = @"D:\Testing\BigOrder\w2.csv";
+            //    EDIPOService cEDIPOService = new EDIPOService(Amex, ConnectionStringWork);
             //    cEDIPOService.ParseEDI850();
+            //    ///cEDIPOService.Path = Amex;
+            //    //cEDIPOService.ParseEDI850();
 
             //}
             //catch (ExceptionsEDI ex)
@@ -93,18 +97,18 @@ namespace IntakeFileTest
             //*********************************** Make Lables *********************************************************************************************************
 
             //*********************************** Make ASN *********************************************************************************************************
-            string Store = "623"; //Make function to get stores from po 
-            string DCNumber = "0587";
-            string ConnectionStringASN = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSA;Integrated Security=True";
-            string DemoXMLFile = @"D:\Testing\ASN\UploadASN1488.xml";
-            string DemoPO = "0290-7029784-0587";        //"0290-9540383-0551";
+            string Store = "1941"; //Make function to get stores from po 
+            const char dash = '-';
+            string DemoXMLFile = @"D:\Testing\ASN\ASN1941.xml";
+            string DemoPO = "0290-6396771-3808";
+            string[] POSplit = DemoPO.Split(dash);
+            string DCNumber = POSplit[2];
 
             try
             {
 
-                  ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringASN , DemoPO, Store, DCNumber  );
+                ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
                 cASNBuild.BuildASN();
-
 
             }
             catch (ExceptionsEDI ex)

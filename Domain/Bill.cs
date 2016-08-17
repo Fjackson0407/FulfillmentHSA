@@ -10,8 +10,8 @@ namespace Domain
     {
         public Guid ID { get; set; }
         public int   BOLNumber { get; set; }
-        public virtual Store Store { get; set; }
-        public Guid? StorFK { get; set; }
+        public virtual StoreInfoFromEDI850 Store { get; set; }
+        public Guid? StoreInfoFK { get; set; }
 
     }
 }

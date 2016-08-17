@@ -17,7 +17,6 @@ using Repository.SerialRageNumberFolder;
 using Repository.Shipping;
 using Repository.ShipProduct;
 using Repository.SkuFolder;
-using Repository.StoreDetailFolder;
 using Repository.UserOrderFolder;
 using Repository.Users;
 using System;
@@ -66,7 +65,7 @@ namespace Repository.UOW
         public IEmptyBox EmptyBox { get; private set; }
 
         public  IMinWeightShipBox MinWeightShipBox { get; private set;  }
-        public IStoreItemDetail StoreItemDetail { get; private set; }
+        
 
         public UnitofWork(EDIContext cEDIContext)
         {
@@ -91,7 +90,7 @@ namespace Repository.UOW
             CardWeight = new CardWeight(_EDIContext);
             EmptyBox = new EmptyBox(_EDIContext);
             MinWeightShipBox = new MinWeightShipBox(_EDIContext);
-            StoreItemDetail = new StoreItemDetail(_EDIContext);
+           
         }
 
         /// <summary>

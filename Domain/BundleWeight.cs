@@ -13,6 +13,6 @@ namespace Domain
         public Double Weigtht { get; set; }
         public DateTime DTS { get; set; }
         public bool InUse { get; set; }
-        public virtual Store store { get; set;  }
+        public virtual StoreInfoFromEDI850 store { get; set;  }
     }
 }

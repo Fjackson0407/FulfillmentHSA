@@ -11,5 +11,6 @@ namespace Repository.Cartons
 public     interface ICartons856 : IRepositoryBase<Carton>
     {
         int SaveChanges();
+        void AddNewCarton(List<Carton> NewCarton);
     }
 }

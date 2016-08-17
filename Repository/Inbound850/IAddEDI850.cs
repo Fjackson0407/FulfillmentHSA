@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Inbound850
 {
-    public interface IAddEDI850: IRepositoryBase<Store>
+    public interface IAddEDI850: IRepositoryBase<StoreInfoFromEDI850>
     {
         
         int SaveChange();

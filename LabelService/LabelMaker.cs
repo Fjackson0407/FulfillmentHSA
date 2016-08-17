@@ -38,7 +38,7 @@ namespace LabelService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<Store> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
+                List<StoreInfoFromEDI850> _lisStores = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
                 List<Label> lisLabels = LoadPO(_lisStores);  //Works 
                 List<Label> lisDC = LoadDC(lisLabels); //DC Number
                 List<Label> lisLabelsWithST = LoadShipFrom(lisDC); //From 
@@ -53,7 +53,7 @@ namespace LabelService
             }
         }
 
-        private void UpdateOrders(List<Store> lisStores)
+        private void UpdateOrders(List<StoreInfoFromEDI850> lisStores)
         {
             throw new NotImplementedException();
         }
@@ -141,74 +141,74 @@ namespace LabelService
                 List<Label> Masterlabels = new List<Label>();
                 foreach (Label item in lisDCAddress )
                 {
-                   List<Label> NewList =       MakeSSCCforAStore(item);
-                    Masterlabels.AddRange(NewList);
+                   //List<Label> NewList =       MakeSSCCforAStore(item);
+                    //Masterlabels.AddRange(NewList);
                 }
                 return Masterlabels;
             }
                     
         }
 
-        private List<Label>  MakeSSCCforAStore(Label ParentLabel)
-        {
-            List<Carton> lisCarton = new List<Domain.Carton>();
-            List<Label> Lables = new List<Label>();
+        //private List<Label>  MakeSSCCforAStore(Label ParentLabel)
+        //{
+        //    List<Carton> lisCarton = new List<Domain.Carton>();
+        //    List<Label> Lables = new List<Label>();
 
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-            {
-                int iQty = 0;
+        //    using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+        //    {
+        //        int iQty = 0;
                 
-                List<Store> lisOrderStore = UoW.AddEDI850.Find(t => t.OrderStoreNumber == ParentLabel.OrderStoreNumber)
-                                                            .Where(x => x.PONumber == ParentLabel.PONumber).ToList();
+        //        List<Store> lisOrderStore = UoW.AddEDI850.Find(t => t.OrderStoreNumber == ParentLabel.OrderStoreNumber)
+        //                                                    .Where(x => x.PONumber == ParentLabel.PONumber).ToList();
 
-                Carton _Carton = new Domain.Carton();
-                _Carton = GetSSCCForNewOrder();
-                ParentLabel.SSCC = _Carton.UCC128;
-                Label Child = ParentLabel; 
-                Lables.Add(ParentLabel);
-                int CustomerLineNumber = 1;
-                //hydrate Qty for alll stores 
-                foreach (Store  _Store in lisOrderStore )
-                {
-                    StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
-                    iQty += _Store.QtyOrdered;
-                    int iCartonWeightWithIems = ((int)(VisaMasterCardBundleWeight * iQty ) / InnersPerPacksSizeInt) + 1;
-                    if (iCartonWeightWithIems >= (20 - 1))
-                    {
-                        lisCarton.Add(_Carton);
-                        _Carton = GetSSCCForNewOrder();
-                        iQty  = 0; //Reset totals for a new cartons
-                        iCartonWeightWithIems = 0;
-                        Child.SSCC = _Carton.UCC128;
-                        Lables.Add(Child);
+        //        Carton _Carton = new Domain.Carton();
+        //        _Carton = GetSSCCForNewOrder();
+        //        ParentLabel.SSCC = _Carton.UCC128;
+        //        Label Child = ParentLabel; 
+        //        Lables.Add(ParentLabel);
+        //        int CustomerLineNumber = 1;
+        //        //hydrate Qty for alll stores 
+        //        foreach (Store  _Store in lisOrderStore )
+        //        {
+        //            StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
+        //            iQty += _Store.QtyOrdered;
+        //            int iCartonWeightWithIems = ((int)(VisaMasterCardBundleWeight * iQty ) / InnersPerPacksSizeInt) + 1;
+        //            if (iCartonWeightWithIems >= (20 - 1))
+        //            {
+        //                lisCarton.Add(_Carton);
+        //                _Carton = GetSSCCForNewOrder();
+        //                iQty  = 0; //Reset totals for a new cartons
+        //                iCartonWeightWithIems = 0;
+        //                Child.SSCC = _Carton.UCC128;
+        //                Lables.Add(Child);
 
-                    }
+        //            }
                         
-                        cStoreOrderDetail.Carton = _Carton;
-                        cStoreOrderDetail.CartonFK = _Carton.Id;
-                        cStoreOrderDetail.Id = Guid.NewGuid();
-                        cStoreOrderDetail.QtyOrdered =  _Store.QtyOrdered;
-                        SkuItem ItemDescription = GetItemDescription(_Store.UPCode);
-                        cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
-                        CustomerLineNumber++;
-                        cStoreOrderDetail.ItemDescription = ItemDescription.Product;
-                        cStoreOrderDetail.DPCI = ItemDescription.DPCI;
-                        cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
-                        cStoreOrderDetail.QtyPacked = 0;
-                        cStoreOrderDetail.SKUFK = ItemDescription.Id;
-                        _Carton.StoreOrderDetail.Add(cStoreOrderDetail);
-                        if (!lisCarton.Exists(t => t.Id == _Carton.Id))
-                        {
-                            lisCarton.Add(_Carton);
-                        }
+        //                cStoreOrderDetail.Carton = _Carton;
+        //                cStoreOrderDetail.CartonFK = _Carton.Id;
+        //                cStoreOrderDetail.Id = Guid.NewGuid();
+        //                cStoreOrderDetail.QtyOrdered =  _Store.QtyOrdered;
+        //                SkuItem ItemDescription = GetItemDescription(_Store.UPCode);
+        //                cStoreOrderDetail.CustomerLineNumber = CustomerLineNumber;
+        //                CustomerLineNumber++;
+        //                cStoreOrderDetail.ItemDescription = ItemDescription.Product;
+        //                cStoreOrderDetail.DPCI = ItemDescription.DPCI;
+        //                cStoreOrderDetail.UPC = ItemDescription.ProductUPC;
+        //                cStoreOrderDetail.QtyPacked = 0;
+        //                cStoreOrderDetail.SKUFK = ItemDescription.Id;
+        //                _Carton.StoreOrderDetail.Add(cStoreOrderDetail);
+        //                if (!lisCarton.Exists(t => t.Id == _Carton.Id))
+        //                {
+        //                    lisCarton.Add(_Carton);
+        //                }
                     
-                    _Carton.Weight = iCartonWeightWithIems;
-                }
+        //            _Carton.Weight = iCartonWeightWithIems;
+        //        }
 
-            }
-            SaveCarton(lisCarton);
-            return Lables;   
-        }
+        //    }
+        //    SaveCarton(lisCarton);
+        //    return Lables;   
+        //}
 
         private Carton GetSSCCForNewOrder()
         {
@@ -343,11 +343,11 @@ namespace LabelService
             return lisLabels; 
         }
 
-        private List<Label> LoadPO(List<Store> lisStores)
+        private List<Label> LoadPO(List<StoreInfoFromEDI850> lisStores)
         {
             List<Label> lisLables = new List<Label>();
             int count = 1; 
-            foreach (Store  item in lisStores )
+            foreach (StoreInfoFromEDI850  item in lisStores )
             {
                 Label cLabel = new Label();
                 cLabel.Count = count;

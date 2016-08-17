@@ -29,6 +29,7 @@ namespace Repository.BaseClass
 
         public IEnumerable<TEntity> Find(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
         {
+            
             return Context.Set<TEntity>().Where(predicate);
 
         }

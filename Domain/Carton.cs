@@ -8,11 +8,6 @@ namespace Domain
 {
 public  class Carton
     {
-
-        public Carton()
-        {
-            StoreOrderDetail = new HashSet<StoreOrderDetail>();
-        }
         public Guid  Id { get; set; }
 
         public int Qty { get; set; }
@@ -21,7 +16,9 @@ public  class Carton
 
         public int Weight { get; set; }
 
-        public virtual ICollection<StoreOrderDetail> StoreOrderDetail { get; set;  }
+        public virtual  StoreInfoFromEDI850 StoreNumber { get; set; }
+        public Guid? StoreNumberFK { get; set; }
+
 
     }
 }
