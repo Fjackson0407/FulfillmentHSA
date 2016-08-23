@@ -55,8 +55,8 @@ namespace Repository.DataSource
         {
             //This is for packs in a carton 
             modelBuilder.Entity<StoreInfoFromEDI850>()
-                .HasMany(s => s.Carton )
-                .WithOptional(s => s.StoreNumber)
+                .HasMany(s => s.Carton)
+                .WithOptional(s => s.StoreNumber)  
                 .HasForeignKey(s => s.StoreNumberFK)
                 .WillCascadeOnDelete();
 

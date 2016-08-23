@@ -17,8 +17,8 @@ namespace IntakeFileTest
     {
         static void Main(string[] args)
         {
-            string ConnectionStringWork = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSATest;Integrated Security=True";
-            
+            string ConnectionStringWork = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSATest;Integrated Security=True;MultipleActiveResultSets=True";
+            string ConnectionStringWork2 = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIAdminTest;Integrated Security=TrueMultipleActiveResultSets=True";
             string ConStringHome = @"Data Source=SUPERMANPC\SUPERMANDB;Initial Catalog=EDIHSA;Integrated Security=True";
             string RemoteConnectionString = @"Data Source=CCPC08\VALIDDB;Database=EDIHSA;User Id=VaildUser;Password = ABC123";
             string path = @"D:\Testing\w20.csv";
@@ -31,16 +31,16 @@ namespace IntakeFileTest
 
             //try
             //{
-            //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\w2.csv";
-            //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AmexLabelsW2.csv";
+            //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\AmexFrom.csv";
+            //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AMEXNew.csv";
 
-            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\8.16.16 Visa ASN.csv";
-            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabelsWeek2.csv";
+            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\8.22.16 ASN VisaMC.csv";
+            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabelsWeek3.csv";
 
 
 
-            //    MCLable cMCLable = new MCLable(FilePathVisa , ConnectionStringWork, NewFileVisa );
-            //    cMCLable.MakeLabelsVisaMaster();
+            //    MCLable cMCLable = new MCLable(FilePathAmex   , ConnectionStringWork, NewFileAmex );
+            //    cMCLable.Amex();
 
 
             //}
@@ -97,18 +97,19 @@ namespace IntakeFileTest
             //*********************************** Make Lables *********************************************************************************************************
 
             //*********************************** Make ASN *********************************************************************************************************
-            string Store = "1114"; //Make function to get stores from po 
-            const char dash = '-';
+            //string Store = "1114"; //Make function to get stores from po 
+            //const char dash = '-';
             string DemoXMLFile = @"D:\Testing\ASN\ASN114.xml";
-            string DemoPO = "0290-7947639-0578";
-            string[] POSplit = DemoPO.Split(dash);
-            string DCNumber = POSplit[2];
+            //string DemoPO = "0290-7947639-0578";
+            //string[] POSplit = DemoPO.Split(dash);
+            //string DCNumber = POSplit[2];
 
             try
             {
 
-                ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
-                cASNBuild.BuildASN();
+                ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork);
+                //ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
+                // cASNBuild.BuildASN();
 
             }
             catch (ExceptionsEDI ex)

@@ -34,7 +34,8 @@ namespace ASNService
         public int m_MinWeightForCarton { get; private set; }
 
         public int m_EmptyBoxWeight { get; set; }
-        string m_TempPath = @"D:\Testing\ASN\Temp.xml";
+        string m_TempPath = @"D:\ASN Folder\ASN.xml";
+        string m_sRootPath = @"D:\ASN Results\";
         public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store, string _DCNumber)
         {
             if (!NoASN(_ConnectionString, _PO, _DCNumber, _Store))
@@ -53,6 +54,38 @@ namespace ASNService
             SetEmptyBoxWeight();
             SetMinCartonWeight();
         }
+
+
+        public ASNBuild(string _path, string _ConnectionString)
+        {
+            
+            ConnectionString = _ConnectionString;
+
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+
+                List<StoreInfoFromEDI850> liStore = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).ToList();
+
+                foreach (StoreInfoFromEDI850 store in liStore )
+                {
+                    PO = store.PONumber;
+                    string[] PoString = PO.Split('-');
+                    CurrentDCNumber = PoString[2];
+                    CurrentStore = store.OrderStoreNumber;
+
+                    SetPackSize();
+                    SetMaxCartonWeight();
+                    SetCartonType();
+                    SetEmptyBoxWeight();
+                    SetMinCartonWeight();
+                    path  = string.Format("{0}ASN For PO {1} {2}.xml", m_sRootPath , PO, GetNewShipmentID());
+                    BuildASN();
+                }
+            }
+                
+            
+        }
+
 
         private void SetMinCartonWeight()
         {
@@ -703,8 +736,9 @@ namespace ASNService
                 string DCNumber = UoW.AddEDI850.Find(x => x.PONumber == PO).Where(x => x.OrderStoreNumber == CurrentStore)
                                                         .Where(x => x.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault().DCNumber;
 
-
-                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == CurrentDCNumber).FirstOrDefault();
+                string sTempStore = CurrentDCNumber.Replace(@"'", "");
+                 
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == sTempStore ).FirstOrDefault();
 
                 if (cDCInformation != null)
                 {

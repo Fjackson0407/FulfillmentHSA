@@ -12,7 +12,7 @@ namespace RegistryFunctions
     public class GetKeys
     {
 
-
+        
         public bool HSA
         {
             get

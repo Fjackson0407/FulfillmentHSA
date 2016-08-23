@@ -137,7 +137,7 @@ namespace TempLables
         }
 
 
-        public void Visa()
+        public void Amex()
         {
 
             using (CsvReader csv = new CsvReader(new StreamReader(FilePath), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
