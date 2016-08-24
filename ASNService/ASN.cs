@@ -32,7 +32,7 @@ namespace ASNService
 
         public int m_MaxWeightForCarton { get; private set; }
         public int m_MinWeightForCarton { get; private set; }
-
+        public  string m_sCompanyCode { get; private set;  }
         public int m_EmptyBoxWeight { get; set; }
         string m_TempPath = @"D:\ASN Folder\ASN.xml";
         string m_sRootPath = @"D:\ASN Results\";
@@ -49,6 +49,7 @@ namespace ASNService
             CurrentStore = _Store;
             CurrentDCNumber = _DCNumber;
             SetPackSize();
+            SetCompanyCode();
             SetMaxCartonWeight();
             SetCartonType();
             SetEmptyBoxWeight();
@@ -76,9 +77,10 @@ namespace ASNService
                     SetPackSize();
                     SetMaxCartonWeight();
                     SetCartonType();
+                    SetCompanyCode();
                     SetEmptyBoxWeight();
                     SetMinCartonWeight();
-                    path  = string.Format("{0}ASN For PO {1} {2}.xml", m_sRootPath , PO, GetNewShipmentID());
+                    path  = string.Format("{0}ASN Store {1} For PO {2} {3}.xml", m_sRootPath , CurrentStore, PO, GetNewShipmentID());
                     BuildASN();
                 }
             }
@@ -163,7 +165,7 @@ namespace ASNService
         XElement BuildHeader()
         {
             return new XElement(HEADER,
-                new XElement(CompanyCode, GetCompanyCode()),
+                new XElement(CompanyCode, m_sCompanyCode ),
                 new XElement(CUSTOMERNUMBER, GetCustomerNumber()),
                 new XElement(Direction, EDIHelperFunctions.Outbound),
                 new XElement(DocumentType, EDIHelperFunctions.EDI856),
@@ -320,7 +322,8 @@ namespace ASNService
                 cASNFileOutBound.File = file.ToString();
                 cASNFileOutBound.DTS = DateTime.Now;
 
-              //  lisStores.ForEach(s => s.ASNStatus = (int)ASNStatus.HasASN);
+               lisStores.ForEach(s => s.ASNStatus = (int)ASNStatus.HasASN);
+                lisStores.ForEach(s => s.PickStatus = (int)EOrderStatus.Open);
                 UoW.AddEDI850.SaveChange();
                 foreach (StoreInfoFromEDI850 item in lisStores)
                 {
@@ -417,7 +420,7 @@ namespace ASNService
                         cXmlWriter.WriteStartElement(ItemIDs);
                         cXmlWriter.WriteElementString(IdQualifier, UP);
                         cXmlWriter.WriteStartElement(ID);
-                        cXmlWriter.WriteCData(Store.PONumber);
+                        cXmlWriter.WriteCData(Store.UPCode);
                         cXmlWriter.WriteEndElement(); //close tag for upc
                         cXmlWriter.WriteEndElement(); //end of item for upc
 
@@ -939,40 +942,7 @@ namespace ASNService
             return cRandom.Next(100000, 100000000);
         }
 
-        //private List<StoreOrderDetail> GetSKUInfo(List<Store> lisStores)
-        //{
-        //    SkuItem cSkuItem = null;
-        //    StoreOrderDetail cStoreOrderDetail = new StoreOrderDetail();
-        //    List<StoreOrderDetail> lisStoreOrderDetail = new List<StoreOrderDetail>();
-
-        //    using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-        //    {
-        //        if (lisStores != null && lisStores.Count > 0)
-        //        {
-        //            foreach (Store store in lisStores)
-        //            {
-        //                string StoreUpc = store.UPCode.Replace(@"'", "");
-        //                cSkuItem = UoW.Sku.Find(t => t.ProductUPC == StoreUpc).FirstOrDefault();
-        //                if (cSkuItem != null)
-        //                {
-
-        //                    cStoreOrderDetail.Id = Guid.NewGuid();
-
-        //                   cStoreOrderDetail.SKUFK = cSkuItem.Id;
-        //                    lisStoreOrderDetail.Add(cStoreOrderDetail);
-        //                }
-        //            }
-        //            return lisStoreOrderDetail;
-        //        }
-        //        else
-        //        {
-        //            throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro23));
-        //        }
-
-        //    }
-        //}
-
-
+        
 
         private string GetCustomerNumber()
         {
@@ -994,7 +964,7 @@ namespace ASNService
         }
 
 
-        public string GetCompanyCode()
+        public void  SetCompanyCode()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
@@ -1004,10 +974,13 @@ namespace ASNService
                                              .FirstOrDefault();
                 if (cEDI850 != null)
                 {
-                    return cEDI850.CompanyCode;
+                    m_sCompanyCode =  cEDI850.CompanyCode;
                 }
 
-                throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro13));
+                else
+                {
+                    throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro13));
+                }
             }
 
         }

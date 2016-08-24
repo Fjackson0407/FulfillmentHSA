@@ -291,6 +291,13 @@ namespace Helpers
             ErrorASN = 3
         }
 
+
+        public enum EOrderStatus
+        {
+            Open,
+            Closed,
+            Cancelled
+        }
         public enum PickStatus : int
         {
             Closed = 0,
