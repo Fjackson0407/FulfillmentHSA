@@ -58,6 +58,14 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RegistryFunctions\RegistryFunctions.csproj">
+      <Project>{2D1C126A-5C01-438C-B0A2-72D66798F4A4}</Project>
+      <Name>RegistryFunctions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WatchDogHSA\WatchDogHSA.csproj">
+      <Project>{D7323472-A9C0-419E-AD1F-A4BF80747B6B}</Project>
+      <Name>WatchDogHSA</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

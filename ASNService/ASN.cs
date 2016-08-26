@@ -182,6 +182,7 @@ namespace ASNService
 
         XElement BuildShipmentLevel()
         {
+            
             return new XElement(EDIHelperFunctions.ShipmentLevel,
        new XElement(TransactionSetPurposeCode, "00"),
                     new XElement(EDIHelperFunctions.DateLoop,

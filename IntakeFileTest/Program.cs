@@ -54,20 +54,20 @@ namespace IntakeFileTest
             //******************************************************************************************************************
             //*********************************** Add Data *********************************************************************************************************
 
-            //try
-            //{
-            //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
-            //    string Amex = @"D:\Testing\BigOrder\w2.csv";
-            //    EDIPOService cEDIPOService = new EDIPOService(Amex, ConnectionStringWork);
-            //    cEDIPOService.ParseEDI850();
-            //    ///cEDIPOService.Path = Amex;
-            //    //cEDIPOService.ParseEDI850();
+            try
+            {
+                string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
+                string Amex = @"D:\Testing\BigOrder\w2.csv";
+                EDIPOService cEDIPOService = new EDIPOService(Amex, ConnectionStringWork);
+                cEDIPOService.ParseEDI850();
+                ///cEDIPOService.Path = Amex;
+                //cEDIPOService.ParseEDI850();
 
-            //}
-            //catch (ExceptionsEDI ex)
-            //{
-            //    string tgest = ex.Message.ToString();
-            //}
+            }
+            catch (ExceptionsEDI ex)
+            {
+                string tgest = ex.Message.ToString();
+            }
 
 
 

@@ -252,6 +252,7 @@ namespace Helpers
         #region Error codes
         public enum ErrorCodes
         {
+            HSAError2 = 2, //Wrong registry hive 
             HSAError3 = 3, //Path to the folder could not be found 
             HSAError5 = 5, //csv error
             HSAErro7 = 7, //csv error with data  reader 
@@ -280,6 +281,7 @@ namespace Helpers
             HSAErro55 = 55, //Already haas ASN
             HSAErro57 = 57, //From lerngth out of rage 
             HSAErro59 = 59, //No orders to process 
+            
 
         }
         #endregion
@@ -421,7 +423,6 @@ namespace Helpers
 
 
         }
-
 
         public class SSCCPostions
         {

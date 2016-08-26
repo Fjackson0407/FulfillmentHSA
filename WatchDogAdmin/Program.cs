@@ -1,12 +1,14 @@
-﻿using RegistryFunctions;
+﻿using Domain;
+using RegistryFunctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using WatchDogHSA;
 
-namespace ASNBuilder
+namespace WatchDogAdmin
 {
     class Program
     {
@@ -19,14 +21,13 @@ namespace ASNBuilder
             SendEmailForIncommingFile();
             while (Console.Read() != 'q') ;
         }
-        private static void SendEmailForIncommingFile()
+       
+    private static void SendEmailForIncommingFile()
         {
 
             GetKeys cGetKeys = new GetKeys();
-            EDIWatch cEDIWatch = new EDIWatch(cGetKeys.GetInboundLocation(), string.Empty );
+            EDIWatch cEDIWatch = new EDIWatch(cGetKeys.GetInboundLocation(), cGetKeys.ConnectionString );
 
         }
-
-
     }
 }
