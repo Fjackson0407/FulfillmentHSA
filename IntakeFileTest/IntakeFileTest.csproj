@@ -84,17 +84,9 @@
       <Project>{40f68eec-14ba-468d-912f-66753a8506c2}</Project>
       <Name>LabelService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReportService\ReportService.csproj">
-      <Project>{B191358B-1389-4E0A-B970-9777D7D48ECE}</Project>
-      <Name>ReportService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TempLables\TempLables.csproj">
       <Project>{ff3fb3c1-168a-4bb0-b5d9-8a78acc35c89}</Project>
       <Name>TempLables</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ToolService\ToolService.csproj">
-      <Project>{64A61BDB-EABF-472A-99DB-11DE522D9557}</Project>
-      <Name>ToolService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

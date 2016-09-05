@@ -5,14 +5,13 @@ using EDIException;
 using EDIService;
 using FulfillmentService;
 using LabelService;
-using ReportService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TempLables;
-using ToolService;
+
 
 namespace IntakeFileTest
 {
@@ -63,7 +62,7 @@ namespace IntakeFileTest
             //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
             //    string Amex = @"D:\Testing\BigOrder\w2.csv";
             //    string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
-            //    string path2 = @"D:\Testing\BigOrder\pick\w2.csv";
+            //    string path2 = @"D:\Testing\BigOrder\Auto\AMEXDoc_20160829162632173.csv";
             //    EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
             //    cEDIPOService.ParseEDI850();
             //    ///cEDIPOService.Path = Amex;

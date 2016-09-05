@@ -19,7 +19,7 @@ namespace ASNService
 {
     public class ASNBuild
     {
-        public string path { get; set; }
+        public string m_sPathForASNFile { get; set; }
         public string ConnectionString { get; set; }
         public string PO { get; set; }
         public string CurrentStore { get; set; }
@@ -46,7 +46,7 @@ namespace ASNService
             }
 
             PO = _PO;
-            path = _path;
+            m_sPathForASNFile = _path;
             ConnectionString = _ConnectionString;
             CurrentStore = _Store;
             CurrentDCNumber = _DCNumber;
@@ -92,7 +92,7 @@ namespace ASNService
             SetCompanyCode();
             SetEmptyBoxWeight();
             SetMinCartonWeight();
-            path = string.Format("{0}ASN Store {1} for PO {2} {3}.xml", m_sASNFolder, CurrentStore, PO, GetNewShipmentID());
+            m_sPathForASNFile = string.Format("{0}ASN Store {1} for PO {2} {3}.xml", m_sASNFolder, CurrentStore, PO, GetNewShipmentID());
         }
 
         private void SetMinCartonWeight()
@@ -192,7 +192,7 @@ namespace ASNService
                     new XElement(EDIHelperFunctions.DateQualifier, ShipDateDateQualifierNumber,
                     new XAttribute(EDIHelperFunctions.Desc,
                     EDIHelperFunctions.ShipDateString)),
-                    new XElement(EDIHelperFunctions.Date,  DateTime.Now )),
+                    new XElement(EDIHelperFunctions.Date,  DateTime.Now.ToString(toFormat)  )),
                     new XElement(EDIHelperFunctions.ManifestCreateTime,
                      GetMilitaryTime()),
                     new XElement(EDIHelperFunctions.ShipmentTotals,
@@ -316,19 +316,29 @@ namespace ASNService
 
             SaveDataToFile(File);
             SaveASN(File);
-            
        
         }
 
-       /// <summary>
-       /// Save 
-       /// </summary>
-       /// <param name="file"></param>
+
         private void SaveDataToFile(XElement file)
         {
-            throw new NotImplementedException();
-        }
 
+            var Setting = new XmlWriterSettings();
+            Setting.Indent = true;
+            Setting.NewLineOnAttributes = true;
+            Setting.Encoding = Encoding.UTF8;
+            Setting.WriteEndDocumentOnClose = true;
+
+            StreamWriter cStreamWriter = File.CreateText(m_sPathForASNFile);
+
+            using (XmlWriter cXmlWriter = XmlWriter.Create(cStreamWriter, Setting))
+            {
+              
+                file.WriteTo(cXmlWriter);
+              
+            };
+
+        }
         private void SaveASN(XElement file)
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
