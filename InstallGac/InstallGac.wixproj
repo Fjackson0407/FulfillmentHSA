@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.10</ProductVersion>
-    <ProjectGuid>faaedf9e-746d-4894-9532-011011f915ec</ProjectGuid>
+    <ProjectGuid>42bc4f5c-aee0-4458-aacf-d6346905b642</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>AdminSide</OutputName>
+    <OutputName>InstallGac</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -22,7 +22,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
-    <Compile Include="RegKeys.wxs" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

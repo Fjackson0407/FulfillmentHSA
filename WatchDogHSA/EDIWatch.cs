@@ -79,7 +79,7 @@ namespace WatchDogHSA
             GetKeys cGetKeys = new GetKeys();
             if (cGetKeys.HSA)
             {
-                EDIPOService cEDIPOService = new EDIPOService(argsFileAdd.FullPath, m_ConnectionString );
+                EDIPOService cEDIPOService = new EDIPOService(argsFileAdd.FullPath, m_ConnectionString);
                 cEDIPOService.ParseEDI850();
             }
             else

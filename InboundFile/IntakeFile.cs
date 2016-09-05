@@ -140,11 +140,7 @@ namespace EDIService
         {
 
             List<StoreInfoFromEDI850> Invoice = new List<StoreInfoFromEDI850>();
-            BundleWeight AmexWeightGuid;
-            BundleWeight VisaWeightGuid;
-
-      
-            using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
+             using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
             {
                 if (csv == null)
                 {
@@ -167,13 +163,13 @@ namespace EDIService
                     cEDI850Domain = new StoreInfoFromEDI850();
                     sPO = reader.GetValue((int)Inbound850Mapping.PONumber).ToString();
                     cEDI850Domain.Id = Guid.NewGuid();
-                    cEDI850Domain.PONumber = sPO;
+                    cEDI850Domain.PONumber = sPO.Replace(@"'", "");
                     cEDI850Domain.PODate = reader.GetDateTime((int)Inbound850Mapping.PODate);
                     cEDI850Domain.DTS = DateTime.Now;
                     cEDI850Domain.ASNStatus = (int) ASNStatus.ReadyForASN;
-                    cEDI850Domain.PickStatus = (int)PickStatus.Open;
+                    cEDI850Domain.PickStatus = 0;
                     cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
-                    cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString();
+                    cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString().Replace(@"'", "");
                     SkuItem cSkuItem = GetSkuInfo(cEDI850Domain.UPCode);
                     if (cSkuItem != null)
                     {
@@ -194,10 +190,10 @@ namespace EDIService
                         cEDI850Domain.VendorNumber = reader.GetValue((int)Inbound850Mapping.VendorNumber).ToString();
                         cEDI850Domain.ShipDate = reader.GetDateTime((int)Inbound850Mapping.ShipDateOrder).ToString();
                         cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
-                        cEDI850Domain.DCNumber = reader.GetValue((int)Inbound850Mapping.ShipToAddress).ToString();
+                        cEDI850Domain.DCNumber = reader.GetValue((int)Inbound850Mapping.ShipToAddress).ToString().Replace(@"'", "");
                         cEDI850Domain.CancelDate = reader.GetDateTime((int)Inbound850Mapping.CancelDate).ToString();
                         cEDI850Domain.OrderStoreNumber = reader.GetValue((int)Inbound850Mapping.OrderStoreNumber).ToString();
-                        cEDI850Domain.BillToAddress = reader.GetValue((int)Inbound850Mapping.BillToAddress).ToString();
+                        cEDI850Domain.BillToAddress = reader.GetValue((int)Inbound850Mapping.BillToAddress).ToString().Replace(@"'", "");
                         cEDI850Domain.DocumentId = reader.GetValue((int)Inbound850Mapping.DocumentId).ToString();
                         cEDI850Domain.OriginalLine = reader.GetValue((int)Inbound850Mapping.OriginalLine).ToString();
                         Invoice.Add(cEDI850Domain);
@@ -212,7 +208,8 @@ namespace EDIService
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                return  UoW.Sku.Find(t => t.ProductUPC == ProductUPC.Replace(@"'", "")).FirstOrDefault();
+               SkuItem cSkuItem =   UoW.Sku.Find(t => t.ProductUPC == ProductUPC  ).FirstOrDefault();
+                return cSkuItem;
             }
         }
     }

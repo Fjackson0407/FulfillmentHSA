@@ -149,6 +149,72 @@ namespace RegistryFunctions
 
 
 
+        public string GetASNLocation()
+        {
+            string sResult = string.Empty;
+            RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
+            RegistryKey localMachineRegistry64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+            RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
+            if (reg64 != null)
+            {
+                if (this.HSA)
+                {
+
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.ASNFOLDERLOCATION, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
+                    {
+                        return item;
+                    }
+                }
+                else
+                {
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
+                    {
+                        return item;
+                    }
+                }
+
+            }
+            return string.Empty;
+        }
+
+        public string GetTempLocation()
+        {
+            string sResult = string.Empty;
+            RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
+            RegistryKey localMachineRegistry64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+            RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
+            if (reg64 != null)
+            {
+                if (this.HSA)
+                {
+
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.TEMPFOLDERLOCATION, EDIHelperFunctions.TEMP_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
+                    {
+                        return item;
+                    }
+                }
+                else
+                {
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.TEMP_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
+                    {
+                        return item;
+                    }
+                }
+
+            }
+            return string.Empty;
+        }
+
+
+
 
         public void SendEmail(string Msg, string Subject)
         {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <ComponentGroup Id ="Cmog.Add.Keys.On.HSA"></ComponentGroup>
+    <Component Id ="Cmp.keys" Guid ="ac9787a7-98c7-45fb-bf7b-57b537e967da" KeyPath ="yes">
+      <RegistryKey Key ="HKEY_LOCAL_MACHINE\SOFTWARE\EDI" Root ="HKLM" >
+        <RegistryValue  Name ="TempFolder" Value ="c:\ASNFolder" Type ="multiString" />
+        <RegistryValue Name ="ASNFolder" Value ="c:\ASNOutbound" Type ="multiString" />
+        <RegistryValue  Name ="HKEY_LOCAL_MACHINE\SOFTWARE\EDI" Type ="multiString" />
+      </RegistryKey>
+    </Component>
+	</Fragment>
+</Wix>

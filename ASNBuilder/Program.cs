@@ -1,4 +1,5 @@
-﻿using RegistryFunctions;
+﻿using ASNService;
+using RegistryFunctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +14,14 @@ namespace ASNBuilder
         static void Main(string[] args)
         {
 
-
-            Console.WriteLine("This is EDI watch dog I will watch for in comming EDI 850 files from Ezcom");
-            Console.WriteLine("Press q then hit the enter key  at anytime to stop watch dog");
-            SendEmailForIncommingFile();
+                 BuildASNs();
             while (Console.Read() != 'q') ;
         }
-        private static void SendEmailForIncommingFile()
+        private static void BuildASNs()
         {
 
             GetKeys cGetKeys = new GetKeys();
-            EDIWatch cEDIWatch = new EDIWatch(cGetKeys.GetInboundLocation(), string.Empty );
+            ASNBuild cASNBuild = new ASNBuild(cGetKeys.GetASNLocation(),  cGetKeys.GetTempLocation(), cGetKeys.ConnectionString);
 
         }
 

@@ -192,7 +192,7 @@ namespace ASNService
                     new XElement(EDIHelperFunctions.DateQualifier, ShipDateDateQualifierNumber,
                     new XAttribute(EDIHelperFunctions.Desc,
                     EDIHelperFunctions.ShipDateString)),
-                    new XElement(EDIHelperFunctions.Date,  DateTime.Now )),
+                    new XElement(EDIHelperFunctions.Date, ShipDate)),
                     new XElement(EDIHelperFunctions.ManifestCreateTime,
                      GetMilitaryTime()),
                     new XElement(EDIHelperFunctions.ShipmentTotals,
@@ -222,24 +222,24 @@ namespace ASNService
 
         }
 
-        private XElement BuildBOL()
-        {
-            int BOLNumber = GetNewBOLID();
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-            {
-                StoreInfoFromEDI850 cStore = UoW.AddEDI850.Find(t => t.PONumber == PO)
-                                                           .Where(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
+        //private XElement BuildBOL()
+        //{
+        //    int BOLNumber = GetNewBOLID();
+        //    using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+        //    {
+        //        StoreInfoFromEDI850 cStore = UoW.AddEDI850.Find(t => t.PONumber == PO)
+        //                                                   .Where(t => t.OrderStoreNumber == CurrentStore).FirstOrDefault();
                     
-                BOLForASN cBill = new BOLForASN();
-                cBill.ID = Guid.NewGuid();
-                cBill.StoreInfoFK = cStore.Id;
-                cBill.BOLNumber = BOLNumber;
-                UoW.Bol.Add(cBill);
-                int Result = UoW.Complate();
+        //        BOLForASN cBill = new BOLForASN();
+        //        cBill.ID = Guid.NewGuid();
+        //        cBill.StoreInfoFK = cStore.Id;
+        //        cBill.BOLNumber = BOLNumber;
+        //        UoW.Bol.Add(cBill);
+        //        int Result = UoW.Complate();
 
-            }
-            return new XElement(BillOfLadingNumber, new XCData(BOLNumber.ToString()));
-        }
+        //    }
+        //    return new XElement(BillOfLadingNumber, new XCData(BOLNumber.ToString()));
+        //}
 
         private XElement BuildContactType()
         {
@@ -311,22 +311,11 @@ namespace ASNService
         /// </summary>
         public void BuildASN()
         {
-            XElement  File = new XElement(FILE,
+            var File = new XElement(FILE,
                       new XElement(EDIHelperFunctions.DOCUMENT, BuildHeader(), BuildShipmentLevel(), BuildOrderLevel()));
 
-            SaveDataToFile(File);
             SaveASN(File);
-            
-       
-        }
-
-       /// <summary>
-       /// Save 
-       /// </summary>
-       /// <param name="file"></param>
-        private void SaveDataToFile(XElement file)
-        {
-            throw new NotImplementedException();
+            File.Save(path);
         }
 
         private void SaveASN(XElement file)
@@ -476,7 +465,7 @@ namespace ASNService
                         cXmlWriter.WriteEndElement(); //close tag for Measurement
 
 
-                        
+                        //Cisco this is wrong need to put item decription not po date. This is only a place holder for now. 
                         cXmlWriter.WriteStartElement(ItemDescription);
                         cXmlWriter.WriteCData(cSkuItem.Product.Trim());
                         cXmlWriter.WriteEndElement();
@@ -960,6 +949,23 @@ namespace ASNService
             }
         }
 
+
+
+        /// <summary>
+        /// This function will change at some point! For now it is just todays date. Talk o Kari about this one 
+        /// </summary>
+        public string ShipDate
+        {
+            get
+            {
+                using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+                {
+                    return UoW.ShipDateRequest.Find(t => t.InUse == true).FirstOrDefault().ASNShip;
+                }
+
+            }
+
+        }
 
         private string GetNewShipmentID()
         {

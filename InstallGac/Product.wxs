@@ -1,22 +1,22 @@
- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="AdminSide" Language="1033" Version="1.0.0.0" Manufacturer="Vaild USA WatchDog" UpgradeCode="1c42041e-2008-48d4-a86b-75f8f3ab68d1">
+	<Product Id="*" Name="InstallGac" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="c154fe29-e1b6-4708-9e67-039096158832">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="AdminSide" Level="1">
+		<Feature Id="ProductFeature" Title="InstallGac" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			
-				<Directory Id="INSTALLFOLDER" Name="AdminSide" />
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="InstallGac" />
 			</Directory>
-		
+		</Directory>
 	</Fragment>
 
 	<Fragment>

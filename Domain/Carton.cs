@@ -20,5 +20,6 @@ public  class Carton
         public Guid? StoreNumberFK { get; set; }
 
 
+
     }
 }

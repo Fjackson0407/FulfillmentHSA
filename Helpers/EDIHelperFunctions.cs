@@ -15,8 +15,12 @@ namespace Helpers
         public const string EDI = "EDI";
         public const string CONNECTIONSTRING = "ConnectionString";
         public const string HSA = "HSA";
+        public const string ASNVNSettingAMEX = "SVS AMEX O";
+        public const string ASNVNSettingMC = "SVS MC";
         public const string EDIFLOER = "EDIInboundFile";
         public const string HSAFOLDEROLCATION = "EDIInboundFileHSASide";
+        public const string ASNFOLDERLOCATION = "ASNFolder";
+        public const string TEMPFOLDERLOCATION = "TempFolder";
         const string SLASH = "\\";
         public const string SoftwareNode = SOFTWARE + SLASH + EDI;
         public const string HSA_NOT_FOUND = "HSA not found";
@@ -25,6 +29,8 @@ namespace Helpers
         public const string PASSWORD_NOT_FOUND = "Passwowrd not found";
         public const string USERNAME_NOT_FOUND = "Username not found";
         public const string INBOUND_FOLDER_NOT_FOUND = "Folder location not feonud";
+        public const string ASN_FOLDER_NOT_FOUND = "Folder location for ASN not feonud";
+        public const string TEMP_FOLDER_NOT_FOUND = "Folder location for temp not feonud";
         public const string EMAIL_ADDRESS_NOT_FOUND = "Email Address not found";
         public const string RECIPIENTS_NOT_FOUNND = "Recipients not found";
         public const string SMTP_NOT_FOUND = "SMTP not found";
@@ -293,13 +299,7 @@ namespace Helpers
             ErrorASN = 3
         }
 
-
-        public enum EOrderStatus
-        {
-            Open,
-            Closed,
-            Cancelled
-        }
+        
         public enum PickStatus : int
         {
             Closed = 0,
