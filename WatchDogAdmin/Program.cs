@@ -25,9 +25,15 @@ namespace WatchDogAdmin
     private static void SendEmailForIncommingFile()
         {
 
-            GetKeys cGetKeys = new GetKeys();
-            EDIWatch cEDIWatch = new EDIWatch(cGetKeys.GetInboundLocation(), cGetKeys.ConnectionString );
-
+            try
+            {
+                GetKeys cGetKeys = new GetKeys();
+                EDIWatch cEDIWatch = new EDIWatch(cGetKeys.GetInboundLocation(), cGetKeys.ConnectionString);
+            }
+            catch (Exception ex )
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

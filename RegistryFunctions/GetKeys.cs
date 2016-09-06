@@ -19,7 +19,7 @@ namespace RegistryFunctions
     public class GetKeys
     {
 
-        
+
         public bool HSA
         {
             get
@@ -47,7 +47,7 @@ namespace RegistryFunctions
                     throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAError2));
                 }
 
-                
+
             }
         }
 
@@ -56,7 +56,7 @@ namespace RegistryFunctions
         {
             get
             {
-                
+
                 RegistryKey localMachineRegistry64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
                 RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
 
@@ -66,8 +66,8 @@ namespace RegistryFunctions
                     RegistryValueKind cRegistryValueKind = reg64.GetValueKind(EDIHelperFunctions.CONNECTIONSTRING);
                     foreach (string item in (string[])oConnectionString)
                     {
-                        return  item;
-                        
+                        return item;
+
 
                     }
                 }
@@ -115,36 +115,36 @@ namespace RegistryFunctions
         }
 
 
-        public string  GetInboundLocation()
+        public string GetInboundLocation()
         {
-                string sResult = string.Empty;
-                RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
-                RegistryKey localMachineRegistry64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
-                if (reg64 != null)
+            string sResult = string.Empty;
+            RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
+            RegistryKey localMachineRegistry64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+            RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
+            if (reg64 != null)
+            {
+                if (this.HSA)
                 {
-                    if (this.HSA)
-                    {
 
-                        object oUserName = reg64.GetValue(EDIHelperFunctions.HSAFOLDEROLCATION, EDIHelperFunctions.INBOUND_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                        cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                        foreach (string item in (string[])oUserName)
-                        {
-                            return  item;
-                        }
-                    }
-                    else
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.HSAFOLDEROLCATION, EDIHelperFunctions.INBOUND_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
                     {
-                        object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.INBOUND_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                        cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                        foreach (string item in (string[])oUserName)
-                        {
-                         return  item;
-                        }
+                        return item;
                     }
-                
+                }
+                else
+                {
+                    object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.INBOUND_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                    foreach (string item in (string[])oUserName)
+                    {
+                        return item;
+                    }
+                }
+
             }
-            return string.Empty; 
+            return string.Empty;
         }
 
 
@@ -214,30 +214,38 @@ namespace RegistryFunctions
         }
 
 
+        static bool RedirectionCallback(string url)
+        {
+            // Return true if the URL is an HTTPS URL.
+            return url.ToLower().StartsWith("https://");
+        }
 
 
         public void SendEmail(string Msg, string Subject)
         {
-            EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
-            ExchangeService service = new ExchangeService();
-            service.Credentials = new WebCredentials(cEmailRecipient.UserName, cEmailRecipient.Password);
-            service.AutodiscoverUrl(cEmailRecipient.EmailAddress);
-            EmailMessage message = new EmailMessage(service);
-            message.Subject = Subject;
-            List<EmailAddress> lisAddress = new List<EmailAddress>();
-            foreach (string item in cEmailRecipient.Recipients)
-            {
-                EmailAddress cEmailAddress = new EmailAddress();
-                cEmailAddress.Address = item;
-                lisAddress.Add(cEmailAddress);
-            }
-            message.ToRecipients.AddRange(lisAddress);
+           
+                EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
+                ExchangeService service = new ExchangeService();
+                service.Credentials = new WebCredentials(cEmailRecipient.UserName, cEmailRecipient.Password);
+            //I need to handle this better!!!!
+            service.AutodiscoverUrl(cEmailRecipient.EmailAddress, RedirectionCallback);
+                EmailMessage message = new EmailMessage(service);
+                message.Subject = Subject;
+                List<EmailAddress> lisAddress = new List<EmailAddress>();
+                foreach (string item in cEmailRecipient.Recipients)
+                {
+                    EmailAddress cEmailAddress = new EmailAddress();
+                    cEmailAddress.Address = item;
+                    lisAddress.Add(cEmailAddress);
+                }
+                message.ToRecipients.AddRange(lisAddress);
 
-            message.Body = Msg;
-            message.Send();
+                message.Body = Msg;
+                message.Send();
 
+
+          
         }
-
 
         public EmailRecipient GetUsernameAmdPassword()
         {
