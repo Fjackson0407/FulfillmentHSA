@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonFunctions.cs" />
     <Compile Include="UpdateDatabas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

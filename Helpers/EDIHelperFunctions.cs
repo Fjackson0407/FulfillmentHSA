@@ -10,6 +10,7 @@ namespace Helpers
     {
 
         #region Strings
+        public const string MasterVisaCard = "STO08";
         public const string Help = "Please contact system administrator or call 651 348-5113  for  assistance ";
         public const string SOFTWARE = "Software";
         public const string EDI = "EDI";
@@ -238,6 +239,9 @@ namespace Helpers
         public const string DCLocation = "DCLocation";
         public const string Comma = ",";
         public const string LineBreak = "\n";
+        public const string STORE = "Store";
+        public const string DPCIFORMAT = "DPCI 2 digit";
+        public const string PKGS = "Pkgs";
         #endregion
 
         /// <summary>

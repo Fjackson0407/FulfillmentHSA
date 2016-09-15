@@ -5,6 +5,8 @@ using EDIException;
 using EDIService;
 using FulfillmentService;
 using LabelService;
+using RegistryFunctions;
+using ReportService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,25 @@ namespace IntakeFileTest
             string po2 = "0290-5429221-0556";  // "0290 -8987645-0553"; //this is for home only will not work at work 
 
 
+
+            //********************************************** Report Inventory *********************************************************************
+
+            string PathReport = @"D:\Inventory Reports\SotresReport.csv";
+            string EDI850 = @"D:\Inventory Reports\MCVDoc_20160829161839505.csv";
+            Reports cReports = new Reports(ConnectionStringWork, EDI850 ,PathReport );
+            cReports.InventorySummaryFromFile();
+
+            //********************************************** Report Inventory *********************************************************************
+
+
+            //********************************************** Report Maker *********************************************************************
+            string Path = @"D:\Report Files\AMX1.csv";
+            ReportsFromInboundFile cReportsFromInboundFile = new ReportsFromInboundFile(Path, ConnectionStringWork);
+            cReportsFromInboundFile.WeeklyReport();
+
+
+            //********************************************** Report Maker *********************************************************************
+
             //********************************************** MAKE LABELS *********************************************************************
 
             //try
@@ -37,12 +58,12 @@ namespace IntakeFileTest
             //    string FilePathAmex = @"D:\Testing\Lables\AmexLabels\AmexFrom.csv";
             //    string NewFileAmex = @"D:\Testing\Lables\AmexLabels\AMEXNew.csv";
 
-            //    string FilePathVisa = @"D:\Testing\Lables\VisaLables\8.30.16 VisaMC ASN.csv";
-            //    string NewFileVisa = @"D:\Testing\Lables\VisaLables\VisaLabelsWeek4.csv";
+            //    string FilePathVisa = @"C:\Users\Contractor\Desktop\New folder\9.6.16 ASN VMC.csv";
+            //    string NewFileVisa = @"C:\Users\Contractor\Desktop\New folder\VisaLabelsWeek4.csv";
 
 
 
-            //    MCLable cMCLable = new MCLable(FilePathVisa , ConnectionStringWork,  NewFileVisa );
+            //    MCLable cMCLable = new MCLable(FilePathVisa, ConnectionStringWork, NewFileVisa);
             //    cMCLable.Amex();
 
 
@@ -57,22 +78,22 @@ namespace IntakeFileTest
             //******************************************************************************************************************
             //*********************************** Add Data *********************************************************************************************************
 
-            //try
-            //{
-            //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
-            //    string Amex = @"D:\Testing\BigOrder\w2.csv";
-            //    string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
-            //    string path2 = @"D:\Testing\BigOrder\Auto\AMEXDoc_20160829162632173.csv";
-            //    EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
-            //    cEDIPOService.ParseEDI850();
-            //    ///cEDIPOService.Path = Amex;
-            //    //cEDIPOService.ParseEDI850();
+            try
+            {
+                string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
+                string Amex = @"D:\Testing\BigOrder\w2.csv";
+                string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
+                string path2 = @"C:\Users\Contractor\Downloads\W1.csv";
+                EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
+                cEDIPOService.ParseEDI850();
+                ///cEDIPOService.Path = Amex;
+                //cEDIPOService.ParseEDI850();
 
-            //}
-            //catch (ExceptionsEDI ex)
-            //{
-            //    string tgest = ex.Message.ToString();
-            //}
+            }
+            catch (ExceptionsEDI ex)
+            {
+                string tgest = ex.Message.ToString();
+            }
 
 
 
@@ -101,7 +122,8 @@ namespace IntakeFileTest
 
             //*********************************** Make Lables *********************************************************************************************************
 
-
+            //   GetKeys cGetKeys = new GetKeys();
+            // cGetKeys.SendEmail("This is only a test", "Testing 123 Testing 123", true );
             //
 
             //*********************************** Update Store *********************************************************************************************************
@@ -120,26 +142,26 @@ namespace IntakeFileTest
 
 
             //*********************************** Make ASN *********************************************************************************************************
-            string Store = "1114"; //Make function to get stores from po 
-            const char dash = '-';
-            string DemoXMLFile = @"D:\Testing\ASN2\ASN114.xml";
-            string root = @"D:\Testing\ASN2\";
-            string DemoPO = "0290-7947639-0578";
-            string[] POSplit = DemoPO.Split(dash);
-            string DCNumber = POSplit[2];
+            //string Store = "1114"; //Make function to get stores from po 
+            //const char dash = '-';
+            //string DemoXMLFile = @"D:\Testing\ASN2\ASN114.xml";
+            //string root = @"D:\Testing\ASN2\";
+            //string DemoPO = "0290-7947639-0578";
+            //string[] POSplit = DemoPO.Split(dash);
+            //string DCNumber = POSplit[2];
 
-            try
-            {
+            //try
+            //{
 
-                ASNBuild cASNBuild = new ASNBuild(root, DemoXMLFile, ConnectionStringWork);
-                //ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
-                //cASNBuild.BuildASN();
+            //    ASNBuild cASNBuild = new ASNBuild(root, DemoXMLFile, ConnectionStringWork);
+            //    //ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
+            //    //cASNBuild.BuildASN();
 
-            }
-            catch (ExceptionsEDI ex)
-            {
-                string tgest = ex.Message.ToString();
-            }
+            //}
+            //catch (ExceptionsEDI ex)
+            //{
+            //    string tgest = ex.Message.ToString();
+            //}
 
 
 

@@ -29,6 +29,8 @@ namespace WatchDogHSA
             {
 
                 m_ConnectionString = _ConnectionString;
+
+                //Cisco, is there a standalone FTP service that loads this directory?  I was expecting to see an FTP library in place.
                 m_FileSystemWatcher = new FileSystemWatcher();
                 m_FileSystemWatcher.Path = _RegKeyEDIFile;
                 m_FileSystemWatcher.Created += OnFileAdded;

@@ -10,29 +10,40 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToolService;
 using static Helpers.EDIHelperFunctions;
 
 namespace EDIService
 {
     public class EDIPOService
     {
-        public string Path { get; set; }
+        public string FromFile { get; set; }
         public string ConnectionString { get; set; }
 
-        public EDIPOService(string _path, string _ConnectionString)
+        public EDIPOService(string _FromPath, string _ConnectionString)
         {
-            if (File.Exists(_path))
+            if (File.Exists(_FromPath))
             {
-                Path = _path;
+                FromFile = _FromPath;
                 ConnectionString = _ConnectionString;
             }
             else
             {
+                //Cisco, this should go to a log file or the console temporarily so it does not stop the process
+
                 throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAError3));
             }
         }
 
 
+        public List<StoreInfoFromEDI850> BuildReport()
+        {
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                return  ParseFile();   
+            }
+        }
+        
         public void ParseEDI850()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -52,7 +63,7 @@ namespace EDIService
 
             List<DCInformation> lisShippingInfo = new List<DCInformation>();
 
-            using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
+            using (CsvReader csv = new CsvReader(new StreamReader(FromFile), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
             {
 
                 csv.SupportsMultiline = true;
@@ -92,16 +103,18 @@ namespace EDIService
         {
             List<SkuItem> lisSku = new List<SkuItem>();
 
-
-            using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
+            //Cisco, interesting solution for the CSV reader...Im not sure I would have done it this way but it works.
+            using (CsvReader csv = new CsvReader(new StreamReader(FromFile), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
 
             {
                 csv.SupportsMultiline = true;
+
+                //Cisco, why the duplicate object, isn't csv already a datareader?  
+                //Also, could this have been configured to use the headers and then map it to the object directly instead of the hard coded enum/index
                 IDataReader reader = csv;
                 SkuItem cSkuItem = null;
                 string sPO = string.Empty;
-
-
+                
                 while (reader.Read())
                 {
                     cSkuItem = new SkuItem();
@@ -140,10 +153,11 @@ namespace EDIService
         {
 
             List<StoreInfoFromEDI850> Invoice = new List<StoreInfoFromEDI850>();
-             using (CsvReader csv = new CsvReader(new StreamReader(Path), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
+             using (CsvReader csv = new CsvReader(new StreamReader(FromFile), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
             {
                 if (csv == null)
                 {
+                    //Cisco, csv will never be null but the contents may be.
                     throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAError5));
                 }
 
@@ -155,6 +169,7 @@ namespace EDIService
 
                 if (reader == null)
                 {
+                    //Cisco, reader will never be null but the contents may be.
                     throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro7));
                 }
 
@@ -170,12 +185,13 @@ namespace EDIService
                     cEDI850Domain.PickStatus = 0;
                     cEDI850Domain.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
                     cEDI850Domain.UPCode = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString().Replace(@"'", "");
-                    SkuItem cSkuItem = GetSkuInfo(cEDI850Domain.UPCode);
+                    CommonFunctions cCommonFunctions = new CommonFunctions(ConnectionString);
+                    SkuItem cSkuItem = cCommonFunctions.GetSkuInfo(cEDI850Domain.UPCode);
                     if (cSkuItem != null)
                     {
 
                         cEDI850Domain.SkuItemFK = cSkuItem.Id;
-
+                        cEDI850Domain.SkuItem = cSkuItem;
                         cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
                         cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
                         if (cEDI850Domain.CompanyCode == "STO08")
@@ -204,13 +220,6 @@ namespace EDIService
             return Invoice;
         }
 
-        private SkuItem GetSkuInfo(string ProductUPC)
-        {
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-            {
-               SkuItem cSkuItem =   UoW.Sku.Find(t => t.ProductUPC == ProductUPC  ).FirstOrDefault();
-                return cSkuItem;
-            }
-        }
+        
     }
 }

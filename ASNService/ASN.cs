@@ -67,6 +67,7 @@ namespace ASNService
 
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
+                //Cisco, Im not a big fan of these wide open loops.  This could be refactored to get all the 'ReadyForASN' records and then process in foreach.
                 for (;;)
                 {
                     StoreInfoFromEDI850 cStore = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault();
@@ -95,6 +96,7 @@ namespace ASNService
             m_sPathForASNFile = string.Format("{0}ASN Store {1} for PO {2} {3}.xml", m_sASNFolder, CurrentStore, PO, GetNewShipmentID());
         }
 
+        //Cisco, this method relies on specific data organization in the DB
         private void SetMinCartonWeight()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -103,6 +105,7 @@ namespace ASNService
             }
         }
 
+        //Cisco, this method relies on specific data organization in the DB
         private void SetEmptyBoxWeight()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -111,7 +114,7 @@ namespace ASNService
             }
         }
 
-
+        //Cisco, this method relies on specific data organization in the DB
         private void SetCartonType()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -120,6 +123,7 @@ namespace ASNService
             }
         }
 
+        //Cisco, this method relies on specific data organization in the DB
         private void SetMaxCartonWeight()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -128,6 +132,7 @@ namespace ASNService
             }
         }
 
+        //Cisco, this method relies on specific data organization in the DB
         private void SetPackSize()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))

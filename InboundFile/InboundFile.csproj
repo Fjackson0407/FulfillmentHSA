@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IntakeFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsFromInboundFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{8eb6338d-94fa-42a1-88a9-c621ee340abb}</Project>
       <Name>Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ToolService\ToolService.csproj">
+      <Project>{64A61BDB-EABF-472A-99DB-11DE522D9557}</Project>
+      <Name>ToolService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

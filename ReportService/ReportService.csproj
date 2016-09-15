@@ -48,6 +48,14 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{47c222ba-6413-4c06-b08c-73e9f05ba2b5}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InboundFile\InboundFile.csproj">
+      <Project>{B88EA99F-DE01-4A94-B033-2E6F79B5CC73}</Project>
+      <Name>InboundFile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{8eb6338d-94fa-42a1-88a9-c621ee340abb}</Project>
       <Name>Repository</Name>

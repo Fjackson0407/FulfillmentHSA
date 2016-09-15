@@ -221,30 +221,47 @@ namespace RegistryFunctions
         }
 
 
+
+        public void SendEmail(string Msg, string Subject, bool inuse)
+        {
+            EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
+            ExchangeService service = new ExchangeService();
+            SmtpClient client = new SmtpClient();
+            NetworkCredential cNetworkCredential = new NetworkCredential(cEmailRecipient.UserName, cEmailRecipient.Password);
+            MailMessage cMailMessage = new MailMessage(cEmailRecipient.EmailAddress , "fjackson0407@yahoo.com");
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Credentials = cNetworkCredential;
+            client.Host = "mail.validusa.com";
+            cMailMessage.Subject = "this is a test email.";
+            cMailMessage.Body = "this is my test email body";
+            client.Send(cMailMessage);
+        }
+
         public void SendEmail(string Msg, string Subject)
         {
-           
-                EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
-                ExchangeService service = new ExchangeService();
-                service.Credentials = new WebCredentials(cEmailRecipient.UserName, cEmailRecipient.Password);
+
+            EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
+            ExchangeService service = new ExchangeService();
+            service.Credentials = new WebCredentials(cEmailRecipient.UserName, cEmailRecipient.Password);
             //I need to handle this better!!!!
             service.AutodiscoverUrl(cEmailRecipient.EmailAddress, RedirectionCallback);
-                EmailMessage message = new EmailMessage(service);
-                message.Subject = Subject;
-                List<EmailAddress> lisAddress = new List<EmailAddress>();
-                foreach (string item in cEmailRecipient.Recipients)
-                {
-                    EmailAddress cEmailAddress = new EmailAddress();
-                    cEmailAddress.Address = item;
-                    lisAddress.Add(cEmailAddress);
-                }
-                message.ToRecipients.AddRange(lisAddress);
+            EmailMessage message = new EmailMessage(service);
+            message.Subject = Subject;
+            List<EmailAddress> lisAddress = new List<EmailAddress>();
+            foreach (string item in cEmailRecipient.Recipients)
+            {
+                EmailAddress cEmailAddress = new EmailAddress();
+                cEmailAddress.Address = item;
+                lisAddress.Add(cEmailAddress);
+            }
+            message.ToRecipients.AddRange(lisAddress);
 
-                message.Body = Msg;
-                message.Send();
+            message.Body = Msg;
+            message.Send();
 
 
-          
+
         }
 
         public EmailRecipient GetUsernameAmdPassword()

@@ -19,6 +19,9 @@ namespace WatchDogAdmin
             Console.WriteLine("This is EDI watch dog I will watch for in comming EDI 850 files from Ezcom");
             Console.WriteLine("Press q then hit the enter key  at anytime to stop watch dog");
             SendEmailForIncommingFile();
+
+            //Cisco, This loop will consume a considerable amount of processing capacity.
+            //You may want to add a Thread.Sleep(500) to release some wasted resources.
             while (Console.Read() != 'q') ;
         }
        

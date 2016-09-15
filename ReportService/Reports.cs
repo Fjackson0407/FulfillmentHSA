@@ -1,8 +1,11 @@
 ﻿using Domain;
+using EDIService;
+using Helpers;
 using Repository.DataSource;
 using Repository.UOW;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,72 +14,91 @@ namespace ReportService
 {
     public class Reports
     {
-        public string ConnectionString { get; private  set; }
-
-
-        public Reports(string _ConnectionString )
+        public string ConnectionString { get; private set; }
+        public string Path { get; set; }
+        public string OutputFile { get; set; }
+        public Reports(string _ConnectionString, string _Path, string _OutputFile)
         {
             ConnectionString = _ConnectionString;
+            Path = _Path;
+            OutputFile = _OutputFile;
         }
 
 
-
-        private List<BundlesPerStore> BOLSummary(List<StoreReport>  Stores)
+        /// <summary>
+        /// Use the data from the raw file via Ezcom before it goes to the database
+        /// </summary>
+        public void InventorySummaryFromFile()
         {
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            SummaryForInverntory cSummaryForInverntory;
+            List<SummaryForInverntory> lisSummaryForInverntory = new List<SummaryForInverntory>();
+
+            EDIPOService cEDIPOService = new EDIPOService(Path, ConnectionString);
+            List<StoreInfoFromEDI850> lisStore = cEDIPOService.BuildReport();
+
+            foreach (var store in lisStore)
             {
-                int result = 0;
-                int i = 1; 
-                List<BundlesPerStore> lisBundlesPerStore = new List<BundlesPerStore>();
-
-                            
-
-                foreach (StoreReport  item in Stores )
-                {
-                    BundlesPerStore cBundlesPerStore = new BundlesPerStore();
-                    List<StoreReport> BUNDLES = Stores.Where(t => t.PONumber == item.PONumber  )
-                                        .Where(t => t.StoreNumber ==  item.StoreNumber ).ToList();
-
-                    foreach (var item2 in BUNDLES)
-                    {
-                        cBundlesPerStore.Bundles = item2.Budles;
-                        cBundlesPerStore.PONumber = item2.PONumber;
-                        cBundlesPerStore.QuantityOrdered = item2.QtyOrdered;
-                        cBundlesPerStore.Store = item2.StoreNumber;
-                        lisBundlesPerStore.Add(cBundlesPerStore);
-                    }
-
-                }
-                var rew = lisBundlesPerStore.OrderBy(t => t.PONumber);
-                return lisBundlesPerStore;
-
+                cSummaryForInverntory = new SummaryForInverntory();
+                cSummaryForInverntory.Store = store.OrderStoreNumber;
+                cSummaryForInverntory.PO = store.PONumber;
+                cSummaryForInverntory.UPC = store.UPCode;
+                cSummaryForInverntory.DPCIFull = store.SkuItem.DPCI;
+                cSummaryForInverntory.DPCI = store.SkuItem.DPCI.Substring(store.SkuItem.DPCI.Length - 2, 2);
+                cSummaryForInverntory.Pkgs = store.QtyOrdered / 25;
+                cSummaryForInverntory.QTYCards = store.QtyOrdered; 
+                lisSummaryForInverntory.Add(cSummaryForInverntory);
             }
+            SaveListToCSV(lisSummaryForInverntory);
         }
-        public  List<StoreReport> GetWeeklyStoreReport(DateTime StartDate)
+
+        public void InventorySummaryFromDatabase(DateTime StartDate, DateTime EndDate)
         {
-            List<StoreReport> Reports = new List<StoreReport>();
+            SummaryForInverntory cSummaryForInverntory;
+            List<SummaryForInverntory> lisSummaryForInverntory = new List<SummaryForInverntory>();
+
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
-                List<StoreInfoFromEDI850> stores = UoW.AddEDI850.Find(t => t.PODate == StartDate).ToList();
-                int count = 1; 
-
-                foreach (StoreInfoFromEDI850  item in stores )
+                var stores = UoW.AddEDI850.Find(x => x.PODate >= StartDate && x.PODate <= EndDate);
+                foreach (var store in stores)
                 {
-                    StoreReport cStoreReport = new StoreReport();
-                    cStoreReport.Number = count;
-                    cStoreReport.StoreNumber = item.OrderStoreNumber;
-                    cStoreReport.PONumber = item.PONumber;
-                    cStoreReport.UPC = item.UPCode;
-                    cStoreReport.DPCI = item.SkuItem.DPCI;
-                    cStoreReport.QtyOrdered = item.QtyOrdered;
-                    cStoreReport.ItemWeight = item.PkgWeight;
-                    cStoreReport.Boxes = 1; //This is only a place holder for now 
-                    Reports.Add(cStoreReport);
-                    count++;
+                    cSummaryForInverntory = new SummaryForInverntory();
+                    cSummaryForInverntory.Store = store.OrderStoreNumber;
+                    cSummaryForInverntory.DPCI = store.SkuItem.DPCI.Substring(store.SkuItem.DPCI.Length - 2, 2);
+                    cSummaryForInverntory.Pkgs = store.QtyOrdered / 25;
+                    lisSummaryForInverntory.Add(cSummaryForInverntory);
                 }
+
             }
-            List<BundlesPerStore> result =  BOLSummary(Reports);
-            return Reports;
+            SaveListToCSV(lisSummaryForInverntory);
+        }
+
+        private void SaveListToCSV(List<SummaryForInverntory> lisSummaryInventory)
+        {
+            StringBuilder cStringBuilder = new StringBuilder();
+            cStringBuilder.Append(EDIHelperFunctions.STORE);
+            cStringBuilder.Append(EDIHelperFunctions.Comma);
+            cStringBuilder.Append(EDIHelperFunctions.DPCIFORMAT);
+            cStringBuilder.Append(EDIHelperFunctions.Comma);
+            cStringBuilder.Append(EDIHelperFunctions.PKGS);
+            cStringBuilder.Append(EDIHelperFunctions.LineBreak);
+            foreach (var item in lisSummaryInventory)
+            {
+                cStringBuilder.Append(item.Store);
+                cStringBuilder.Append(EDIHelperFunctions.Comma);
+                cStringBuilder.Append(item.DPCI);
+                cStringBuilder.Append(EDIHelperFunctions.Comma);
+                cStringBuilder.Append(item.Pkgs);
+                cStringBuilder.Append(EDIHelperFunctions.LineBreak);
+            }
+
+            using (StreamWriter sw = new StreamWriter(OutputFile))
+            {
+                sw.WriteLine(cStringBuilder.ToString());
+            }
         }
     }
+
 }
+
+
+
