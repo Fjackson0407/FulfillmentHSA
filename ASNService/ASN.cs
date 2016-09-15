@@ -472,7 +472,7 @@ namespace ASNService
                         cXmlWriter.WriteStartElement(ItemIDs);
                         cXmlWriter.WriteElementString(IdQualifier, CU);
                         cXmlWriter.WriteStartElement(Id);
-                        cXmlWriter.WriteCData(Store.DPCI);
+                        cXmlWriter.WriteCData(cSkuItem.DPCI);
                         cXmlWriter.WriteEndElement(); //Close cu tag 
                         cXmlWriter.WriteEndElement(); //Close itemids 
                         cXmlWriter.WriteStartElement(Quantities);
@@ -641,7 +641,7 @@ namespace ASNService
                         //Set the weight for the carton 
                         if (OrderWeight <= MaxWeght)
                         {
-                            cCarton.Qty = temp.QtyOrdered;
+                            cCarton.Qty += temp.QtyOrdered;
                             CurrentWeight = OrderWeight;
                         }
                         else
@@ -665,9 +665,9 @@ namespace ASNService
                             }
                             cCarton.Weight += CurrentWeight;
                             temp.CustomerLineNumber = CustomerLineNumber;
-                            temp.DPCI = ItemDescription.DPCI;
+                            // temp.DPCI = ItemDescription.DPCI;
                             temp.QtyPacked = 0;
-                            temp.SKUFK = ItemDescription.Id;
+                            //temp.SKUFK = ItemDescription.Id;
                             CustomerLineNumber++;
                             if (OrderWeight >= MaxWeght)
                             {

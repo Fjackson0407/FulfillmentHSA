@@ -191,7 +191,7 @@ namespace EDIService
                     {
 
                         cEDI850Domain.SkuItemFK = cSkuItem.Id;
-                        cEDI850Domain.SkuItem = cSkuItem;
+                       // cEDI850Domain.SkuItem = cSkuItem;
                         cEDI850Domain.CustomerNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
                         cEDI850Domain.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
                         if (cEDI850Domain.CompanyCode == "STO08")

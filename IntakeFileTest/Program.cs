@@ -35,18 +35,18 @@ namespace IntakeFileTest
 
             //********************************************** Report Inventory *********************************************************************
 
-            string PathReport = @"D:\Inventory Reports\SotresReport.csv";
-            string EDI850 = @"D:\Inventory Reports\MCVDoc_20160829161839505.csv";
-            Reports cReports = new Reports(ConnectionStringWork, EDI850 ,PathReport );
-            cReports.InventorySummaryFromFile();
+            //string PathReport = @"D:\Inventory Reports\SotresReport.csv";
+            //string EDI850 = @"D:\Inventory Reports\MCVDoc_20160829161839505.csv";
+            //Reports cReports = new Reports(ConnectionStringWork, EDI850 ,PathReport );
+            //cReports.InventorySummaryFromFile();
 
             //********************************************** Report Inventory *********************************************************************
 
 
             //********************************************** Report Maker *********************************************************************
-            string Path = @"D:\Report Files\AMX1.csv";
-            ReportsFromInboundFile cReportsFromInboundFile = new ReportsFromInboundFile(Path, ConnectionStringWork);
-            cReportsFromInboundFile.WeeklyReport();
+            //string Path = @"D:\Report Files\AMX1.csv";
+            //ReportsFromInboundFile cReportsFromInboundFile = new ReportsFromInboundFile(Path, ConnectionStringWork);
+            //cReportsFromInboundFile.WeeklyReport();
 
 
             //********************************************** Report Maker *********************************************************************
@@ -78,22 +78,22 @@ namespace IntakeFileTest
             //******************************************************************************************************************
             //*********************************** Add Data *********************************************************************************************************
 
-            try
-            {
-                string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
-                string Amex = @"D:\Testing\BigOrder\w2.csv";
-                string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
-                string path2 = @"C:\Users\Contractor\Downloads\W1.csv";
-                EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
-                cEDIPOService.ParseEDI850();
-                ///cEDIPOService.Path = Amex;
-                //cEDIPOService.ParseEDI850();
+            //try
+            //{
+            //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
+            //    string Amex = @"D:\Testing\BigOrder\w2.csv";
+            //    string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
+            //    string path2 = @"C:\Users\Contractor\Downloads\W1.csv";
+            //    EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
+            //    cEDIPOService.ParseEDI850();
+            //    ///cEDIPOService.Path = Amex;
+            //    //cEDIPOService.ParseEDI850();
 
-            }
-            catch (ExceptionsEDI ex)
-            {
-                string tgest = ex.Message.ToString();
-            }
+            //}
+            //catch (ExceptionsEDI ex)
+            //{
+            //    string tgest = ex.Message.ToString();
+            //}
 
 
 
@@ -142,26 +142,26 @@ namespace IntakeFileTest
 
 
             //*********************************** Make ASN *********************************************************************************************************
-            //string Store = "1114"; //Make function to get stores from po 
-            //const char dash = '-';
-            //string DemoXMLFile = @"D:\Testing\ASN2\ASN114.xml";
-            //string root = @"D:\Testing\ASN2\";
-            //string DemoPO = "0290-7947639-0578";
-            //string[] POSplit = DemoPO.Split(dash);
-            //string DCNumber = POSplit[2];
+            string Store = "1114"; //Make function to get stores from po 
+            const char dash = '-';
+            string DemoXMLFile = @"D:\Testing\ASN2\ASN114.xml";
+            string root = @"D:\ASN Test\";
+            string DemoPO = "0290-7947639-0578";
+            string[] POSplit = DemoPO.Split(dash);
+            string DCNumber = POSplit[2];
 
-            //try
-            //{
+            try
+            {
 
-            //    ASNBuild cASNBuild = new ASNBuild(root, DemoXMLFile, ConnectionStringWork);
-            //    //ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
-            //    //cASNBuild.BuildASN();
+                ASNBuild cASNBuild = new ASNBuild(root, DemoXMLFile, ConnectionStringWork);
+                //ASNBuild cASNBuild = new ASNBuild(DemoXMLFile, ConnectionStringWork, DemoPO, Store, DCNumber);
+                //cASNBuild.BuildASN();
 
-            //}
-            //catch (ExceptionsEDI ex)
-            //{
-            //    string tgest = ex.Message.ToString();
-            //}
+            }
+            catch (ExceptionsEDI ex)
+            {
+                string tgest = ex.Message.ToString();
+            }
 
 
 

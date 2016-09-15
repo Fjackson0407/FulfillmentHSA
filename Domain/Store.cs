@@ -52,9 +52,7 @@ namespace Domain
         public int ASNStatus { get; set; }
 
         public Guid? ASNFileOutBoundFK { get; set; }
-        public Guid? SKUFK { get; set; }
         public int QtyPacked { get; set; }
-        public string DPCI { get; set; }
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
         public int CustomerLineNumber { get; set; }
         public ICollection<BOLForASN> BOL { get; set; }
@@ -65,7 +63,6 @@ namespace Domain
         public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set;  }
         public double  PkgWeight { get; set;  }
         public string  User { get; set; }
-        public string  Label { get; set; }
         public bool InUse { get; set; }
 
     }
