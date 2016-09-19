@@ -21,7 +21,7 @@ namespace IntakeFileTest
     {
         static void Main(string[] args)
         {
-            string ConnectionStringWork = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSATest;Integrated Security=True;MultipleActiveResultSets=True";
+            string ConnectionStringWork = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIHSADev;Integrated Security=True;MultipleActiveResultSets=True";
             string ConnectionStringWork2 = @"Data Source=CCPC08\VALIDDB;Initial Catalog=EDIAdminTest;Integrated Security=TrueMultipleActiveResultSets=True";
             string ConStringHome = @"Data Source=SUPERMANPC\SUPERMANDB;Initial Catalog=EDIHSA;Integrated Security=True";
             string RemoteConnectionString = @"Data Source=CCPC08\VALIDDB;Database=EDIHSA;User Id=VaildUser;Password = ABC123";
@@ -40,7 +40,7 @@ namespace IntakeFileTest
             //Reports cReports = new Reports(ConnectionStringWork, EDI850 ,PathReport );
             //cReports.InventorySummaryFromFile();
 
-            //********************************************** Report Inventory *********************************************************************
+            ////********************************************** Report Inventory *********************************************************************
 
 
             //********************************************** Report Maker *********************************************************************
@@ -78,22 +78,22 @@ namespace IntakeFileTest
             //******************************************************************************************************************
             //*********************************** Add Data *********************************************************************************************************
 
-            //try
-            //{
-            //    string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
-            //    string Amex = @"D:\Testing\BigOrder\w2.csv";
-            //    string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
-            //    string path2 = @"C:\Users\Cisco\Desktop\importd\W1.csv";
-            //    EDIPOService cEDIPOService = new EDIPOService(path2, ConStringHome);
-            //    cEDIPOService.ParseEDI850();
-            //    ///cEDIPOService.Path = Amex;
-            //    //cEDIPOService.ParseEDI850();
+            try
+            {
+                string MCFile = @"D:\Testing\BigOrder\Yesterday.csv";
+                string Amex = @"D:\Testing\BigOrder\w2.csv";
+                string CurrentAmexOrder = @"D:\Testing\BigOrder\wc-orders.csv";
+                string path2 = @"C:\Users\Contractor\Dropbox\Test data\w1.csv";
+                EDIPOService cEDIPOService = new EDIPOService(path2, ConnectionStringWork);
+                cEDIPOService.ParseEDI850();
+                ///cEDIPOService.Path = Amex;
+                //cEDIPOService.ParseEDI850();
 
-            //}
-            //catch (ExceptionsEDI ex)
-            //{
-            //    string tgest = ex.Message.ToString();
-            //}
+            }
+            catch (ExceptionsEDI ex)
+            {
+                string tgest = ex.Message.ToString();
+            }
 
 
 
@@ -145,7 +145,7 @@ namespace IntakeFileTest
             //string Store = "1114"; //Make function to get stores from po 
             //const char dash = '-';
             //string DemoXMLFile = @"D:\Testing\ASN2\ASN114.xml";
-            //string root = @"D:\ASN Test\";
+            //string root = @"D:\Testing\ASN2\";
             //string DemoPO = "0290-7947639-0578";
             //string[] POSplit = DemoPO.Split(dash);
             //string DCNumber = POSplit[2];

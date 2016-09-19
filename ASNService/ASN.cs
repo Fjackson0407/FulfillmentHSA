@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using static Helpers.EDIHelperFunctions;
+using static ToolService.UpdateDatabas;
 
 namespace ASNService
 {
@@ -358,7 +359,7 @@ namespace ASNService
                 cASNFileOutBound.DTS = DateTime.Now;
 
                 lisStores.ForEach(s => s.ASNStatus = (int)ASNStatus.HasASN);
-                lisStores.ForEach(s => s.PickStatus = (int)PickStatus.Open);
+                lisStores.ForEach(s => s.PickStatus = (int)EOrderStatus.Open);
                 UoW.AddEDI850.SaveChange();
                 foreach (StoreInfoFromEDI850 item in lisStores)
                 {

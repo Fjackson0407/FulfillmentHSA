@@ -76,6 +76,10 @@
     <Compile Include="EmptyBoxFolder\IEmptyBox.cs" />
     <Compile Include="Inbound850\AddEDI850.cs" />
     <Compile Include="Inbound850\IAddEDI850.cs" />
+    <Compile Include="Migrations\201609180909348_DEV.cs" />
+    <Compile Include="Migrations\201609180909348_DEV.Designer.cs">
+      <DependentUpon>201609180909348_DEV.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MinWeightFolder\IMinWeightShipBox.cs" />
     <Compile Include="MinWeightFolder\MinWeightShipBox.cs" />
@@ -106,7 +110,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Valid.Fulfillment.Client Cisco%27s copy\Valid.Fulfillment.Client\Helpers\Helpers.csproj">
+    <ProjectReference Include="..\..\Client code\EDI\Helpers\Helpers.csproj">
       <Project>{47c222ba-6413-4c06-b08c-73e9f05ba2b5}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
@@ -114,6 +118,11 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609180909348_DEV.resx">
+      <DependentUpon>201609180909348_DEV.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

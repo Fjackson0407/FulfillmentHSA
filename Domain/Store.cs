@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain
 {
@@ -13,27 +10,36 @@ namespace Domain
             Carton = new HashSet<Carton>();
             SerialRageNumber = new HashSet<SerialRageNumber>();
         }
-        
+
         public Guid Id { get; set; }
 
         public DateTime DTS { get; set; }
 
         public string CompanyCode { get; set; }
 
-        public string  UPCode  { get; set; }
+        public string UPCode { get; set; }
         public string CustomerNumber { get; set; }
 
         public string PONumber { get; set; }
 
+        public virtual string POSubstring
+        {
+            get
+            {
+                string[] parts = PONumber.Split('-');
+                return string.Format("{0}-{1}", parts[0], parts[1]);
+            }
+
+        }
         public string ShippingLocationNumber { get; set; }
 
         public string VendorNumber { get; set; }
 
-        public DateTime   PODate { get; set; }
+        public DateTime PODate { get; set; }
 
-        public string  ShipDate { get; set; }
+        public string ShipDate { get; set; }
 
-        public string  CancelDate { get; set; }
+        public string CancelDate { get; set; }
 
         public string DCNumber { get; set; }
 
@@ -56,14 +62,20 @@ namespace Domain
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
         public int CustomerLineNumber { get; set; }
         public ICollection<BOLForASN> BOL { get; set; }
-        public virtual SkuItem SkuItem { get; set;  }
-        public Guid? SkuItemFK { get; set;  }
-      
-        public virtual  ICollection<Carton> Carton { get; set;  }
-        public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set;  }
-        public double  PkgWeight { get; set;  }
-        public string  User { get; set; }
+        public virtual SkuItem SkuItem { get; set; }
+        public Guid? SkuItemFK { get; set; }
+
+        public virtual ICollection<Carton> Carton { get; set; }
+        public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set; }
+        public double PkgWeight { get; set; }
+        public string User { get; set; }
         public bool InUse { get; set; }
+        public virtual int BundleQty
+        {
+            get { return QtyOrdered / 25; }
+        }
+
+        public string Label { get; set; }
 
     }
 }

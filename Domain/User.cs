@@ -13,7 +13,7 @@ public     class UserTable
         public string  Password { get; set; }
         public DateTime  DTS { get; set; }
         public virtual UserOrders Orders { get; set; }
-        public Guid? OrdersFK { get; set; }
+        public Guid? OrdersFK { get; set; } 
 
     }
 }
