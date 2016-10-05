@@ -149,7 +149,7 @@ namespace RegistryFunctions
 
 
 
-        public string GetASNLocation()
+        public string GetASNPath()
         {
             string sResult = string.Empty;
             RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
@@ -157,31 +157,18 @@ namespace RegistryFunctions
             RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
             if (reg64 != null)
             {
-                if (this.HSA)
+                object oUserName = reg64.GetValue(EDIHelperFunctions.ASNFOLDERLOCATION, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                foreach (string item in (string[])oUserName)
                 {
-
-                    object oUserName = reg64.GetValue(EDIHelperFunctions.ASNFOLDERLOCATION, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                    foreach (string item in (string[])oUserName)
-                    {
-                        return item;
-                    }
-                }
-                else
-                {
-                    object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                    foreach (string item in (string[])oUserName)
-                    {
-                        return item;
-                    }
+                    return item;
                 }
 
             }
             return string.Empty;
         }
 
-        public string GetTempLocation()
+        public string GetASNTempLocation()
         {
             string sResult = string.Empty;
             RegKeys cEDIInboundPathRegistryKeyInfo = new RegKeys();
@@ -189,24 +176,11 @@ namespace RegistryFunctions
             RegistryKey reg64 = localMachineRegistry64.OpenSubKey(EDIHelperFunctions.SoftwareNode, false);
             if (reg64 != null)
             {
-                if (this.HSA)
+                object oUserName = reg64.GetValue(EDIHelperFunctions.ASNTEMPFOLDERLOCATION, EDIHelperFunctions.ASN_FOLDER_NOT_FOUND, RegistryValueOptions.None);
+                cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
+                foreach (string item in (string[])oUserName)
                 {
-
-                    object oUserName = reg64.GetValue(EDIHelperFunctions.TEMPFOLDERLOCATION, EDIHelperFunctions.TEMP_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                    foreach (string item in (string[])oUserName)
-                    {
-                        return item;
-                    }
-                }
-                else
-                {
-                    object oUserName = reg64.GetValue(EDIHelperFunctions.EDIFLOER, EDIHelperFunctions.TEMP_FOLDER_NOT_FOUND, RegistryValueOptions.None);
-                    cEDIInboundPathRegistryKeyInfo.RegistryKey = string.Format(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDI");
-                    foreach (string item in (string[])oUserName)
-                    {
-                        return item;
-                    }
+                    return item;
                 }
 
             }
@@ -228,7 +202,7 @@ namespace RegistryFunctions
             ExchangeService service = new ExchangeService();
             SmtpClient client = new SmtpClient();
             NetworkCredential cNetworkCredential = new NetworkCredential(cEmailRecipient.UserName, cEmailRecipient.Password);
-            MailMessage cMailMessage = new MailMessage(cEmailRecipient.EmailAddress , "fjackson0407@yahoo.com");
+            MailMessage cMailMessage = new MailMessage(cEmailRecipient.EmailAddress, "fjackson0407@yahoo.com");
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.Credentials = cNetworkCredential;
@@ -236,6 +210,40 @@ namespace RegistryFunctions
             cMailMessage.Subject = "this is a test email.";
             cMailMessage.Body = "this is my test email body";
             client.Send(cMailMessage);
+        }
+
+        public void SendEmail()
+        {
+
+            EmailRecipient cEmailRecipient = GetUsernameAmdPassword();
+            ExchangeService service = new ExchangeService();
+            service.Credentials = new WebCredentials(cEmailRecipient.UserName,
+                cEmailRecipient.Password);
+            //("https://red003.mail.apac.microsoftonline.com/EWS/Exchange.asmx");
+            service.Url = new Uri("https://mail.validusa.com/EWS/Exchange.asmx");
+            //I need to handle this better!!!!
+            //service.AutodiscoverUrl("ediprocess@validusa.com");
+            EmailMessage message = new EmailMessage(service);
+            message.Subject = "Subject";
+           
+            message.ToRecipients.Add("fjackson0407@yahoo.com");
+
+            message.Body = "Msg";
+            message.Send();
+
+
+
+            ////System.Web.Mail.SmtpMail oMail = new System.Web.Mail.SmtpMail();
+            //System.Net.Mail.SmtpClient cSmtpClient = new SmtpClient("validusa.com", 25);
+            ////SmtpClient oSmtp = new SmtpClient();
+            //MailAddress from = new MailAddress("ediprocess@validusa.com");
+            //MailAddress to = new MailAddress("fjackson0407@yahoo.com");
+            //MailMessage cMailMessage = new MailMessage(from, to);
+            //cMailMessage.Body = "Testing 123 Testing 123";
+            //cMailMessage.Subject = "Test for EDI";
+            //cSmtpClient.Credentials = new NetworkCredential("ediprocess", "$ecure9!");
+            //cSmtpClient.Send(cMailMessage);
+            //cMailMessage.Dispose();
         }
 
         public void SendEmail(string Msg, string Subject)

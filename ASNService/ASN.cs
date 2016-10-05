@@ -65,20 +65,20 @@ namespace ASNService
             m_TempPath = _TempPath;
             m_sASNFolder = ASNPath;
             ConnectionString = _ConnectionString;
-
+                
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
             {
                 //Cisco, Im not a big fan of these wide open loops.  This could be refactored to get all the 'ReadyForASN' records and then process in foreach.
                 for (;;)
                 {
-                    StoreInfoFromEDI850 cStore = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN).FirstOrDefault();
+                    //DateTime mydate = DateTime.Parse("09/12/2016"); for testing only 
+                    StoreInfoFromEDI850 cStore = UoW.AddEDI850.Find(t => t.ASNStatus == (int)ASNStatus.ReadyForASN ).FirstOrDefault();
                     if (cStore == null)
                     {
                         break;
                     }
                     PO = cStore.PONumber;
-                    string[] PoString = PO.Split('-');
-                    CurrentDCNumber = PoString[2];
+                    CurrentDCNumber = cStore.DCNumber;
                     CurrentStore = cStore.OrderStoreNumber;
                     SetmemberVaribles();
                     BuildASN();
@@ -439,7 +439,7 @@ namespace ASNService
                     cXmlWriter.WriteEndElement(); //End of Mark
                     cXmlWriter.WriteStartElement(Quantities);
                     cXmlWriter.WriteElementString(QtyQualifier, "ZZ");
-                    cXmlWriter.WriteElementString(QtyUOM, Each);
+                    cXmlWriter.WriteElementString(QtyUOM, "ZZ");
                     cXmlWriter.WriteElementString(Qty, cCarton.Qty.ToString());
                     cXmlWriter.WriteEndElement();
                     cXmlWriter.WriteStartElement(Measurement);
@@ -530,41 +530,6 @@ namespace ASNService
                 return UoW.Sku.Find(t => t.Id == store.SkuItemFK).FirstOrDefault();
             }
         }
-
-        private List<StoreOrderSkuDetail> GetSkusForStore(List<StoreInfoFromEDI850> lisStores, int CustomerLineNumber)
-        {
-
-            SkuItem cSkuItem = null;
-            StoreOrderSkuDetail cStoreOrderSkuDetail = null;
-            List<StoreOrderSkuDetail> lisStoreOrderSkuDetail = new List<StoreOrderSkuDetail>();
-
-            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
-            {
-                if (lisStores != null && lisStores.Count > 0)
-                {
-                    foreach (StoreInfoFromEDI850 store in lisStores)
-                    {
-                        string StoreUpc = store.UPCode.Replace(@"'", "");
-                        cSkuItem = UoW.Sku.Find(t => t.ProductUPC == StoreUpc).FirstOrDefault();
-                        if (cSkuItem != null)
-                        {
-
-                            cStoreOrderSkuDetail.CustomerLineNumber = CustomerLineNumber;
-                            cStoreOrderSkuDetail.ProductDescription = cSkuItem.SubProduct;
-                            cStoreOrderSkuDetail.DPCI = cSkuItem.DPCI;
-                            lisStoreOrderSkuDetail.Add(cStoreOrderSkuDetail);
-                        }
-                    }
-                    return lisStoreOrderSkuDetail;
-                }
-                else
-                {
-                    throw new ExceptionsEDI(string.Format("{0} {1}", Help, ErrorCodes.HSAErro23));
-                }
-
-            }
-        }
-
 
         
         private List<StoreInfoFromEDI850> GetStoreItmesForCartons()
@@ -666,9 +631,8 @@ namespace ASNService
                             }
                             cCarton.Weight += CurrentWeight;
                             temp.CustomerLineNumber = CustomerLineNumber;
-                            // temp.DPCI = ItemDescription.DPCI;
                             temp.QtyPacked = 0;
-                            //temp.SKUFK = ItemDescription.Id;
+                       
                             CustomerLineNumber++;
                             if (OrderWeight >= MaxWeght)
                             {

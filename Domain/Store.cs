@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Domain
 {
-    public class StoreInfoFromEDI850
+    public class StoreInfoFromEDI850 : INotifyPropertyChanged
     {
         public StoreInfoFromEDI850()
         {
@@ -31,6 +32,9 @@ namespace Domain
             }
 
         }
+
+        public virtual  string DPCI { get; set;  }
+        public virtual string Label { get; set;  }
         public string ShippingLocationNumber { get; set; }
 
         public string VendorNumber { get; set; }
@@ -58,7 +62,19 @@ namespace Domain
         public int ASNStatus { get; set; }
 
         public Guid? ASNFileOutBoundFK { get; set; }
-        public int QtyPacked { get; set; }
+
+        private int _QtyPacked;
+
+        public int QtyPacked
+        {
+            get { return _QtyPacked; }
+            set
+            {
+                _QtyPacked = value;
+                OnPropertyChanged(nameof(QtyPacked));
+            }
+        }
+
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
         public int CustomerLineNumber { get; set; }
         public ICollection<BOLForASN> BOL { get; set; }
@@ -75,7 +91,20 @@ namespace Domain
             get { return QtyOrdered / 25; }
         }
 
-        public string Label { get; set; }
+        
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
 
     }
 }

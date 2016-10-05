@@ -54,6 +54,8 @@
     <Compile Include="ASNCartonTypes\ICartonTypeForASN.cs" />
     <Compile Include="ASNCartonTypes\ASNOut\ASNFile.cs" />
     <Compile Include="ASNCartonTypes\ASNOut\IASNFile.cs" />
+    <Compile Include="ASNSettings\ASN856Settings.cs" />
+    <Compile Include="ASNSettings\IASN856Settings.cs" />
     <Compile Include="Barcode\ISSCCBarcode.cs" />
     <Compile Include="Barcode\SSCCBarcode.cs" />
     <Compile Include="BaseClass\IRepositoryBase.cs" />

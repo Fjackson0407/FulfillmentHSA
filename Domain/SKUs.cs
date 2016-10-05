@@ -17,6 +17,15 @@ namespace Domain
 		******************************************************************************/
         public Guid Id { get; set; }
         public string  DPCI { get; set; }
+
+        public virtual string DPCI_Last
+        {
+            get
+            {
+                string[] parts = DPCI.Split('-');
+                return string.Format("{0}", parts[2]);
+            }
+        }
         public string Brand  { get; set; }
         public string  Product { get; set; }
         public string  SubProduct { get; set; }

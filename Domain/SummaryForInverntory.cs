@@ -12,9 +12,27 @@ public   class SummaryForInverntory
         public string  PO { get; set; }
         public string  UPC { get; set; }
         public string  DPCIFull { get; set; }
-        public int QTYCards { get; set; }
+        public int QuantityOrdered { get; set; }
+        public string DPCI {
+            get
 
-        public string  DPCI { get; set; }
-        public int Pkgs { get; set; }
+            {
+                if (string.IsNullOrEmpty( DPCIFull ))
+                {
+                    return string.Empty;
+                }
+                return DPCIFull.Substring(DPCIFull.Length - 4, 4 );
+            }
+                }
+
+        public int Bundles {
+            get
+            {
+                return QuantityOrdered / 25;
+            }
+                
+                }
+
+        public double  ItemWeight { get; set; }
     }
 }

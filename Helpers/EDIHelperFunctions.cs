@@ -21,7 +21,7 @@ namespace Helpers
         public const string EDIFLOER = "EDIInboundFile";
         public const string HSAFOLDEROLCATION = "EDIInboundFileHSASide";
         public const string ASNFOLDERLOCATION = "ASNFolder";
-        public const string TEMPFOLDERLOCATION = "TempFolder";
+        public const string ASNTEMPFOLDERLOCATION = "ASNTempFolder";
         const string SLASH = "\\";
         public const string SoftwareNode = SOFTWARE + SLASH + EDI;
         public const string HSA_NOT_FOUND = "HSA not found";
@@ -31,7 +31,7 @@ namespace Helpers
         public const string USERNAME_NOT_FOUND = "Username not found";
         public const string INBOUND_FOLDER_NOT_FOUND = "Folder location not feonud";
         public const string ASN_FOLDER_NOT_FOUND = "Folder location for ASN not feonud";
-        public const string TEMP_FOLDER_NOT_FOUND = "Folder location for temp not feonud";
+        public const string ASN_TEMP_FOLDER_NOT_FOUND = "Folder location for temp not feonud";
         public const string EMAIL_ADDRESS_NOT_FOUND = "Email Address not found";
         public const string RECIPIENTS_NOT_FOUNND = "Recipients not found";
         public const string SMTP_NOT_FOUND = "SMTP not found";
@@ -223,6 +223,9 @@ namespace Helpers
         #region For CSV file 
 
         public const string From = "From";
+        public const string Item = "Item";
+        public const string Description = "Description";
+        public const string Cards = "Cards";
 
         public const string Faddress = "Faddress";
         public const string Fcity = "Fcity";
@@ -240,9 +243,25 @@ namespace Helpers
         public const string Comma = ",";
         public const string LineBreak = "\n";
         public const string STORE = "Store";
-        public const string DPCIFORMAT = "DPCI 2 digit";
+        public const string DPCIFORMAT = "DPCI 4 digit";
+        public const string DPCI = "DPCI";
+        public const string PoNumber = "PoNumber";
+        public const string Bundles = "Bundles";
+        public const string ItemWeight = "ItemWeight";
+        public const string UPC = "UPC";
+        public const string BOLSummary = "BOL Summary";
+        public const string Boxes = "Boxes";
+        public const string Lbs = "Lbs.";
+        public const string QuantityOrdered = "QuantityOrdered";
+
+
+
         public const string PKGS = "Pkgs";
         #endregion
+
+
+        public const  double AmexWeight = .95;
+        public const  double MCVisaWeight = .70;
 
         /// <summary>
         /// Get ID for new ship for 
@@ -374,6 +393,24 @@ namespace Helpers
             PackageUPC = 14,
         }
 
+        public enum TargetProductMappingStockPile : int
+
+        {
+            DPCI = 2,
+            Product = 0,
+            Iten = 12,
+            ProductUPC = 3,
+            PackageUPC = 4,
+
+        }
+
+
+
+        public enum UPCMapping : int
+        {
+            UPC = 1,
+            DPCI = 0,
+        }
 
         public enum Inbound850Mapping : int
         {
@@ -390,6 +427,7 @@ namespace Helpers
             OrderCases = 17,
             CustomerLine = 19,
             UPCCode = 22,
+            DPCI = 23,
             QtyOrdered = 24,
             UnitofMeasure = 32,
             UnitPrice = 34,

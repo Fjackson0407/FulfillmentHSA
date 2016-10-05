@@ -68,6 +68,10 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EDIException\EDIException.csproj">
+      <Project>{2A29F2C0-09D7-447E-BE1D-C36CF62CABED}</Project>
+      <Name>EDIException</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RegistryFunctions\RegistryFunctions.csproj">
       <Project>{2D1C126A-5C01-438C-B0A2-72D66798F4A4}</Project>
       <Name>RegistryFunctions</Name>

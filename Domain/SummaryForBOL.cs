@@ -9,8 +9,8 @@ namespace Domain
     public class SummaryForBOL
     {
         public string PONumber { get; set; }
-        public int  NumberOfBoxes { get; set; }
-        public int Boxes  { get; set; }
+        public double  NumberOfBoxes { get; set; }
+        public double  Weight  { get; set; }
 
     }
 }

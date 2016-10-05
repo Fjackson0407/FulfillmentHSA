@@ -1,4 +1,5 @@
 ﻿using ASNService;
+using EDIException;
 using RegistryFunctions;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,21 @@ namespace ASNBuilder
     {
         static void Main(string[] args)
         {
-
-                 BuildASNs();
-            //Cisco, This loop will consume a considerable amount of processing capacity.
-            //You may want to add a Thread.Sleep(500) to release some wasted resources.
-            while (Console.Read() != 'q') ;
-        }
-        private static void BuildASNs()
-        {
-
-            GetKeys cGetKeys = new GetKeys();
-
-            //Cisco, this is weird that you perform the operation from the constructor.  You would not be able to unit test this.
-            ASNBuild cASNBuild = new ASNBuild(cGetKeys.GetASNLocation(),  cGetKeys.GetTempLocation(), cGetKeys.ConnectionString);
+            string DemoXMLFile = @"C:\EDI850 prod\ASN AMEX\ASN114.xml";
+            string root = @"C:\EDI850 prod\ASN2MC\";
+            string HSAProdString = "Data Source=CCSQLSEC;Database=ValidFulfillment;uid=Car;pwd=@Viper;MultipleActiveResultSets=True";
+            try
+            {
+                ASNBuild cASNBuild = new ASNBuild(root, DemoXMLFile, HSAProdString);
+            }
+            catch (ExceptionsEDI ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
 
         }
+
+
 
 
     }
