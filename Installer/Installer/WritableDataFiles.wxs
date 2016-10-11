@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.WritableDataFiles = "..\..\Console\DRW"?>
+    <ComponentGroup Id ="Cmpg.WritableDataFiles" Directory ="Dir.NexGen.Console.Drw">
+      <Component Id ="Cmp.transid.dat" Guid ="{D3078066-FD75-49D7-B0EF-90F7D5C7332C}">
+        <File Id ="File.transid.dat" Source ="$(var.SourcePath.WritableDataFiles)\transid.dat"/>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

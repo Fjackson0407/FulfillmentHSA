@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Binary Id ="XML.BIN" SourceFile ="Files\xml.bat"></Binary>
+    <CustomAction Id="CA_XML.BAT"
+                 BinaryKey ="XML.BIN"
+               ExeCommand =""
+                 Execute ="deferred"
+               Return ="check"
+                HideTarget ="yes"
+              Impersonate="no" />
+
+
+  </Fragment>
+</Wix>

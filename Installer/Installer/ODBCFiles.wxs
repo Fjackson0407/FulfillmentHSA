@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.ODBCFiles = "..\..\SharedFiles\System32\ODBC"?>
+    <ComponentGroup Id ="Cmpg.ODBCFiles" Directory ="Dir.System32">
+      <Component Id="Cmp.12520437.cpx" Guid="{7BED0420-D220-4AF7-83AE-96AEAE1C85A6}">
+        <File Id="File.12520437.cpx" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\12520437.cpx"/>
+      </Component>
+      <Component Id="Cmp.12520850.cpx" Guid="{744B6CE2-9C5C-4704-94CD-A3B7B745D596}">
+        <File Id="File.12520850.cpx" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\12520850.cpx" />
+      </Component>
+      <Component Id="Cmp.ds16gt.dll" Guid="{72C88EEB-F7F8-4FF2-80EC-B91FE18D2B3C}">
+        <File Id="File.ds16gt.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\ds16gt.dll"/>
+      </Component>
+      <Component Id="Cmp.ds32gt.dll" Guid="{3D3AB683-BA47-42A5-BF1B-F419691425A8}">
+        <File Id="File.ds32gt.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\ds32gt.dll"/>
+      </Component>
+      <Component Id="Cmp.mscpxl32.dll" Guid="{52A3D672-798C-410F-AE08-FC1FB9E48943}">
+        <File Id="File.mscpxl32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\mscpxl32.dll"/>
+      </Component>
+      <Component Id="Cmp.MSJINT35.dll" Guid="{3FF96EFD-8BEC-42BC-A4E3-651E4810EC96}">
+        <File Id="File.MSJINT35.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\MSJINT35.dll"/>
+      </Component>
+      <Component Id="Cmp.MSJTER35.dll" Guid="{E7F87B42-AC8D-43B3-8E24-600B33A73A46}">
+        <File Id="File.MSJTER35.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\MSJTER35.dll"/>
+      </Component>
+      <Component Id="Cmp.MSREPL35.dll" Guid="{7DA1F1B9-5A07-4FD6-A51A-B0E1A3054D1A}">
+        <File Id="File.MSREPL35.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\MSREPL35.dll"/>
+      </Component>
+      <Component Id="Cmp.mtxdm.dll" Guid="{838A5BA5-AA6C-4334-8ECF-BDC3E89E1008}">
+        <File Id="File.mtxdm.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\mtxdm.dll"/>
+      </Component>
+      <Component Id="Cmp.odbc16gt.dll" Guid="{27E5627A-6F0E-431A-AD73-73DA386FF3FE}">
+        <File Id="File.odbc16gt.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbc16gt.dll"/>
+      </Component>
+      <Component Id="Cmp.odbc32.dll" Guid="{12640400-E223-422B-9AD1-B1015F0A9BB1}">
+        <File Id="File.odbc32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbc32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbc32gt.dll" Guid="{4A3CA0B8-C4A4-405C-9298-489AAC83AC1D}">
+        <File Id="File.odbc32gt.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbc32gt.dll"/>
+      </Component>
+      <Component Id="Cmp.odbcad32.exe" Guid="{54F9A088-EE60-41EB-981A-93241E10D8E9}">
+        <File Id="File.odbcad32.exe" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbcad32.exe"/>
+      </Component>
+      <Component Id="Cmp.odbccp32.cpl" Guid="{85AE5B72-33D2-45E3-B2CC-044985638DF0}">
+        <File Id="File.odbccp32.cpl" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbccp32.cpl"/>
+      </Component>
+      <Component Id="Cmp.odbccp32.dll" Guid="{12492396-AC49-4775-9D23-89B645D6102B}">
+        <File Id="File.odbccp32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbccp32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbccr32.dll" Guid="{C6AB22B6-08F1-4473-B968-7B2B6E1882A5}">
+        <File Id="File.odbccr32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbccr32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbccu32.dll" Guid="{FF2E806E-23A8-4409-A410-68267D430EF7}">
+        <File Id="File.odbccu32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbccu32.dll"/>
+      </Component>
+      <Component Id="Cmp.ODBCINST.cnt" Guid="{F8AE451B-A6E8-45FF-9A83-23369368A854}">
+        <File Id="File.ODBCINST.cnt" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\ODBCINST.cnt"/>
+      </Component>
+      <Component Id="Cmp.ODBCINST.hlp" Guid="{F423B3C7-DE5E-44BE-8F62-661B16DB0426}">
+        <File Id="File.ODBCINST.hlp" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\ODBCINST.hlp"/>
+      </Component>
+      <Component Id="Cmp.odbcint.dll" Guid="{41BC5296-9E1D-47E6-BDD1-FC3DB78751E1}">
+        <File Id="File.odbcint.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbcint.dll"/>
+      </Component>
+      <Component Id="Cmp.odbcji32.dll" Guid="{2D999BFB-5198-4295-802A-74FA4F093AB8}">
+        <File Id="File.odbcji32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbcji32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbcjt32.dll" Guid="{F2FDDD66-3A4D-46EB-9B02-53467451475E}">
+        <File Id="File.odbcjt32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbcjt32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbctl32.dll" Guid="{F413FB1F-C9E0-4102-8FDB-4DAD40CA94A5}">
+        <File Id="File.odbctl32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbctl32.dll"/>
+      </Component>
+      <Component Id="Cmp.odbctrac.dll" Guid="{90EBE925-B540-48D5-A4D6-01553F6BE1C8}">
+        <File Id="File.odbctrac.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odbctrac.dll"/>
+      </Component>
+      <Component Id="Cmp.odtext32.dll" Guid="{F1A8122F-AB4D-4B20-832E-F03A34BD45D0}">
+        <File Id="File.odtext32.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCFiles)\odtext32.dll"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

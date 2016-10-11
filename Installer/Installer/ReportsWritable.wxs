@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.ReportsWritable = "..\..\Console\Drw\Reports"?>
+    <ComponentGroup Id ="Cmpg.ReportsWritable" Directory ="Dir.NexGen.Console.Drw.Reports">
+      <Component Id="Cmp.schema.ini" Guid="{1DC3B79E-9465-4B53-BD39-898E63C9CAB5}">
+        <File Id="File.schema.ini" KeyPath="yes" Source="$(var.SourcePath.ReportsWritable)\schema.ini"/>
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

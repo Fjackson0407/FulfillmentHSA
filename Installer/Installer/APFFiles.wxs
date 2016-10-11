@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.APFFiles = "..\..\Console\Dro"?>
+    <ComponentGroup Id="Cmpg.APFFiles" Directory ="Dir.NexGen.Console.Dro">
+      <Component Id ="Cmp.MrEd.csv" Guid ="{F9AFA918-EA3A-445A-B402-7484F6258EB3}">
+        <File Id ="File.MrEd.csv" Source ="$(var.SourcePath.APFFiles)\MrEd.csv"/> 
+      </Component>
+      <Component Id ="Cmp.MrEdStrings.csv" Guid ="{A2221D07-50F8-4E92-AFAA-6344CD055791}">
+        <File Id ="File.MrEdStrings.csv" Source ="$(var.SourcePath.APFFiles)\MrEdStrings.csv"/>
+      </Component>
+      <Component Id ="Cmp.Thermal.xsd" Guid ="{ACC9F458-5773-4A5F-A68F-8586B3716BA4}">
+        <File Id ="File.Thermal.xsd" Source ="$(var.SourcePath.APFFiles)\Thermal.xsd"/>
+      </Component>
+      <Component Id ="Cmp.units.csv" Guid ="{B52F1801-1B87-4A87-8F77-9B5804F61037}">
+        <File Id ="File.units.csv" Source ="$(var.SourcePath.APFFiles)\units.csv"/>
+      </Component>
+      <Component Id ="Cmp.TransferThermalData.exe" Guid ="{20D4F842-5CEC-4B77-B134-184F88E61A95}">
+        <File Id ="File.TransferThermalData.exe" Source ="$(var.SourcePath.APFFiles)\TransferThermalData.exe"/>
+      </Component>
+      <Component Id ="Cmp.Pipettordes.csv" Guid ="{9D1FCD0A-4959-43B4-9F1C-A35595797F3A}">
+        <File Id ="File.Pipettordes.csv" Source ="$(var.SourcePath.APFFiles)\Pipettordes.csv"/>
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

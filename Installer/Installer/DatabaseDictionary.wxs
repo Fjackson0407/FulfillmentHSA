@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.NexStepDict = "..\..\Console\DRO\NexStepDict"?>
+    <ComponentGroup Id ="Cmpg.DatabaseDictionary" Directory ="Dir.NexGen.Console.Dro.NexStepDict" >
+      <Component Id ="Cmp.NexStepDict._objects.dat" Guid ="{5EC1A785-CEBD-4DC6-88CF-E9F7BAF939D1}" >
+        <File Id ="File.NexStepDict._objects.dat" Source ="$(var.SourcePath.NexStepDict)\_objects.dat"/>
+      </Component >
+      <Component Id ="Cmp.NexStepDict._object.idx"  Guid ="{0BD33BFB-9FA0-4952-B416-2B6F7E2635AE}">
+        <File Id ="File.NexStepDict._objects.idx" Source ="$(var.SourcePath.NexStepDict)\_objects.idx"/>
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

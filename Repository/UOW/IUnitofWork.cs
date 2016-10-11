@@ -10,6 +10,7 @@ using Repository.DC;
 using Repository.EmptyBoxFolder;
 using Repository.Inbound850;
 using Repository.MinWeightFolder;
+using Repository.Notes;
 using Repository.OperatorFolder;
 using Repository.PackSize;
 using Repository.SerialRageNumberFolder;
@@ -49,7 +50,8 @@ namespace Repository.UOW
         ICardWeight CardWeight { get; }
         IEmptyBox EmptyBox { get; }
         IMinWeightShipBox MinWeightShipBox { get; }
-        
+        IStoreNotesRepo StoreNotesRepo { get; }
         int Complate();
     }
 }
+ 

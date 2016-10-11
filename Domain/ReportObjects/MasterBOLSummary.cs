@@ -10,6 +10,6 @@ namespace Domain.ReportObjects
     {
         public string  BOL { get; set; }
         public int Boxes { get; set; }
-        public int Pounds { get; set; }
+        public double  Pounds { get; set; }
     }
 }

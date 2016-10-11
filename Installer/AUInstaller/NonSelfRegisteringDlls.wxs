@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.InstrumentUBin = "..\..\Instrument\UBin"?>
+    <ComponentGroup Id ="Cmpg.NonSelfRegisteringDlls" Directory ="Dir.Au">
+      <Component Id="Cmp.Socket.dll" Guid="{4E98C6AB-CE7B-4AE3-9B9A-512B7966C938}">
+        <File Id="File.Socket.dll" KeyPath="yes" Source="$(var.SourcePath.InstrumentUBin)\Socket.dll"/>
+      </Component>
+      <Component Id="Cmp.AUComm.dll" Guid="{42E8A4A8-2B25-4AFD-BC1D-5A7DC96B3529}">
+        <File Id="File.AUComm.dll" KeyPath="yes" Source="$(var.SourcePath.InstrumentUBin)\AUComm.dll"/>
+      </Component>
+      <Component Id="Cmp.MsgData.dll" Guid="{0B2F5AA6-E5D1-499B-B45D-737390E78DF6}">
+        <File Id="File.MsgData.dll" KeyPath="yes" Source="$(var.SourcePath.InstrumentUBin)\MsgData.dll"/>
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

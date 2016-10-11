@@ -45,6 +45,10 @@
     <Compile Include="ReportsFromInboundFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ASNService\ASNService.csproj">
+      <Project>{073bc609-49c1-46d3-a315-0860845f23e8}</Project>
+      <Name>ASNService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>

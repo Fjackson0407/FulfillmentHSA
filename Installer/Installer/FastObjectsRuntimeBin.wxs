@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- This file contains all of the file components needed to install Fast Objects on the Console PC. -->
+    <?define SourcePath.FastObjectsInstallationRuntimeBin = "..\..\SharedFiles\FastObjects\runtime\bin"?>
+    <ComponentGroup Id ="Cmpg.FastObjects.Runtime.Bin" Directory ="Dir.NexGen.FastObjects.runtime.Bin">
+    <!--Fast Object Files needed from the Runtime\Bin folder-->
+    <Component Id="Cmp.license" Guid="D202A5D0-ACA4-4D86-BB29-6975A8F3728C">
+      <File Id="File.license" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\license"/>
+    </Component>
+    <Component Id="Cmp.pt95Fbs.dll" Guid="{893A8128-BE70-4C1A-A5D9-E00A8C59D9F3}">
+      <File Id="File.pt95Fbs.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fbs.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fbs71.dll" Guid="{381DC7C4-3035-41A8-96F3-FB54C6471D2F}">
+      <File Id="File.pt95Fbs71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fbs71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FbsB.dll" Guid="{F3310F22-94BA-4FB6-9546-8542FEA186C7}">
+      <File Id="File.pt95FbsB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FbsB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fen.dll" Guid="{94F50B0F-137C-41DC-9D15-FC5404F0B843}">
+      <File Id="File.pt95Fen.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fen.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fen71.dll" Guid="{E191A2CE-FD73-49F0-B4F9-623B92B1D30A}">
+      <File Id="File.pt95Fen71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fen71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fex.dll" Guid="{14F12E63-A5F5-4913-8CB4-21E28738F0B2}">
+      <File Id="File.pt95Fex.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fex.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fex71.dll" Guid="{2627EAE1-E822-4C37-A587-2D45416CA75E}">
+      <File Id="File.pt95Fex71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fex71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FexB.dll" Guid="{E655F4C7-3AB6-48A7-A536-254D1103B8D8}">
+      <File Id="File.pt95FexB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FexB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fhc.dll" Guid="{965FA03C-2D9C-4599-92EE-14C326795070}">
+      <File Id="File.pt95Fhc.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fhc.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fhc71.dll" Guid="{00BAF364-2019-4732-961B-D1BC1C2DE705}">
+      <File Id="File.pt95Fhc71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fhc71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FhcB.dll" Guid="{D413DF78-AB9E-464F-9B42-6A2C591C77C7}">
+      <File Id="File.pt95FhcB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FhcB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fib.dll" Guid="{E8990283-892A-48DF-A635-9DE00422FB83}">
+      <File Id="File.pt95Fib.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fib.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fib71.dll" Guid="{F0538A18-4F6A-439A-ADC2-54102984E5D8}">
+      <File Id="File.pt95Fib71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fib71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fin.dll" Guid="{FC688973-ECD2-4508-BD1E-D66841D3893B}">
+      <File Id="File.pt95Fin.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fin.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fin71.dll" Guid="{A158807F-85B6-42DE-BC1C-39DA605ABED4}">
+      <File Id="File.pt95Fin71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fin71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FinB.dll" Guid="{335A0FB1-5592-4C94-B20F-A4CAE19268CC}">
+      <File Id="File.pt95FinB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FinB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fix.dll" Guid="{4A77A32A-A80C-4713-AF31-AD6E40DC2E53}">
+      <File Id="File.pt95Fix.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fix.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fix71.dll" Guid="{31CFE815-48BB-4710-BE8B-B832DAB9B756}">
+      <File Id="File.pt95Fix71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fix71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FixB.dll" Guid="{5F04D649-B595-4394-A9ED-CBDC3152AF74}">
+      <File Id="File.pt95FixB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FixB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fkn.dll" Guid="{B762C497-DE9C-4AD9-8C11-D59223D84479}">
+      <File Id="File.pt95Fkn.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fkn.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fkn71.dll" Guid="{4E174086-C998-4471-A9F6-E7263F5D4B9C}">
+      <File Id="File.pt95Fkn71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fkn71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FknB.dll" Guid="{325FE9B6-E93B-4B30-9742-5F449CF9B2E5}">
+      <File Id="File.pt95FknB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FknB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Flc.dll" Guid="{A6B00AAA-2EF1-4CBE-897D-081E2BA8B514}">
+      <File Id="File.pt95Flc.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Flc.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Flc71.dll" Guid="{7941F312-71FF-415D-AF2B-C3ECBF95B725}">
+      <File Id="File.pt95Flc71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Flc71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FlcB.dll" Guid="{95FA65AB-2CB0-4E74-853E-0F58F2FF1648}">
+      <File Id="File.pt95FlcB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FlcB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fli.dll" Guid="{2ACCDF40-EF33-4BCC-89FE-7167BA845BD5}">
+      <File Id="File.pt95Fli.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fli.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fli71.dll" Guid="{7286439A-D105-4743-A269-F1F3C0031D3A}">
+      <File Id="File.pt95Fli71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fli71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FliB.dll" Guid="{252072B6-8296-4F5E-97B9-8EDC2F67A1D1}">
+      <File Id="File.pt95FliB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FliB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fmm.dll" Guid="{4F629267-2D0C-4524-8304-7AED4CB364CF}">
+      <File Id="File.pt95Fmm.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fmm.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fmm71.dll" Guid="{E0C49573-4DFD-4C4E-BDD7-DB88CE755F8E}">
+      <File Id="File.pt95Fmm71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fmm71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Foq.dll" Guid="{73B96084-3CB0-4637-8B1D-2EA5054DC5C5}">
+      <File Id="File.pt95Foq.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Foq.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Foq71.dll" Guid="{B36AA303-62C6-42DD-B634-30F4DC33B6C7}">
+      <File Id="File.pt95Foq71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Foq71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FoqB.dll" Guid="{C2156B17-5A0A-44AA-9BB7-99AC43819FD2}">
+      <File Id="File.pt95FoqB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FoqB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Frm.dll" Guid="{8322B391-E5A3-4461-B3F2-42C48C0E244B}">
+      <File Id="File.pt95Frm.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Frm.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Frm71.dll" Guid="{54E86230-017E-42DE-8930-A7B7CADB770F}">
+      <File Id="File.pt95Frm71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Frm71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Frp.dll" Guid="{E07A58A1-B4CD-4056-9FBD-24C7B45889BA}">
+      <File Id="File.pt95Frp.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Frp.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Frp71.dll" Guid="{8A6CEF1A-312E-4BAB-96EC-95BE1DE922F6}">
+      <File Id="File.pt95Frp71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Frp71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fsc.dll" Guid="{812F1574-C792-443B-8255-03E80AA30AF9}">
+      <File Id="File.pt95Fsc.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fsc.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fsc71.dll" Guid="{A1E7D54C-C775-4A42-A229-3F66F7414138}">
+      <File Id="File.pt95Fsc71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fsc71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FscB.dll" Guid="{30F5CC13-DA9E-4509-932F-92037281C881}">
+      <File Id="File.pt95FscB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FscB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Ftm.dll" Guid="{FB867C72-9856-4568-A731-BDFF67360B42}">
+      <File Id="File.pt95Ftm.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Ftm.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Ftm71.dll" Guid="{F0889C84-1835-4BB7-BA60-039059F6B16A}">
+      <File Id="File.pt95Ftm71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Ftm71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FtmB.dll" Guid="{AA1D5268-7BF3-40A1-A9DF-4AC7855DC50F}">
+      <File Id="File.pt95FtmB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FtmB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fut.dll" Guid="{862D348C-D331-4194-AA81-DBB377C9454A}">
+      <File Id="File.pt95Fut.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fut.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fut71.dll" Guid="{BF757D5C-F0AE-436A-BD8F-FF033DBF1403}">
+      <File Id="File.pt95Fut71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fut71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95FutB.dll" Guid="{A9A1153F-16AE-4B66-9588-D17A5991E22F}">
+      <File Id="File.pt95FutB.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95FutB.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fvx.dll" Guid="{2D0D3037-A6FE-4CCC-B6F9-D21C037F8E3A}">
+      <File Id="File.pt95Fvx.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fvx.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Fvx71.dll" Guid="{2C3B27FB-7669-48FB-B485-6E52795CBAB2}">
+      <File Id="File.pt95Fvx71.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Fvx71.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Jgc.dll" Guid="{DC64B2B2-0B93-448C-B528-61834C22BD86}">
+      <File Id="File.pt95Jgc.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Jgc.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Jrt.dll" Guid="{840C5E46-F1E9-4074-9581-D712A2FE937D}">
+      <File Id="File.pt95Jrt.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Jrt.dll"/>
+    </Component>
+    <Component Id="Cmp.pt95Jtl.dll" Guid="{DB9B483B-38CE-4129-AABB-F8977C845E88}">
+      <File Id="File.pt95Jtl.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\pt95Jtl.dll"/>
+    </Component>
+    <Component Id="Cmp.ptgc.exe" Guid="{14CE1329-6B68-4FD1-A195-F1F5B426D275}">
+      <File Id="File.ptgc.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ptgc.exe"/>
+    </Component>
+    <Component Id="Cmp.PtGMon.exe" Guid="{2333BEB8-600B-4072-A2AA-4DF9F2E07BB7}">
+      <File Id="File.PtGMon.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\PtGMon.exe"/>
+    </Component>
+    <Component Id="Cmp.ptlicens.exe" Guid="{7A7BD2D6-AE5E-4F7C-A7B2-42DAA266FC00}">
+      <File Id="File.ptlicens.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ptlicens.exe"/>
+    </Component>
+    <Component Id="Cmp.ptserv32.exe" Guid="{86343B9B-E886-43BC-AE70-9E0334835F76}">
+      <File Id="File.ptserv32.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ptserv32.exe"/>
+    </Component>
+    <Component Id="Cmp.ptserver.exe" Guid="{8343F47C-40A7-4094-9554-420EBAC78114}">
+      <File Id="File.ptserver.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ptserver.exe"/>
+    </Component>
+    <Component Id="Cmp.ptsu.exe" Guid="{8092023E-3C8C-4594-9E92-3285FCA01189}">
+      <File Id="File.ptsu.exe" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ptsu.exe"/>
+    </Component>
+    <Component Id="Cmp.ssl_runtimebin.pem" Guid="{1507D942-B0FB-4112-9A84-445C3FB6EDC1}">
+        <File Id="File.ssl_runtimebin.pem" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\ssl.pem"/>
+    </Component>
+    <Component Id="Cmp.SSLeay32.dll" Guid="{9E7469B0-26DE-4C8E-8576-4684570392AE}">
+      <File Id="File.SSLeay32.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\SSLeay32.dll"/>
+    </Component>
+      <Component Id="Cmp.libeay32_runtimebin.dll" Guid="{C0B9024A-6B33-4EC6-8171-60C3ADE0BFEF}">
+        <File Id="File.libeay32_runtimebin.dll" KeyPath="yes" Source="$(var.SourcePath.FastObjectsInstallationRuntimeBin)\libeay32.dll"/>
+    </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

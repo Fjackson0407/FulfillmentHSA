@@ -48,6 +48,10 @@
       <Project>{63df732a-2564-4297-9883-e799ad982f83}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EDIException\EDIException.csproj">
+      <Project>{2A29F2C0-09D7-447E-BE1D-C36CF62CABED}</Project>
+      <Name>EDIException</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{47c222ba-6413-4c06-b08c-73e9f05ba2b5}</Project>
       <Name>Helpers</Name>

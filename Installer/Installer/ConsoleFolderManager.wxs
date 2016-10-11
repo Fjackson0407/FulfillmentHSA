@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="Cmpg.Console.Folders">
+      <Component Id ="Cmp.NexGen" Guid ="{FB1D2F69-3D17-4CD8-BFED-C5C306B34E2F}" Directory ="Dir.NexGen">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.Console" Guid ="{CA24E506-73D7-40CC-A04A-7E89BF0C9DF4}" Directory ="Dir.NexGen.Console">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Bin" Guid ="{573516B4-7CB1-430D-81C2-40F04AF85E9A}" Directory ="Dir.NexGen.Console.Bin">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Bin.Language" Guid ="{5467D9E7-D667-4BD6-9CD2-C742C37ED9E4}" Directory ="Dir.NexGen.Console.Bin.Language">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Dro" Guid ="{BE3CB992-83A3-44E7-A1ED-63116FE0B1EA}" Directory ="Dir.NexGen.Console.Dro">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Dro.EventDict" Guid ="{7B38AC57-C398-489A-B216-0C3D0ACCF3A0}" Directory ="Dir.NexGen.Console.Dro.EventDict">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Dro.NexStepDict" Guid ="{E8F82F3C-D762-414D-9E92-5F4753F3FD08}" Directory ="Dir.NexGen.Console.Dro.NexStepDict">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Dro.Reports" Guid ="{C9C0D5EF-FDF7-4083-9158-C9ECAF73FDFB}" Directory ="Dir.NexGen.Console.Dro.Reports">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Drw" Guid ="{6FB56E96-F769-4FB5-A64E-9434108DC55D}" Directory ="Dir.NexGen.Console.Drw">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Drw.EventBase" Guid ="{FC084C02-19BE-45DE-A96C-E9BB2E3E08E2}" Directory ="Dir.NexGen.Console.Drw.EventBase">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Drw.NexStepBase" Guid ="{DF7C10C3-83ED-4AB3-B619-2B8655EB0B5D}" Directory ="Dir.NexGen.Console.Drw.NexStepBase">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Drw.Reports" Guid ="{0C8D9F96-6678-4CA7-8A2C-D48E38EC8BE4}" Directory ="Dir.NexGen.Console.Drw.Reports">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.Console.Drw.Reports.Spool" Guid ="{E94BC909-D4BF-4C90-ACBB-F78895C05139}" Directory ="Dir.NexGen.Console.Drw.Reports.Spool">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.FastObjects" Guid ="{A9C2A79B-F098-4E49-9F32-92692FC65BC3}" Directory ="Dir.NexGen.FastObjects">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.FastObjects.bin" Guid ="{D034EBF9-32B6-4DCD-97C3-70782E6E3CEC}" Directory ="Dir.NexGen.FastObjects.Bin">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.FastObjects.runtime" Guid ="{0998EB88-0BF9-4F44-9537-BC04CB9BDC0F}" Directory ="Dir.NexGen.FastObjects.runtime">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.NexGen.FastObjects.runtime.bin" Guid ="{BC9C0355-3D65-4644-808E-207F6A98C153}" Directory ="Dir.NexGen.FastObjects.runtime.Bin">
+        <CreateFolder/>
+      </Component>
+      <ComponentGroupRef Id ="Cmpg.APFFiles"/>
+      <ComponentGroupRef Id ="Cmpg.ConsoleFiles"/>
+      <ComponentGroupRef Id ="Cmpg.DatabaseDictionary"/>
+      <ComponentGroupRef Id ="Cmpg.DatabaseFiles"/>
+      <ComponentGroupRef Id ="Cmpg.EventlogDictionary"/>
+      <ComponentGroupRef Id ="Cmpg.EventlogFiles"/>
+      <ComponentGroupRef Id ="Cmpg.FastObjects.Bin"/>
+      <ComponentGroupRef Id ="Cmpg.HelpFiles"/>
+      <ComponentGroupRef Id ="Cmpg.FastObjects.Runtime.Bin"/>
+      <ComponentGroupRef Id ="Cmpg.ProgramDlls"/>
+      <ComponentGroupRef Id ="Cmpg.ProgramExecutableFiles"/>
+      <ComponentGroupRef Id ="Cmpg.ProgramSelfRegFiles"/>
+      <ComponentGroupRef Id ="Cmpg.Reports"/>
+      <ComponentGroupRef Id ="Cmpg.ReportsWritable"/>
+      <ComponentGroupRef Id ="Cmpg.SharedSelfRegFiles"/>
+      <ComponentGroupRef Id ="Cmpg.SharedDlls"/>
+      <ComponentGroupRef Id ="Cmpg.LanguageDlls"/>
+      <ComponentGroupRef Id ="Cmpg.ODBCFiles"/>
+      <ComponentGroupRef Id ="Cmpg.ODBCSelfRegFiles"/>
+      <ComponentGroupRef Id ="Cmpg.TempInstallFiles"/>
+      <ComponentGroupRef Id ="Cmpg.WritableDataFiles"/>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define System32 = "..\..\SharedFiles\System32" ?>
+    <ComponentGroup Id ="Cmpg.SelfRegisteringMicrosoftDlls"  Directory ="Dir.System32">
+      <Component Id ="Cmp.atl" Guid ="{D5D75853-4165-4E03-ABF5-7FC28A9A8F19}">
+        <File Id ="File.atl"  Source="$(var.System32)\atl.dll"/>
+      </Component>        
+    </ComponentGroup >
+	</Fragment>
+</Wix>

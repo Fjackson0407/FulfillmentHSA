@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="Dir.NexGen.Applications.Shortcuts" Name="NexGen"/>
+      </Directory>
+      <Directory Id ="Dir.Drivers" Name ="Drivers"/>
+      <Directory Id ="DesktopFolder" Name ="Desktop"/>
+      <Directory Id="Windows" Name="Windows">
+        <Directory Id="Dir.System32" Name="System32">
+          <Directory Id="Dir.System32.DRVSTORE" Name="DRVSTORE"/>
+        </Directory>
+      </Directory>
+      <Directory Id ="Dir.Au" Name ="AU">
+        <Directory Id ="Dir.Au.Defaults" Name ="Defaults"/>
+        <Directory Id ="Dir.Au.Log" Name ="Log"/>
+        <Directory Id ="Dir.Au.Tools" Name ="Tools"/>
+      </Directory>
+      <Directory Id="Dir.TempInstallFiles" Name="TempInstallFiles"/>
+    </Directory>
+  </Fragment>
+</Wix>

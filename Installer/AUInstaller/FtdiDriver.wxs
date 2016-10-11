@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.FtdiDriver = "..\..\Instrument\drivers\FtdiUSB"?>
+    <ComponentGroup Id ="Cmpg.FtdiDriver.ToDRVSTORE" Directory ="Dir.System32.DRVSTORE">
+      <Component Id="Cmp.DPInst.exe" Guid="{5D563743-24A0-4F27-918D-6068960E9C74}">
+        <File Id="File.DPInst.exe" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\DPInst.exe"/>
+      </Component>
+      <Component Id="Cmp.dpinst.xml" Guid="{ABB9FD61-EB5F-4141-B894-D3F85AFB17D7}">
+        <File Id="File.dpinst.xml" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\dpinst.xml"/>
+      </Component>
+      <Component Id="Cmp.FTBUSUI.dll" Guid="{EFBCFD50-87B5-4D7B-B4DB-74C7094C8152}">
+        <File Id="File.FTBUSUI.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTBUSUI.dll"/>
+      </Component>
+      <Component Id="Cmp.FTChipID.dll" Guid="{6D74CBEB-6622-4E3E-95C5-5B0C142CEED0}">
+        <File Id="File.FTChipID.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.dll"/>
+      </Component>
+      <Component Id="Cmp.FTChipID.h" Guid="{F6255D33-430D-44C8-B7CB-D067B02C8761}">
+        <File Id="File.FTChipID.h" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.h"/>
+      </Component>
+      <Component Id="Cmp.FTChipID.lib" Guid="{07CB6B75-F345-4B3E-8EB4-67F71E7A3F22}">
+        <File Id="File.FTChipID.lib" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.lib"/>
+      </Component>
+      <Component Id="Cmp.ftcserco.dll" Guid="{57EC4B05-50B7-4EE8-B548-A48C729A63E0}">
+        <File Id="File.ftcserco.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftcserco.dll"/>
+      </Component>
+      <Component Id="Cmp.FTD2XX.dll" Guid="{83487351-B05B-42E8-A6D7-A16FE3075C69}">
+        <File Id="File.FTD2XX.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.dll"/>
+      </Component>
+      <Component Id="Cmp.FTD2XX.H" Guid="{5651343F-3D2B-4ADF-9C17-9DB33CC5CA3E}">
+        <File Id="File.FTD2XX.H" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.H"/>
+      </Component>
+      <Component Id="Cmp.FTD2XX.lib" Guid="{775730E1-BEF1-42A5-96C3-0DAF18761C94}">
+        <File Id="File.FTD2XX.lib" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.lib"/>
+      </Component>
+      <Component Id="Cmp.ftdibus.cat" Guid="{DB495B80-4EE2-4E44-8E37-62666A600C83}">
+        <File Id="File.ftdibus.cat" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftdibus.cat"/>
+      </Component>
+      <Component Id="Cmp.FTDIBUS.INF" Guid="{9602BDD1-B4AB-4F07-9722-716338967FDA}">
+        <File Id="File.FTDIBUS.INF" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIBUS.INF"/>
+      </Component>
+      <Component Id="Cmp.FTDIBUS.sys" Guid="{A1236929-8148-4E49-8AF3-3CAF317B2D38}">
+        <File Id="File.FTDIBUS.sys" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIBUS.sys"/>
+      </Component>
+      <Component Id="Cmp.ftdiport.cat" Guid="{BA3F1DB2-832B-484D-BA3C-BA8D8470682B}">
+        <File Id="File.ftdiport.cat" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftdiport.cat"/>
+      </Component>
+      <Component Id="Cmp.FTDIPORT.INF" Guid="{B578B3D7-8543-4FD5-9C05-0F378C3EC8AB}">
+        <File Id="File.FTDIPORT.INF" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIPORT.INF"/>
+      </Component>
+      <Component Id="Cmp.FTDIUN2K.INI" Guid="{22FC70FA-05B5-4114-BA0F-B808D03A5AA4}">
+        <File Id="File.FTDIUN2K.INI" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIUN2K.INI"/>
+      </Component>
+      <Component Id="Cmp.FTDIUNIN.exe" Guid="{BA42AA0C-7D6A-4A44-9046-36604ED952D0}">
+        <File Id="File.FTDIUNIN.exe" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIUNIN.exe"/>
+      </Component>
+      <Component Id="Cmp.FTLang.dll" Guid="{E3D05358-953F-4C43-934E-C4CCB69657C3}">
+        <File Id="File.FTLang.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTLang.dll"/>
+      </Component>
+      <Component Id="Cmp.ftser2k.sys" Guid="{37D7C6EE-AB80-471D-BF26-739DEC42FBA4}">
+        <File Id="File.ftser2k.sys" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftser2k.sys"/>
+      </Component>
+      <Component Id="Cmp.ftserui2.dll" Guid="{F2685AAD-01E2-499F-82E2-4ADB5C741304}">
+        <File Id="File.ftserui2.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftserui2.dll"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id ="Cmpg.FtdiDriver.ToSystem32" Directory ="Dir.System32">
+      <Component Id="Cmp.ToSystem32.DPInst.exe" Guid="{50AE1C4E-4EAC-483B-910F-873F4CF68262}">
+        <File Id="File.ToSystem32.DPInst.exe" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\DPInst.exe"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.dpinst.xml" Guid="{F09915BA-A481-4CB6-BC52-63785C1D90C2}">
+        <File Id="File.ToSystem32.dpinst.xml" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\dpinst.xml"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTBUSUI.dll" Guid="{1DE60318-0D79-4CA7-884D-F9729625A57C}">
+        <File Id="File.ToSystem32.FTBUSUI.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTBUSUI.dll"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTChipID.dll" Guid="{9062599E-4654-4308-B483-811892D92A96}">
+        <File Id="File.ToSystem32.FTChipID.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.dll"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTChipID.h" Guid="{DD940055-76AE-49EE-B09E-C43A9E75B0F8}">
+        <File Id="File.ToSystem32.FTChipID.h" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.h"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTChipID.lib" Guid="{8B707EF9-1BEA-4C28-B859-55D24AD7170D}">
+        <File Id="File.ToSystem32.FTChipID.lib" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTChipID.lib"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.ftcserco.dll" Guid="{78D75CF1-95C7-43DA-B0C7-1F936D0F571D}">
+        <File Id="File.ToSystem32.ftcserco.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftcserco.dll"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTD2XX.dll" Guid="{12E23602-8EDF-4C3D-9CD1-D0466E145A14}">
+        <File Id="File.ToSystem32.FTD2XX.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.dll"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTD2XX.H" Guid="{384582E9-CCCA-4D3F-B404-77516C175F51}">
+        <File Id="File.ToSystem32.FTD2XX.H" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.H"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTD2XX.lib" Guid="{292D6854-E87F-4604-A41B-3A60816D9918}">
+        <File Id="File.ToSystem32.FTD2XX.lib" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTD2XX.lib"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.ftdibus.cat" Guid="{A3CD27FA-4D5D-4241-86BB-C86DE99A7B35}">
+        <File Id="File.ToSystem32.ftdibus.cat" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftdibus.cat"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTDIBUS.INF" Guid="{F7346B44-2D2F-43E8-9440-23EE35BD7ED2}">
+        <File Id="File.ToSystem32.FTDIBUS.INF" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIBUS.INF"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTDIBUS.sys" Guid="{905A0ABD-C054-413D-A7EA-6BB044FC91EC}">
+        <File Id="File.ToSystem32.FTDIBUS.sys" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIBUS.sys"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.ftdiport.cat" Guid="{D5EA1990-5180-4049-AD12-2E1C8E59993A}">
+        <File Id="File.ToSystem32.ftdiport.cat" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftdiport.cat"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTDIPORT.INF" Guid="{D4BCA6DF-5746-4D30-A71F-5BDA91DC2AED}">
+        <File Id="File.ToSystem32.FTDIPORT.INF" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIPORT.INF"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTDIUN2K.INI" Guid="{19245982-BE2A-4786-B246-F37F44D8E7D4}">
+        <File Id="File.ToSystem32.FTDIUN2K.INI" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIUN2K.INI"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTDIUNIN.exe" Guid="{5FB2FC4D-577B-43CF-8330-E4DE676C76A1}">
+        <File Id="File.ToSystem32.FTDIUNIN.exe" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTDIUNIN.exe"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.FTLang.dll" Guid="{916EB073-F2A3-48F7-A06F-ADB6FCE1C974}">
+        <File Id="File.ToSystem32.FTLang.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\FTLang.dll"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.ftser2k.sys" Guid="{E5EE4B94-BA0A-451B-99EC-B5173CAFC58F}">
+        <File Id="File.ToSystem32.ftser2k.sys" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftser2k.sys"/>
+      </Component>
+      <Component Id="Cmp.ToSystem32.ftserui2.dll" Guid="{ACB3A09F-40FE-498A-B436-9711803B743D}">
+        <File Id="File.ToSystem32.ftserui2.dll" KeyPath="yes" Source="$(var.SourcePath.FtdiDriver)\ftserui2.dll"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

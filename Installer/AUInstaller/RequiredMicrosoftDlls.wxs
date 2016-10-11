@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.System32 = "..\..\SharedFiles\System32" ?>
+    <ComponentGroup Id ="Cmpg.RequiredMicrosoftDlls" Directory ="Dir.System32">
+      <Component Id="Cmp.MFCO42UD.dll" Guid="{A6AA1CDA-607A-43EC-BDA0-747742388C88}"  >
+        <File Id="File.MFCO42UD.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\MFCO42UD.dll"/>
+      </Component>
+      <Component Id="Cmp.MFC42UD.dll" Guid="{2CD5147D-860B-484F-86C7-ED8A6DFE6F09}">
+        <File Id="File.MFC42UD.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\MFC42UD.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcrtd.dll" Guid="{F52A8BCB-6C15-4A98-B0D5-CB2E32E6A5DD}">
+        <File Id="File.msvcrtd.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\msvcrtd.dll"/>
+      </Component>
+      <Component Id ="Cmp.oleaut32.dll"  Guid ="{3CFF151F-E348-4AEA-9848-9E07CF0A2B83}">
+        <File  Id ="File.oleaut32.dll" KeyPath ="yes" Source ="$(var.SourcePath.System32)\oleaut32.dll"/>
+      </Component>
+      <Component Id="Cmp.MSVCIRT.dll" Guid="{1CF3AD96-92AE-40C9-A025-6CCE7591B4C0}">
+        <File Id="File.MSVCIRT.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\MSVCIRT.dll" />
+      </Component>
+      <Component Id="Cmp.comctl32.dll" Guid="{512FDBCE-106A-4440-8573-DB32AC60F769}">
+        <File Id="File.comctl32.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\comctl32.dll" />
+      </Component>
+      <Component Id="Cmp.imagehlp.dll" Guid="{826CC79D-1298-4E4E-BB8A-EF968E89F760}">
+        <File Id="File.imagehlp.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\imagehlp.dll" />
+      </Component>
+      <Component Id="Cmp.mmdrv.dll" Guid="{C7410A86-2860-493B-B622-FCE35C70D081}">
+        <File Id="File.mmdrv.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\mmdrv.dll" />
+      </Component>
+      <Component Id="Cmp.msvcrt40.dll" Guid="{627D3B2D-33D3-42B1-BC7D-512F91DF6CFD}">
+        <File Id="File.msvcrt40.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\msvcrt40.dll" />
+      </Component>
+      <Component Id="Cmp.msvcirtd.dll" Guid="{749ADBD5-3802-429D-A1FF-C278E4BA1622}">
+        <File Id="File.msvcirtd.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\msvcirtd.dll" />
+      </Component>
+      <Component Id="Cmp.mfc42d.dll" Guid="{E331A68B-BA1A-434D-9B80-D8A6EC8D12E2}">
+        <File Id="File.mfc42d.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\mfc42d.dll" />
+      </Component>
+      <Component Id="Cmp.mfco42d.dll" Guid="{D260D260-3480-4334-9944-41AED33BE426}">
+        <File Id="File.mfco42d.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\mfco42d.dll" />
+      </Component>
+      <Component Id="Cmp.MSVCP60D.dll" Guid="{DE1BD220-6043-49BE-87F9-7AE63A32FBCA}">
+        <File Id="File.MSVCP60D.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\MSVCP60D.dll" />
+      </Component>
+      <Component Id="Cmp.MSVCP60.dll" Guid="{8986A85C-FAF9-41E3-ACF5-1B82DAAE644F}">
+        <File Id="File.MSVCP60.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\MSVCP60.dll" />
+      </Component>
+      <Component Id="Cmp.psapi.dll" Guid="{751A9161-6A50-40A4-B612-E06148F06CDA}">
+        <File Id="File.psapi.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\psapi.dll" />
+      </Component>
+      <Component Id="Cmp.pdh.dll" Guid="{6ACEEB7A-EB26-4C8E-BCD4-B289D2F9C9B7}">
+        <File Id="File.pdh.dll" KeyPath="yes" Source="$(var.SourcePath.System32)\pdh.dll" />
+      </Component>
+    </ComponentGroup>
+    </Fragment>
+</Wix>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define ProgramExecutableTestFiles = "..\..\Instrument\Test\Ubin" ?>
+    <?define ProgramExecutables = "..\..\Instrument\Ubin" ?>
+    <ComponentGroup Id ="Cmpg.ProgramExecutableFiles" Directory ="Dir.Au" >
+      <Component Id="Cmp.SMCTest.exe" Guid="{8589A189-1F2A-4A5F-9045-0150254F0C8C}">
+        <File Id="File.SMCTest.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\SMCTest.exe"/>
+      </Component>
+      <Component Id="Cmp.InBitTest.exe" Guid="{BEE4F900-8537-430F-9368-237CF8A18A43}">
+        <File Id="File.InBitTest.exe" KeyPath="yes"  Source ="$(var.ProgramExecutableTestFiles)\InBitTest.exe"/>
+      </Component>
+      <Component Id="Cmp.OutBitTest.exe" Guid="{5AEB4258-FDB3-4138-84D4-D3FC1AF0F03D}">
+        <File Id="File.OutBitTest.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\OutBitTest.exe"/>
+      </Component>
+      <Component Id="Cmp.TestGpio.exe" Guid="{7EDF9BBE-BAB5-4F57-B357-5A4D9B1D0CA0}">
+        <File Id="File.TestGpio.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\TestGpio.exe"/>
+      </Component>
+      <Component Id="Cmp.TestDynamic.exe" Guid="{0EBFB977-4CE9-4C05-8496-EE2AD3C055EE}">
+        <File Id="File.TestDynamic.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\TestDynamic.exe"/>
+       </Component>
+      <Component Id="Cmp.TestAnalog.exe" Guid="{43FA51AE-1686-40C3-8081-7FB2C76EA998}">
+        <File Id="File.TestAnalog.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\TestAnalog.exe"/>
+      </Component>
+      <Component Id="Cmp.TestUltrasonic.exe" Guid="{4C3BA6EC-DB17-47DB-881E-5573DB8B2FDF}">
+        <File Id="File.TestUltrasonic.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\TestUltrasonic.exe"/>
+      </Component>
+      <Component Id="Cmp.EMI.exe" Guid="{A545044A-8EB4-4BF4-A9B9-220212420325}">
+        <File Id="File.EMI.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\EMI.exe"/>
+      </Component>
+      <Component Id="Cmp.TestReagentIf.exe" Guid="{6985BB3B-CC79-4E97-900F-9B4383582223}">
+        <File Id="File.TestReagentIf.exe" KeyPath="yes" Source ="$(var.ProgramExecutableTestFiles)\TestReagentIf.exe"/>
+      </Component>
+      <Component Id="Cmp.UCTASimulator.exe" Guid="{40CDA801-3C00-4C45-ABC1-7CB0D4C0D059}">
+        <File Id="File.UCTASimulator.exe" KeyPath="yes"  Source ="$(var.ProgramExecutables)\UCTASimulator.exe"/>
+      </Component>
+      <Component Id="Cmp.NVMEditor.exe" Guid="{0DCC0258-A476-4AB4-99AD-FE6C2C43BDDD}">
+        <File Id="File.NVMEditor.exe" KeyPath="yes"  Source ="$(var.ProgramExecutables)\NVMEditor.exe"/>
+      </Component>
+      <Component Id="Cmp.AUObj.bat" Guid="{8A3C5BB3-0CB4-4ADE-A2C1-9DEF8BA44D7C}">
+        <File Id="File.AUObj.bat" KeyPath="yes"  Source ="$(var.ProgramExecutables)\AUObj.bat"/>
+      </Component>
+      <Component Id="Cmp.Sleep.exe" Guid="{8B133921-87E0-4BC9-A5E5-9BC0ADCA4B92}">
+        <File Id="File.Sleep.exe" KeyPath="yes"  Source ="$(var.ProgramExecutables)\Sleep.exe"/>
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

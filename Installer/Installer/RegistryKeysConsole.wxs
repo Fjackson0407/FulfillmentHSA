@@ -1,0 +1,1211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--The installer regisgtry keys should be handled in two component groups.  
+    1. Registry Keys that should be overwritten for each install, and
+    2. Registry Keys that should be written once and then never again modified by the installer (i.e. TimeZone)-->
+    <ComponentGroup Id ="Cmpg.OverrideConsoleRegistryKeys" Directory ="TARGETDIR"> 
+      <Component Id="Cmp.OverrideConsoleRegistryKeys" Guid="{D21B8DA2-B493-4FFE-8137-8897F03BD238}" KeyPath="yes">
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep"  Root="HKLM">
+          <RegistryValue Name="PoetBinPath" Value="C:\NexGen\FastObjects\runtime\bin" Type="string"/>
+          <RegistryValue Name="PrimaryConsoleIPAddress" Value="192.168.2.3" Type="string"/>
+          <RegistryValue Name="SoftwareUpdated" Value="1" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Workgroup" Root="HKLM">
+          <RegistryValue Name="AuIp" Value="192.168.2.4" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" Root="HKLM">
+          <RegistryValue Name="SecureProtocols" Value="168" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows\CurrentVersion\policies\Explorer" Root="HKLM">
+          <RegistryValue Name="HonorAutoRunSetting" Value="1" Type="integer"/>
+          <RegistryValue Name="NoDriveTypeAutoRun" Value="149" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run" Root="HKLM">
+          <RegistryValue Name="NexGenStartup" Value="c:\NexGen\Console\bin\NexGenStartupScript.vbs" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" Root="HKLM">
+          <RegistryValue Name="C:\NexGen\Console\Bin\AUCommTest.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\DbMaintenanceUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\DbTestUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\EventsTestUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\LasUtilities.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\LISServiceUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\NexGenDBGen.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\NexGenUIUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\NSPRNTUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\NsUtilUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\NSWGSVUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\ReduceUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\RestoreUtilUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\Sleep.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\UniCelDxI.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\WorkgroupCommTestUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\DxCSimulator.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\ResourceMonitorUD.exe" Value="~ RUNASADMIN" Type="string"/>
+          <RegistryValue Name="C:\NexGen\Console\Bin\ScreenTransitionToolUD.exe" Value="~ RUNASADMIN" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\ResourceMonitor"  Root="HKLM">
+          <RegistryValue Name="EnableMonitoring" Value="1" Type="integer"/>
+          <RegistryValue Name="MonitoringFrequency" Value="1" Type="integer"/>
+          <RegistryValue Name="PointsToAverage" Value="100" Type="integer"/>
+          <RegistryValue Name="MemoryThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="CPUThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="DiskUtilThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="HDDSpaceThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="DBSizeThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="ThresholdWindowWidth" Value="5" Type="integer"/>
+          <RegistryValue Name="LogEntriesCount" Value="1000" Type="integer"/>
+          <RegistryValue Name="RecentLogFilesCount" Value="100" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\ScreenTransition" Root="HKLM">
+          <RegistryValue Name="EnableTool" Value="1" Type="integer"/>
+          <RegistryValue Name="MaxLogFileEntry" Value="1000" Type="integer"/>
+          <RegistryValue Name="MaxLogFileNumber" Value="100" Type="integer"/>
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+    
+    <!--If an existing registry key from this component group needs to be modified in a newer version
+    of software, it will need to be moved to the OverrideRegistryKeys section for that release. -->
+    <ComponentGroup Id ="Cmpg.DoNotOverrideConsoleRegistryKeys" Directory ="TARGETDIR">    
+      <Component Id="CMP.DoNotOverrideConsoleRegistryKeys" Guid="{71DCACAD-3255-4A07-8477-CE0C96246A2A}" KeyPath="yes" NeverOverwrite ="yes">
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep" Root="HKLM">
+          <RegistryValue Name="PrimaryConsoleIPAddress" Value="192.168.2.3" Type="string"/>
+          <RegistryValue Name="BinPath" Value="C:\NexGen\Console\Bin" Type="string"/>
+          <RegistryValue Name="CurrentLanguage" Value="ENU" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\AU Names" Root="HKLM">
+          <RegistryValue Name="Number Five" Value="" Type="binary"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\EventLog" Root="HKLM">
+          <RegistryValue Name="EventLog Entries" Value="600" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup" Root="HKLM">
+          <RegistryValue Name="Auto Print Result Reports" Value="" Type="string"/>
+          <RegistryValue Name="Date Format" Value="MM/DD/YY" Type="string"/>
+          <RegistryValue Name="Enable Bar Code Reader" Value="1" Type="integer"/>
+          <RegistryValue Name="Enable RMS" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableDxCiCommLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnableDxCiConflictLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnableDxCiQueryTestLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableDxIToDxCLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableEventSinkThreadLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableLISQueryTestLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableLisTimeoutLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnableNexGenEventSinkLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="EnableNexGenRMSLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnablePWPLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnableReduceLogging" Value="0" Type="integer"/>
+          <RegistryValue Name="EnableRunManagerLogging" Value="1" Type="integer"/>
+          <RegistryValue Name="LIS In Message Path" Value="C:\in.lis" Type="string"/>
+          <RegistryValue Name="LIS Out Message Path" Value="C:\out.lis" Type="string"/>
+          <RegistryValue Name="LogFileSize" Value="20000000" Type="integer"/>
+          <RegistryValue Name="LogFileVerbosity" Value="0" Type="integer"/>
+          <RegistryValue Name="MaxNumberLogFiles" Value="10" Type="integer"/>
+          <RegistryValue Name="RMS Auto Enroll" Value="1" Type="integer"/>
+          <RegistryValue Name="RMS ID" Value="" Type="string"/>
+          <RegistryValue Name="SVExpireMinutes" Value="60" Type="integer"/>
+          <RegistryValue Name="Time Format" Value="12 Hour" Type="string"/>
+          <RegistryValue Name="SIAMessageSoftwareVersion" Value="1" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports" Root="HKLM">
+          <RegistryValue Name="Data Directory" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="Spool Directory" Value="C:\NexGen\Console\DRW\Reports\Spool" Type="string"/>
+          <RegistryValue Name="Templates Directory" Value="C:\NexGen\Console\DRO\Reports" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Alignment" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Alignment.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Alignment.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Cal Data Quali" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Cal Data Quali.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Acceptance Limits.txt" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Cal Data Quali.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Cal Data Quanti" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Cal Data Quanti.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="CalChart.BMP" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Cal Data Quanti.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Calibration" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Calibration.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Calibration.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Continuous Sample" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Continuous Sample.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Continuous Sample.rpt" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Flags.txt" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Continuous Sample.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Derived Results" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Derived Results.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Derived Results.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Events" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Event Log.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Event Log.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Event Log.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\HotSpots" Root="HKLM">
+          <RegistryValue Name="Data File" Value="HotSpots.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="HotSpots.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="HotSpots.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Incubator Belt" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Incubator Belt.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Incubator Belt.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Low Volume Pip Match" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Low Volume Pip Match.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Low Volume Pip Match.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Low Volume Pip Match.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\NexGen Alignment" Root="HKLM">
+          <RegistryValue Name="Data File" Value="NexGen Alignment.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="NexGen Alignment.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="NexGen Alignment.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Pack Inventory" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Pack Inventory.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Pack Inventory.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Patient" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Patient Report.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Patient Report.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Flags.txt" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Patient.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Pipettor Matching" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Pipettor Matching.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Pipettor Matching.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Pipettor Matching.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\QC Chart" Root="HKLM">
+          <RegistryValue Name="Data File" Value="QC Chart.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="QCChart.BMP" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="QC Chart.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\QC Data" Root="HKLM">
+          <RegistryValue Name="Data File" Value="QC Data.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="QC Data.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\QC Review" Root="HKLM">
+          <RegistryValue Name="Data File" Value="QC Review.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="QC Review.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Reflex Tests" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Reflex Tests.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Reflex Tests.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\RF Level Sense" Root="HKLM">
+          <RegistryValue Name="Data File" Value="RF Level Sense.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="RF Level Sense.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="RF Level Sense.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Sample" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Sample Report.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Sample Report.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Flags.txt" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Sample.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Screen Print" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Screen Print.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Screen Print.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Screen Print.bmp" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Screen Print.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Single Check" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Single Check.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Single Check.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Supplies Required" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Supplies Required.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Supplies Required.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\System Check" Root="HKLM">
+          <RegistryValue Name="Data File" Value="System Check.csv" Type="string"/>
+          <RegistryValue Name="Flag File" Value="Flags.txt" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Support File" Value="System Check Sub.csv" Type="string"/>
+          <RegistryValue Name="Template" Value="System Check.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Temperature" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Temperature.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Temperature.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Test Panels" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Test Panels.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Test Panels.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Test Ranges" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Reference Ranges.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Reference Ranges.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Test Setup" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Test Setup.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Test Setup.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Ultra Level Sense" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Ultra Level Sense.csv" Type="string"/>
+          <RegistryValue Name="DSN" Value="Ultra Level Sense.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Ultra Level Sense.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Ultrasonic Test" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Ultrasonic Test.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Ultrasonic Test.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Console\System Setup\Reports\Work Pending" Root="HKLM">
+          <RegistryValue Name="Data File" Value="Work Pending.csv" Type="string"/>
+          <RegistryValue Name="Header File" Value="HeaderFooter.txt" Type="string"/>
+          <RegistryValue Name="Template" Value="Work Pending.rpt" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Database" Root="HKLM">
+          <RegistryValue Name="ConsistencyCheckNeeded" Value="0" Type="integer"/>
+          <RegistryValue Name="EventLogDatabase" Value="EventLog" Type="string"/>
+          <RegistryValue Name="EventLogServer" Value="127.0.0.1" Type="string"/>
+          <RegistryValue Name="EventReorgRequired" Value="1" Type="integer"/>
+          <RegistryValue Name="ObjectDatabase" Value="NexStep" Type="string"/>
+          <RegistryValue Name="ObjectServer" Value="127.0.0.1" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\RationalRobot" Root="HKLM">
+          <RegistryValue Name="EnableRightClick" Value="0" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\UI" Root="HKLM">
+          <RegistryValue Name="GridDebug" Value="0" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\Workgroup" Root="HKLM">
+          <RegistryValue Name="DxIToDxCCommDiagEnabled" Value="0" Type="integer"/>
+          <RegistryValue Name="WorkgroupServerIp" Value="127.0.0.1" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Acceptance limits.txt" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Acceptance limits.txt\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Alignment.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Alignment.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Cal Data Quali.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Cal Data Quali.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Cal Data Quanti.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Cal Data Quanti.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Calibration.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Calibration.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Continuous Sample.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Continuous Sample.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Derived Results.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Derived Results.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Event Log.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Event Log.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Flags.txt" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Flags.txt\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\HeaderFooter.txt" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\HeaderFooter.txt\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\HotSpots.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\HotSpots.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Incubator Belt.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Incubator Belt.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Low Volume Pip Match.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Low Volume Pip Match.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\ODBC Data Sources" Root="HKLM">
+          <RegistryValue Name="Acceptance Limits.txt"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Alignment.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Cal Data Quali.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Cal Data Quanti.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Calibration.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Continuous Sample.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Derived Results.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Event Log.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Flags.txt"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="HeaderFooter.txt"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="HotSpots.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Incubator Belt.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Low Volume Pip Match.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Pack Inventory.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Patient Report.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Pipettor Matching.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="QC Chart.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="QC Data.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="QC Review.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="QC Rules.txt"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Reference Ranges.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Reflex Tests.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="RF Level Sense.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Sample Report.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Screen Print.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Single Check.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Supplies Required.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="System Check sub.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="System Check.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Temperature.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Test Panels.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Test Setup.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Ultra Level Sense.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Ultrasonic Test.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Work Pending.csv"  Value="Microsoft Text Driver (*.txt; *.csv)" Type="string"/>
+          <RegistryValue Name="Xtreme Sample Database 2008"  Value="Microsoft Access Driver (*.mdb)" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\ODBC File DSN" Root="HKLM">
+          <RegistryValue Name="DefaultDSNDir" Value="c:\Program Files\Common Files\ODBC\Data Sources" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Pack Inventory.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Pack Inventory.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Patient Report.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Patient Report.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Pipettor Matching.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Pipettor Matching.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\QC Chart.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\QC Chart.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\QC Data.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\QC Data.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\QC Review.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\QC Review.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\QC Rules.txt" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\QC Rules.txt\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Reference Ranges.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Reference Ranges.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Reflex Tests.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Reflex Tests.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\RF Level Sense.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\RF Level Sense.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Sample Report.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Sample Report.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Screen Print.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Screen Print.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Single Check.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Single Check.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Supplies Required.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Supplies Required.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\System Check sub.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\System Check sub.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\System Check.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\System Check.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Temperature.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Temperature.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Test Panels.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Test Panels.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Test Setup.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Test Setup.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Ultra Level Sense.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Ultra Level Sense.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Ultrasonic Test.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Ultrasonic Test.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\ODBC\ODBC.INI\Work Pending.csv" Root="HKLM">
+          <RegistryValue Name="DefaultDir" Value="C:\NexGen\Console\DRW\Reports" Type="string"/>
+          <RegistryValue Name="DriverId" Value= "27"  Type  ="integer"/>
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll"  Type="string"/>
+          <RegistryValue Name="FIL" Value="text;" Type="string"/>
+          <RegistryValue Name="UID" Value=""   Type="string"/>
+          <RegistryValue Name="SafeTransactions" Value="00000000" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Work Pending.csv\Engines\Text" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="Yes" Type="string"/>
+          <RegistryValue Name="Extensions" Value="txt,csv,tab,asc" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Xtreme Sample Database 2008" Root="HKLM">
+          <RegistryValue Name="Driver" Value="C:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="DBQ" Value="C:\Program Files\Microsoft Visual Studio 9.0\Crystal Reports\Samples\En\databases\xtreme.mdb" Type="string"/>
+          <RegistryValue Name="DriverId" Value="19" Type="integer"/>
+          <RegistryValue Name="SafeTransactions" Value="0" Type="integer"/>
+          <RegistryValue Name="UID" Value="" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBC.INI\Xtreme Sample Database 2008\Engines\Jet" Root="HKLM">
+          <RegistryValue Name="ImplicitCommitSync" Value="" Type="string"/>
+          <RegistryValue Name="Threads" Value="3" Type="integer"/>
+          <RegistryValue Name="UserCommitSync" Value="Yes" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Conversor de página de código MS" Root="HKLM">
+          <RegistryValue Name="Translator" Value="c:\WINDOWS\system32\MSCPXL32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\MSCPXL32.dll" Type="string"/>
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver da Microsoft para arquivos texto (*.txt; *.csv)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odtext32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.,*.asc,*.csv,*.tab,*.txt,*.csv" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver do Microsoft Access (*.mdb)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="2" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.mdb" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver do Microsoft dBase (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\oddbse32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.ndx,*.mdx" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver do Microsoft Excel(*.xls)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odexl32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.xls" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver do Microsoft Paradox (*.db )" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odpdx32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.db" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Driver para o Microsoft Visual FoxPro" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.cdx,*.idx,*.fpt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Access Driver (*.mdb)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="2" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.mdb" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Access-Treiber (*.mdb)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="2" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.mdb" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft dBase Driver (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\oddbse32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.ndx,*.mdx" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft dBase VFP Driver (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.cdx,*.idx,*.fpt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft dBase-Treiber (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\oddbse32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.ndx,*.mdx" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Excel Driver (*.xls)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odexl32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.xls" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Excel-Treiber (*.xls)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odexl32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.xls" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft FoxPro Driver (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odfox32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.cdx,*.idx,*.fpt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft FoxPro VFP Driver (*.dbf)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.cdx,*.idx,*.fpt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft ODBC for Oracle" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\msorcl32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\msorcl32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Paradox Driver (*.db )" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odpdx32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.db" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Paradox-Treiber (*.db )" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\odpdx32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.db" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Text Driver (*.txt; *.csv)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Windows\system32\odtext32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.,*.asc,*.csv,*.tab,*.txt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Text-Treiber (*.txt; *.csv)" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\odbcjt32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Windows\system32\odtext32.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.,*.asc,*.csv,*.tab,*.txt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Visual FoxPro Driver" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Windows\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbc,*.dbf" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Microsoft Visual FoxPro-Treiber" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Windows\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Windows\system32\vfpodbc.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="0" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYN" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="02.50" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="1" Type="string"/>
+          <RegistryValue Name="FileExtns" Value="*.dbf,*.cdx,*.idx,*.fpt" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="0" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\MS Code Page Translator" Root="HKLM">
+          <RegistryValue Name="Translator" Value="c:\Windows\system32\mscpxl32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\Windows\system32\mscpxl32.dll" Type="string"/>
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\MS Code Page-Übersetzer" Root="HKLM">
+          <RegistryValue Name="Translator" Value="c:\WINDOWS\system32\MSCPXL32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\MSCPXL32.dll" Type="string"/>
+          <RegistryValue Name="UsageCount" Value="2" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\ODBC Core" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="3" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\ODBC Connection Pooling" Root="HKLM">
+          <RegistryValue Name="PerfMon" Value="0" Type="integer"/>
+          <RegistryValue Name="Retry Wait" Value="120" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers" Root="HKLM">
+          <RegistryValue Name="SQL Server" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Access Driver (*.mdb)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Text Driver (*.txt; *.csv)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Excel Driver (*.xls)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft dBase Driver (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Paradox Driver (*.db )" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Visual FoxPro Driver" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft FoxPro VFP Driver (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft dBase VFP Driver (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Access-Treiber (*.mdb)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Text-Treiber (*.txt; *.csv)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Excel-Treiber (*.xls)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft dBase-Treiber (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Paradox-Treiber (*.db )" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft Visual FoxPro-Treiber" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver do Microsoft Access (*.mdb)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver da Microsoft para arquivos texto (*.txt; *.csv)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver do Microsoft Excel(*.xls)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver do Microsoft dBase (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver do Microsoft Paradox (*.db )" Value="Installed" Type="string"/>
+          <RegistryValue Name="Driver para o Microsoft Visual FoxPro" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft ODBC for Oracle" Value="Installed" Type="string"/>
+          <RegistryValue Name="Oracle ODBC Driver" Value="Installed" Type="string"/>
+          <RegistryValue Name="Microsoft FoxPro Driver (*.dbf)" Value="Installed" Type="string"/>
+          <RegistryValue Name="Rational DataDirect Oracle Wire Protocol" Value="Installed" Type="string"/>
+          <RegistryValue Name="Rational DataDirect DB2 Wire Protocol" Value="Installed" Type="string"/>
+          <RegistryValue Name="SQL Native Client" Value="Installed" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\ODBC Translators" Root="HKLM">
+          <RegistryValue Name="MS Code Page Translator" Value="Installed" Type="string"/>
+          <RegistryValue Name="MS Code Page-Übersetzer" Value="Installed" Type="string"/>
+          <RegistryValue Name="Conversor de página de código MS" Value="Installed" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Oracle ODBC Driver" Root="HKLM">
+          <RegistryValue Name="Driver" Value="C:\oracle\ora81\BIN\SQORA32.DLL" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\oracle\ora81\BIN\SQORAS32.DLL" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="03.51" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+          <RegistryValue Name="CPTimeout" Value="60" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Rational DataDirect DB2 Wire Protocol" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Program Files\Rational\Common\odbc\rkdb219.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Program Files\Rational\Common\odbc\rkdb219.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="03.52" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+          <RegistryValue Name="CPTimeout" Value="60" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\Rational DataDirect Oracle Wire Protocol" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="C:\Program Files\Rational\Common\odbc\rkora19.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="C:\Program Files\Rational\Common\odbc\rkora19s.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="1" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="03.52" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+          <RegistryValue Name="CPTimeout" Value="60" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\SQL Native Client" Root="HKLM">
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\sqlncli.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\sqlncli.dll" Type="string"/>
+          <RegistryValue Name="APILevel" Value="2" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="09.00" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+          <RegistryValue Name="CPTimeout" Value="60" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\ODBC\ODBCINST.INI\SQL Server" Root="HKLM">
+          <RegistryValue Name="CPTimeout" Value="60" Type="string"/>
+          <RegistryValue Name="UsageCount" Value="1" Type="integer"/>
+          <RegistryValue Name="Driver" Value="c:\WINDOWS\system32\SQLSRV32.dll" Type="string"/>
+          <RegistryValue Name="Setup" Value="c:\WINDOWS\system32\sqlsrv32.dll" Type="string"/>
+          <RegistryValue Name="SQLLevel" Value="1" Type="string"/>
+          <RegistryValue Name="FileUsage" Value="0" Type="string"/>
+          <RegistryValue Name="DriverODBCVer" Value="03.50" Type="string"/>
+          <RegistryValue Name="ConnectFunctions" Value="YYY" Type="string"/>
+          <RegistryValue Name="APILevel" Value="2" Type="string"/>
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Control\TimeZoneInformation" Root="HKLM">
+          <RegistryValue Name="DisableAutoDaylightTimeSet" Value="1" Type="integer"/>
+        </RegistryKey>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

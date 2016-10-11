@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.ODBCSelfRegFiles = "..\..\SharedFiles\System32\ODBC"?>
+    <ComponentGroup Id ="Cmpg.ODBCSelfRegFiles" Directory ="Dir.System32">
+      <Component Id="Cmp.msjet35.dll" Guid="{D75E4D53-44F9-4C01-82CA-21619A57CB68}">
+        <File Id="File.msjet35.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCSelfRegFiles)\msjet35.dll"/>
+      </Component>
+      <Component Id="Cmp.msrd2x35.dll" Guid="{9BBBD6BC-486E-4805-B853-F73D85AF101E}">
+        <File Id="File.msrd2x35.dll" KeyPath="yes" Source="$(var.SourcePath.ODBCSelfRegFiles)\msrd2x35.dll"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

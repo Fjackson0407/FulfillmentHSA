@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*"
+           Name="AUInstaller"
+           Language="1033"
+           Version="!(bind.fileVersion.File.AUObj.exe)"
+           Manufacturer="BeckmanCoulter"
+           UpgradeCode="d5cdef19-0e9d-4ddf-baa8-1d0df19ccee0">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MediaTemplate EmbedCab ="yes"/>
+    <!--Check to see if the drivers are there if they are do not install another copy-->
+    <!--To make a property public it must be in all CAPS-->
+    <Property Id ="OSR.BCDAQ" Value ="No.BCCOM.BCDAQ">
+      <DirectorySearch Path="C:\DRIVERS\" Depth="0" AssignToProperty="yes" Id="OSR.BCDAQ"  />
+      </Property>
+
+    <!--AUSYSTEMVERSION is used to determine if this is a fresh install or not.  
+    If it is not a fresh install, some registry keys/files may not be installed a second time (i.e. desktop icons)-->
+    <Property Id='AUSYSTEMVERSION' Value="DoesNotExists">
+      <DirectorySearch Id ="AUSYSTEMVERSION" Depth ="5" AssignToProperty ="yes" Path ="c:\au">
+        <FileSearch Id="AU_SYSTEM_VERSION" Name="SystemVersion.txt"/>
+      </DirectorySearch>
+    </Property>
+    
+    <Property Id ="NVM_ENABLED" Value ="No">
+      <RegistrySearch Id ="NVM"  Name ="Start" Root ="HKLM" Key ="SYSTEM\CurrentControlSet\Services\Nvm"  Type ="raw"  ></RegistrySearch>
+    </Property >
+    <Property Id='TARGETDIR' Value='C:\'/>
+ 
+    <InstallUISequence>
+      <Custom Action="Install.FtdiDrivers" After="ExecuteAction">NOT Installed</Custom>
+      <Custom Action="RegisterLumin.dll" After="Install.FtdiDrivers"/>
+      <Custom Action="RegisterDiagPort.dll" After="RegisterLumin.dll"/>
+      <Custom Action="RegisterBarcodeReader.dll" After="RegisterDiagPort.dll"/>
+      <Custom Action="RegisterSMC.dll" After="RegisterBarcodeReader.dll"/>
+      <Custom Action="RegisterSMCps.dll" After="RegisterSMC.dll"/>
+      <Custom Action="RegisterDCMotorDev.dll" After="RegisterSMCps.dll"/>
+      <Custom Action="RegisterEncoder.dll" After="RegisterDCMotorDev.dll"/>
+      <Custom Action="RegisterHighSpeedAnalog.dll" After="RegisterEncoder.dll"/>
+      <Custom Action="RegisterLEDControl.dll" After="RegisterHighSpeedAnalog.dll"/>
+      <Custom Action="RegisterPressure.dll" After="RegisterLEDControl.dll"/>
+      <Custom Action="RegisterPwmObj.dll" After="RegisterPressure.dll"/>
+      <Custom Action="RegisterRFLevelSense.dll" After="RegisterPwmObj.dll"/>
+      <Custom Action="RegisterTempObj.dll" After="RegisterRFLevelSense.dll"/>
+      <Custom Action="RegisterTempObjps.dll" After="RegisterTempObj.dll"/>
+      <Custom Action="RegisterUltraSonDev.dll" After="RegisterTempObjps.dll"/>
+      <Custom Action="RegisterVoltage.dll" After="RegisterUltraSonDev.dll"/>
+      <Custom Action="RegisterWeight.dll" After="RegisterVoltage.dll"/>
+      <Custom Action="RegisterMixerSpeed.dll" After="RegisterWeight.dll"/>
+      <Custom Action="RegisterLASFrameLayer.dll" After="RegisterMixerSpeed.dll"/>
+      <Custom Action="RegisterAUObjps.dll" After="RegisterLASFrameLayer.dll"/>
+      <Custom Action="RegisterUnicelService.exe" After="RegisterAUObjps.dll"/>
+      <Custom Action="RegisterTControl.exe" After="RegisterUnicelService.exe"/>
+      <Custom Action="RegisterPControl.exe" After="RegisterTControl.exe"/>
+      <Custom Action="CA_SetAuIPAddress" After="RegisterPControl.exe"/>
+      <Custom Action="CA_SignalStatusToConsole" After="CA_SetAuIPAddress"/>
+    </InstallUISequence>
+
+    <InstallExecuteSequence>
+      <Custom Action ='Install.BCCom' After ='InstallFiles'><![CDATA[OSR.BCDAQ = "No.BCCOM.BCDAQ" and VersionNT < "6.2" ]]></Custom>
+      <Custom Action ='Install.BCDaq' After ='Install.BCCom'><![CDATA[OSR.BCDAQ = "No.BCCOM.BCDAQ" and VersionNT < "6.2" ]]></Custom>
+    </InstallExecuteSequence>
+
+    <Feature Id="ProductFeature" Title="AUInstaller" Level="1">
+      <ComponentGroupRef Id ="Cmpg.OverrideAuRegistryKeys"/>
+      <ComponentGroupRef Id ="Cmpg.DoNotOverrideAuRegistryKeys"/>
+      <ComponentGroupRef Id ="Cmpg.SetShortcuts"/>
+      <ComponentGroupRef Id ="Cmpg.Au.Folders"/>
+    </Feature>
+  </Product>
+</Wix>

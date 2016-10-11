@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.DatabaseFiles = "..\..\Console\DRW\NexStepBase"?>
+    <ComponentGroup Id ="Cmpg.DatabaseFiles" Directory ="Dir.NexGen.Console.Drw.NexStepBase" >
+      <Component Id ="Cmp.NexStepBase.objects.dat" Guid ="{09F534E1-B6F3-47F4-AA7D-DAAB242B392A}" >
+        <File Id ="File.NexStepBase.objects.dat" Source ="$(var.SourcePath.DatabaseFiles)\objects.dat"/>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component Id ="Cmp.NexStepBase.objects.idx"  Guid = "{3CA846A4-0DBD-4F96-B1D5-1573B12939EE}">
+        <File Id ="File.NexStepBase.objects.idx" Source ="$(var.SourcePath.DatabaseFiles)\objects.idx"/>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

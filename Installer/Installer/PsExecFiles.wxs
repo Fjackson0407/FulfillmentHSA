@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.PsExecSource = "..\..\Console\OSUpgradeTool\Supporting Files\PSTools" ?>
+    <ComponentGroup Id ="Cmpg.PsExecFiles" Directory ="Dir.System32">
+      <Component Id="Cmp.Eula.txt" Guid="{65CA5D4C-F9FA-421C-BD3D-06BEE4E231E7}"  >
+        <File Id="File.Eula.txt" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\Eula.txt"/>
+      </Component>
+      <Component Id="Cmp.PsExec.exe" Guid="{E9D54BAC-C3B0-49B1-8D56-BD478FBAA59B}">
+        <File Id="File.PsExec.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\PsExec.exe"/>
+      </Component>
+      <Component Id="Cmp.psfile.exe" Guid="{288788A0-46F6-4E2F-9647-EEC1E4B6870D}">
+        <File Id="File.psfile.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\psfile.exe"/>
+      </Component>
+      <Component Id ="Cmp.PsGetsid.exe"  Guid ="{774E4DBB-D58C-4EFF-BA5F-0AC768F73B29}">
+        <File  Id ="File.PsGetsid.exe" KeyPath ="yes" Source ="$(var.SourcePath.PsExecSource)\PsGetsid.exe"/>
+      </Component>
+      <Component Id="Cmp.PsInfo.exe" Guid="{93C3F303-727A-4616-A6FF-4267A39EFA46}">
+        <File Id="File.PsInfo.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\PsInfo.exe" />
+      </Component>
+      <Component Id="Cmp.pskill.exe" Guid="{004372CC-541C-46E2-91DE-7A2B1F4D9C4E}">
+        <File Id="File.pskill.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\pskill.exe" />
+      </Component>
+      <Component Id="Cmp.pslist.exe" Guid="{DB133ADA-6F58-423A-BED9-C0728658528C}">
+        <File Id="File.pslist.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\pslist.exe" />
+      </Component>
+      <Component Id="Cmp.PsLoggedon.exe" Guid="{29D4DB90-06C3-4737-8579-1473D7F77D5E}">
+        <File Id="File.PsLoggedon.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\PsLoggedon.exe" />
+      </Component>
+      <Component Id="Cmp.psloglist.exe" Guid="{0F551712-48FF-43F3-AAC0-688DD0D39A4C}">
+        <File Id="File.psloglist.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\psloglist.exe" />
+      </Component>
+      <Component Id="Cmp.pspasswd.exe" Guid="{1EEC30F7-518E-4173-AEFA-EC2835123C4C}">
+        <File Id="File.pspasswd.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\pspasswd.exe" />
+      </Component>
+      <Component Id="Cmp.PsService.exe" Guid="{957A111F-371D-4E8B-8BB2-6A5CF8C1B874}">
+        <File Id="File.PsService.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\PsService.exe" />
+      </Component>
+      <Component Id="Cmp.psshutdown.exe" Guid="{0FCD9218-A3A4-48BC-8EBA-9C9339DB0434}">
+        <File Id="File.psshutdown.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\psshutdown.exe" />
+      </Component>
+      <Component Id="Cmp.pssuspend.exe" Guid="{D5CC9069-166B-4AE6-A212-11A97C847A1A}">
+        <File Id="File.pssuspend.exe" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\pssuspend.exe" />
+      </Component>
+      <Component Id="Cmp.Pstools.chm" Guid="{8FF2F70C-106B-4927-ACFE-119BE0E1FE4C}">
+        <File Id="File.Pstools.chm" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\Pstools.chm" />
+      </Component>
+      <Component Id="Cmp.psversion.txt" Guid="{BACC511D-6D57-4F38-985C-D93107B06299}">
+        <File Id="File.psversion.txt" KeyPath="yes" Source="$(var.SourcePath.PsExecSource)\psversion.txt" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

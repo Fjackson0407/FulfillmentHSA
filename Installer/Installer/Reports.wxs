@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.Reports = "..\..\Console\DRO\Reports"?>
+    <ComponentGroup Id ="Cmpg.Reports" Directory ="Dir.NexGen.Console.Dro.Reports" >
+      <Component Id="Cmp.footer" Guid="{10AEC707-D102-43A6-AC2C-6A138A2658B0}">
+        <File Id="File.footer" KeyPath="yes" Source="$(var.SourcePath.Reports)\ab footer.rpt" />
+      </Component>
+      <Component Id="Cmp.header" Guid="{C0DC7197-E3AC-4F1F-BB30-E23DCDE8FBB4}">
+        <File Id="File.header" KeyPath="yes" Source="$(var.SourcePath.Reports)\ab header nosn.rpt" />
+      </Component>
+      <Component Id="Cmp.ab" Guid="{27256031-C5E5-4378-B69D-1E31EDBC2CF3}">
+        <File Id="File.ab" KeyPath="yes" Source="$(var.SourcePath.Reports)\ab header.rpt" />
+      </Component>
+      <Component Id="Cmp.abr" Guid="{D708EAEE-E5E7-4E20-8F53-BAF52D761E65}">
+        <File Id="File.abr" KeyPath="yes" Source="$(var.SourcePath.Reports)\abr footer.rpt" />
+      </Component>
+      <Component Id="Cmp.Alignment" Guid="{4FDCBC42-6A75-4729-8589-127090EF9521}">
+        <File Id="File.Alignment" KeyPath="yes" Source="$(var.SourcePath.Reports)\Alignment.rpt" />
+      </Component>
+      <Component Id="Cmp.Alignment.chs" Guid="{93B251D4-D871-40F8-A2EB-D749F78DC885}">
+        <File Id="File.Alignment.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Alignment_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Alignment.jpn" Guid="{03D21258-2433-4934-A620-9536049261AA}">
+        <File Id="File.Alignment.jbn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Alignment_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Cal.Data.Quali" Guid="{9D021042-114A-4390-A704-2EB2C112C38F}">
+        <File Id="File.Cal.Data.Quali" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quali.rpt" />
+      </Component>
+      <Component Id="Cmp.Cal.Data.Quali.chs" Guid="{08E9ED7D-B933-419A-97B3-758CB9A28526}">
+        <File Id="File.Cal.Data.Quali.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quali_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Cal.Data.Quali.jpn" Guid="{20364B4D-B8D7-46EC-8218-674FB66E5378}">
+        <File Id="File.Cal.Data.Quali.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quali_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Cal.Data.Quali.rpt" Guid="{CB2DDAB1-FF4A-41BC-A52C-164AE3ED6476}">
+        <File Id="File.Cal.Data.Quali.rpt" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quanti.rpt" />
+      </Component>
+      <Component Id="Cmp.Cal.Data.Quanti.chs" Guid="{33AE94ED-577D-4611-814C-C024154D5424}">
+        <File Id="File.Cal.Data.Quanti.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quanti_chs.rpt" />
+      </Component>
+      <Component Id="Cal.Data.Quanti.jpn" Guid="{D28E445D-859A-4683-97E9-66669BB2749E}">
+        <File Id="File.Cal.Data.Quanti.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Cal Data Quanti_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Calibration" Guid="{6DA7B849-E73A-408A-BA83-CDE6C4B8B686}">
+        <File Id="File.Calibration" KeyPath="yes" Source="$(var.SourcePath.Reports)\Calibration.rpt" />
+      </Component>
+      <Component Id="Cmp.Calibration.chs" Guid="{B4FCA9C3-BECA-4CA2-9CC0-8AF9D6F5CC3D}">
+        <File Id="File.Calibration.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Calibration_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Calibration.jpn" Guid="{2EF7921A-6B90-4FC1-AB73-E4A054DBBF26}">
+        <File Id="File.Calibration.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Calibration_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Caution" Guid="{7811219E-7C6B-4258-941E-0224E804BF19}">
+        <File Id="File.Caution" KeyPath="yes" Source="$(var.SourcePath.Reports)\Caution.bmp" />
+      </Component>
+      <Component Id="Cmp.Continuous.Sample" Guid="{E29868CE-05F0-4934-BE62-5E8CAB53C63F}">
+        <File Id="File.Continuous.Sample" KeyPath="yes" Source="$(var.SourcePath.Reports)\Continuous Sample.rpt" />
+      </Component>
+      <Component Id="Cmp.Continuous.Sample.chs" Guid="{51AEB4B6-C5DC-40E1-82E5-E5BA1F8DD040}">
+        <File Id="File.Continuous.Sample.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Continuous Sample_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Continuous.Sample.jpn" Guid="{4D4C2107-BDE0-47E7-A773-7AA987D34212}">
+        <File Id="File.Continuous.Sample.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Continuous Sample_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Derived.Results" Guid="{6AF98305-E24C-42E5-803E-DCCA10390577}">
+        <File Id="File.Derived.Results" KeyPath="yes" Source="$(var.SourcePath.Reports)\Derived Results.rpt" />
+      </Component>
+      <Component Id="Cmp.Derived.Results.chs" Guid="{A621A6F6-5BF3-461E-9DB1-34D1C0B25B09}">
+        <File Id="File.Derived.Results.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Derived Results_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Derived.Results.jpn" Guid="{DB096C0E-3565-4F4E-9C14-DD6A0AAB9F71}">
+        <File Id="File.Derived.Results.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Derived Results_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.EventLog" Guid="{C6F3F5C1-5F50-4189-A9DE-23E9EA03330C}">
+        <File Id="File.EventLog" KeyPath="yes" Source="$(var.SourcePath.Reports)\Event Log.rpt" />
+      </Component>
+      <Component Id="Cmp.EventLog.chs" Guid="{A1E057FB-4FF4-474B-B26C-853373FDA810}">
+        <File Id="File.EventLog.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Event Log_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.EventLog.jpn" Guid="{3E2D0DD4-5448-4AAD-9D60-CA711129CAC5}">
+        <File Id="File.EventLog.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Event Log_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Flags" Guid="{70E92CCF-9C03-45E6-BC11-22AD509986DD}">
+        <File Id="Cmp.Flags" KeyPath="yes" Source="$(var.SourcePath.Reports)\flags.rpt" />
+      </Component>
+      <Component Id="Cmp.Dro.Footer" Guid="{3B6D056A-D6CA-4FD2-9B68-44A7DE9D2027}">
+        <File Id="File.Dro.Footer" KeyPath="yes" Source="$(var.SourcePath.Reports)\footer.rpt" />
+      </Component>
+      <Component Id="Cmp.header.nosn.rpt" Guid="{EA160347-A5CE-457D-AB2B-A212CF4396CE}">
+        <File Id="File.header.nosn.rpt" KeyPath="yes" Source="$(var.SourcePath.Reports)\header nosn.rpt" />
+      </Component>
+      <Component Id="Cmp.header.rpt" Guid="{234D6859-D39F-4CB4-AAB5-EC043A135756}">
+        <File Id="File.Header.rpt" KeyPath="yes" Source="$(var.SourcePath.Reports)\header.rpt" />
+      </Component>
+      <Component Id="Cmp.Hotspot" Guid="{F1D08F4B-F24F-431C-A8AA-6382FC3A6ED9}">
+        <File Id="File.Hotspot" KeyPath="yes" Source="$(var.SourcePath.Reports)\HotSpots.rpt" />
+      </Component>
+      <Component Id="Cmp.Hotspot.chs" Guid="{7BA11F25-DA70-4E0E-A38D-422FA626E132}">
+        <File Id="File.Hotspot.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\HotSpots_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Hotspot.jpn" Guid="8A4F8C70-F5B2-409F-BD2A-6E30C4305462">
+        <File Id="File.Hotspot.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\HotSpots_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Incubator.Belt" Guid="{D618FD6B-883C-4C55-8944-F3C566FB5036}">
+        <File Id="File.Incubator.Belt" KeyPath="yes" Source="$(var.SourcePath.Reports)\Incubator Belt.rpt" />
+      </Component>
+      <Component Id="Cmp.Incubator.Belt.chs" Guid="{7D1B4119-79A5-4C7D-9019-1275E2F6EA0B}">
+        <File Id="File.Incubator.Belt.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Incubator Belt_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.incubator.Belt.jpn" Guid="{FDCAB6FB-C14D-440C-961C-B59DFEC04895}">
+        <File Id="File.incubator.Belt.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Incubator Belt_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.incubator.left" Guid="{B09FA1C7-A54A-468D-A75B-EEBBC77490B5}">
+        <File Id="File.incubator.left" KeyPath="yes" Source="$(var.SourcePath.Reports)\incubator left.rpt" />
+      </Component>
+      <Component Id="Cmp.incubator.right" Guid="{E9C144AD-4313-404D-ABD1-914DB967FF53}">
+        <File Id="File.incubator.right" KeyPath="yes" Source="$(var.SourcePath.Reports)\incubator right.rpt" />
+      </Component>
+      <Component Id="Cmp.information" Guid="{24896A71-B9BF-4EBA-9530-CB040ADAE2C1}">
+        <File Id="File.Information" KeyPath="yes" Source="$(var.SourcePath.Reports)\information.bmp" />
+      </Component>
+      <Component Id="Cmp.Low.Volume.Pip.Match" Guid="{F8DF1B15-E37F-43B3-83E4-61A75D7197CC}">
+        <File Id="File.Low.Volume.Pip.Match" KeyPath="yes" Source="$(var.SourcePath.Reports)\Low Volume Pip Match.rpt" />
+      </Component>
+      <Component Id="Cmp.Low.Volume.Pip.Match.chs" Guid="{F200DCE2-AAFC-477B-8169-034C609C841E}">
+        <File Id="File.Low.Volume.Pip.Match.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Low Volume Pip Match_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Low.Volume.Pip.Match.jpn" Guid="{167C822C-A5B4-4D78-BBF5-F6BA0475E36D}">
+        <File Id="Fiole.Low.Volume.Pip.Match.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Low Volume Pip Match_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.NexGen.Alignment" Guid="{E2658054-0AE0-430A-BF8C-E9CEBC1E9303}">
+        <File Id="File.NexGen.Alignment" KeyPath="yes" Source="$(var.SourcePath.Reports)\NexGen Alignment.rpt" />
+      </Component>
+      <Component Id="Cmp.NexGen.Alignment.chs" Guid="{0AC78D4E-C6F0-403C-AC7C-660F433252F3}">
+        <File Id="File.NexGen.Alignment.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\NexGen Alignment_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.NexGen.Alignment.jpn" Guid="{16D2E379-6083-482F-BC6C-365925615027}">
+        <File Id="File.NexGen.Alignment.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\NexGen Alignment_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Pack.Inventory" Guid="{56A6EB47-5065-4B20-9329-62E153619B7D}">
+        <File Id="File.Pack.Inventory" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pack Inventory.rpt" />
+      </Component>
+      <Component Id="Cmp.Pack.Inventory.chs" Guid="{503233A6-346D-4876-A7CE-39C8900B5519}">
+        <File Id="File.Pack.Inventory.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pack Inventory_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Pack.Inventory.jpn" Guid="{AF29E7E7-97B8-4D5D-8E65-F3A6CBA88372}">
+        <File Id="file.Pack.Inventory.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pack Inventory_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Patient" Guid="{D3B47A6D-F37D-4074-8F3A-3138BCE034E4}">
+        <File Id="File.Patient" KeyPath="yes" Source="$(var.SourcePath.Reports)\Patient.rpt" />
+      </Component>
+      <Component Id="Cmp.Patient.chs" Guid="{F3FB6B72-9836-4412-8573-78A2E02A2EF9}">
+        <File Id="File.Patient.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Patient_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Patient.jpn" Guid="{F7BE79AF-0629-43DE-9294-EBF62F123834}">
+        <File Id="File.Patient.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Patient_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Pipettor.Matching" Guid="{4CD719FD-9DC5-4C9A-AC4C-06CE4AA08267}">
+        <File Id="File.Pipettor.Matching" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pipettor Matching.rpt" />
+      </Component>
+      <Component Id="Cmp.Pipettor.Matching.chs" Guid="{A0AF7229-BD13-4CF2-B95F-B5427F45F8BE}">
+        <File Id="File.Pipettor.Matching.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pipettor Matching_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Pipettor.Matching.jpn" Guid="{79A2424D-7558-445B-8563-1D6047C51E34}">
+        <File Id="File.Pipettor.Matching.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Pipettor Matching_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Chart" Guid="{28DE5628-E01B-49CC-8E2E-D21DD89350CD}">
+        <File Id="File.QC.Chart" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Chart.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Chart.chs" Guid="{CBE62FE2-6BE5-422E-B025-7BE3E8E0407D}">
+        <File Id="File.QC.Chart.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Chart_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Chart.jpn" Guid="{339DBE40-CD5F-4CA8-AC78-9D1993D5207C}">
+        <File Id="File.QC.Chart.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Chart_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Data" Guid="{C0FC9A08-AA64-412A-A198-BD1167EFE80F}">
+        <File Id="File.QC.Data" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Data.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Data.chs" Guid="{3980D5EC-4720-4E9D-B540-D4ADE7BDE819}">
+        <File Id="File.QC.Data.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Data_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Data.jpn" Guid="{9AD5AE05-3756-4C23-91A5-C1BD730C160F}">
+        <File Id="File.QC.Data.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Data_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Review" Guid="{63C37E38-D9F2-4D04-ADAC-7180240ACBCA}">
+        <File Id="File.QC.Review" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Review.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Review.chs" Guid="{CD9B4B14-7F6D-456A-B0F7-C087E9BEB88B}">
+        <File Id="File.QC.Review.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Review_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.QC.Review.jpn" Guid="{6D60C406-086C-4A73-BDA8-3583676E2A51}">
+        <File Id="Cmp.QC.Review.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\QC Review_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Reference.Ranges" Guid="{4118139A-8490-454A-B849-F0B58F94722D}">
+        <File Id="File.Reference.Ranges" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reference Ranges.rpt" />
+      </Component>
+      <Component Id="Cmp.Reference.Ranges.chs" Guid="{9C36FF66-7ECC-4394-A742-3038AAFF5819}">
+        <File Id="File.Reference.Ranges.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reference Ranges_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Reference.Ranges.jpn" Guid="{22AFFED1-A6E7-4E50-8BEB-D0DD231B2202}">
+        <File Id="File.Reference.Ranges.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reference Ranges_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Reflex.Tests" Guid="{E2A2BE23-555A-45E9-B859-DB7207112103}">
+        <File Id="File.Reflex.Tests" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reflex Tests.rpt" />
+      </Component>
+      <Component Id="Cmp.Reflex.Tests.chs" Guid="{8C77D6C6-618A-416A-8B0B-D47B69A90260}">
+        <File Id="File.Reflex.Tests.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reflex Tests_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Reflex.Tests.jpn" Guid="{F636F4B9-8A5A-4B3C-8C43-753BC647207A}">
+        <File Id="File.Reflex.Tests.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Reflex Tests_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.RF.Level.Sense" Guid="{47D5048A-F77E-4026-9158-F61E0E6D7E7F}">
+        <File Id="File.RF.Level.Sense" KeyPath="yes" Source="$(var.SourcePath.Reports)\RF Level Sense.rpt" />
+      </Component>
+      <Component Id="Cmp.RF.Level.Sense.chs" Guid="{93BE1E9A-616E-41F0-A663-DFA22624279C}">
+        <File Id="File.RF.Level.Sense.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\RF Level Sense_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.RF.Level.Sense.jpn" Guid="{987F8148-465B-4937-8734-4093603889A3}">
+        <File Id="File.RF.Level.Sense.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\RF Level Sense_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Sample" Guid="{5D16A1EB-17AA-4638-93C9-6B6044E9BE9C}">
+        <File Id="File.Sample" KeyPath="yes" Source="$(var.SourcePath.Reports)\Sample.rpt" />
+      </Component>
+      <Component Id="Cmp.Sample.chs" Guid="{9DCEE863-0703-4111-BA30-9D3309163F07}">
+        <File Id="File.Sample.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Sample_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Sample.jpn" Guid="{1E07D2D7-CB0A-4EA7-9242-3F87ADF70381}">
+        <File Id="File.Sample.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Sample_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Screen.Print" Guid="{F1AA1DB4-3F2D-405F-983A-32833858EA28}">
+        <File Id="File.ScreenPrint" KeyPath="yes" Source="$(var.SourcePath.Reports)\Screen Print.rpt" />
+      </Component>
+      <Component Id="Cmp.Screen.Print.chs" Guid="{3EF2809F-7C15-44E0-8358-3C6C0B44E72C}">
+        <File Id="File.Screen.Print.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Screen Print_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Screen.Print.jpn" Guid="{39BCD194-9FEA-453C-B159-90DD4F15DAE0}">
+        <File Id="File.Screen.Print.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Screen Print_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Single.Check" Guid="{C625D548-793E-4DDF-A0DD-A66C27141DDA}">
+        <File Id="File.Single.Check" KeyPath="yes" Source="$(var.SourcePath.Reports)\Single Check.rpt" />
+      </Component>
+      <Component Id="Cmp.Single.Check.chs" Guid="{D69D916A-35C4-4CB1-B93B-E69965D07E1D}">
+        <File Id="File.Single.Check.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Single Check_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Single.Check.jpn" Guid="{E35005D8-A45C-48CA-A8F9-DD7E37F94E0B}">
+        <File Id="File.Single.Check.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Single Check_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Supplies.Required" Guid="{BEBB1729-17BA-4CA0-8F76-D2ADC1E2498A}">
+        <File Id="File.Supplies.Required" KeyPath="yes" Source="$(var.SourcePath.Reports)\Supplies Required.rpt" />
+      </Component>
+      <Component Id="Cmp.Supplies.Required.chs" Guid="{1CCD4F66-6E1C-46E4-B1E9-EB1C0AB89C77}">
+        <File Id="File.Supplies.Required.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Supplies Required_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Supplies.Required.jpn" Guid="{E47B25C7-8830-445E-A4F2-7A308112E6D0}">
+        <File Id="File.Supplies.Required.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Supplies Required_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.System.Check" Guid="{D9236D0C-8663-4007-AC3A-DF7BDC65C1F5}">
+        <File Id="File.System.Check" KeyPath="yes" Source="$(var.SourcePath.Reports)\System Check.rpt" />
+      </Component>
+      <Component Id="Cmp.System.Check.chs" Guid="{0FD8DEFD-FD2F-4654-B26B-F0E7A321E9E6}">
+        <File Id="File.System.Check.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\System Check_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.System.Check.jpn" Guid="{49F9A70B-F6ED-4405-99E4-526E376BA555}">
+        <File Id="File.System.Check.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\System Check_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Temperature" Guid="{DBBC29A6-D013-444A-B1EF-01ACC858E1CD}">
+        <File Id="File.Temperature" KeyPath="yes" Source="$(var.SourcePath.Reports)\Temperature.rpt" />
+      </Component>
+      <Component Id="Cmp.Temperature.chs" Guid="{CDA7DED6-A7EB-404D-861B-6B662C2F5719}">
+        <File Id="File.Temperature.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Temperature_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Temperature.jpn" Guid="{08D5327D-3E7B-4831-B0F8-9AA5F4137EE3}">
+        <File Id="File.Temperature.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Temperature_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Panel" Guid="{ED4A08BA-9F25-405D-99C6-0F1F67E7E09F}">
+        <File Id="File.Test.Panel" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Panels.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Panel.chs" Guid="{35864935-C2C4-46E6-8AE5-787788594CF3}">
+        <File Id="File.Test.Panel.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Panels_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Panel.jpn" Guid="{2499A3D8-0BD5-40D2-BCAD-062123691CAE}">
+        <File Id="File.Test.Panel.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Panels_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Setup" Guid="{FC4FB241-8663-4B77-9639-D3EC886F8D4F}">
+        <File Id="File.Test.Setup" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Setup.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Setup.chs" Guid="{2583939A-FAB1-4103-86AA-6A493AC2F09C}">
+        <File Id="File.Test.Setup.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Setup_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Test.Setup.jpn" Guid="{F39526E4-286F-43CF-9381-5293EFD7F870}">
+        <File Id="File.Test.Setup.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Test Setup_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Ultra.Level.Sense" Guid="{B81711F9-4176-420D-98EB-A1325349FF57}">
+        <File Id="File.Ultra.Level.Sense" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultra Level Sense.rpt" />
+      </Component>
+      <Component Id="CmpUltra.Level.Sense.chs" Guid="{11197DE0-4DA8-4D6E-B942-49581197990C}">
+        <File Id="File.Ultra.Level.Sense.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultra Level Sense_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Ultra.Level.Sense.jpn" Guid="{0F09F313-EA80-4F41-8A5C-7C4A4DCD46B0}">
+        <File Id="Cmp.Ultra.Level.Sense.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultra Level Sense_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Ultrasonic.Test" Guid="{D5483850-4F12-4762-BC10-2815C37894DD}">
+        <File Id="File.Ultrasonic.Test" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultrasonic Test.rpt" />
+      </Component>
+      <Component Id="Cmp.Ultrasonic.Test.chs" Guid="{FA065EEC-80A6-4556-808A-CE48F2292046}">
+        <File Id="File.Ultrasonic.Test.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultrasonic Test_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Ultrasonic.Test.jpn" Guid="{7B99A6A0-E479-461A-96D5-52B0728CE6BC}">
+        <File Id="File.Ultrasonic.Test.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Ultrasonic Test_jpn.rpt" />
+      </Component>
+      <Component Id="Cmp.Warning" Guid="{E3B925AD-6F60-4955-8A43-F91F0735BF10}">
+        <File Id="ile.Warning" KeyPath="yes" Source="$(var.SourcePath.Reports)\Warning.bmp" />
+      </Component>
+      <Component Id="Cmp.Work.Pending" Guid="{1C466F57-FC23-4024-985F-2850171636DE}">
+        <File Id="File.Work.Pending" KeyPath="yes" Source="$(var.SourcePath.Reports)\Work Pending.rpt" />
+      </Component>
+      <Component Id="Cmp.Work.Pending.chs" Guid="{509130C1-697C-43D5-9188-239C1E153400}">
+        <File Id="File.Work.Pending.chs" KeyPath="yes" Source="$(var.SourcePath.Reports)\Work Pending_chs.rpt" />
+      </Component>
+      <Component Id="Cmp.Work.Pending.jpn" Guid="{C1F6E58A-AC7B-4D16-8CD8-BD10857F69FE}">
+        <File Id="File.Work.Pending.jpn" KeyPath="yes" Source="$(var.SourcePath.Reports)\Work Pending_jpn.rpt" />
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

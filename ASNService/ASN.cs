@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using TempLables;
 using static Helpers.EDIHelperFunctions;
 using static ToolService.UpdateDatabas;
 
@@ -39,6 +40,8 @@ namespace ASNService
         string m_TempPath = string.Empty;
         //string m_sRootPath = @"D:\ASN Results\";
         string m_sASNFolder = string.Empty;
+        public string NewFileVisa { get; set; }
+
         public ASNBuild(string _path, string _ConnectionString, string _PO, string _Store, string _DCNumber)
         {
             if (!NoASN(_ConnectionString, _PO, _DCNumber, _Store))
@@ -59,8 +62,34 @@ namespace ASNService
             SetMinCartonWeight();
         }
 
+        public void BuildHoildayASN(IEnumerable<HoildayOrder> Orders)
+        {
 
-        public ASNBuild(string ASNPath, string _TempPath, string _ConnectionString)
+            foreach (var Order in Orders)
+            {
+                XElement File = new XElement(FILE,
+               new XElement(EDIHelperFunctions.DOCUMENT,
+                            BuildHeader(Order),
+                            BuildShipmentLevel(Order ),
+                            BuildOrderLevel(Order)));
+                SaveDataToFile(File , Order );
+                            }
+
+            MCLable cMCLable = new MCLable( ConnectionString ,  NewFileVisa);
+            cMCLable.Amex(Orders);
+
+        }
+        public ASNBuild(string ASNPath, string  _labelPath, string _TempPath, string _ConnectionString)
+        {
+            NewFileVisa = _labelPath;
+            m_TempPath = _TempPath;
+            m_sASNFolder = ASNPath;
+            ConnectionString = _ConnectionString;
+
+        }
+
+        #region Auto orders
+        public ASNBuild(string ASNPath,  string _TempPath, string _ConnectionString)
         {
             m_TempPath = _TempPath;
             m_sASNFolder = ASNPath;
@@ -97,6 +126,7 @@ namespace ASNService
             m_sPathForASNFile = string.Format("{0}ASN Store {1} for PO {2} {3}.xml", m_sASNFolder, CurrentStore, PO, GetNewShipmentID());
         }
 
+       
         //Cisco, this method relies on specific data organization in the DB
         private void SetMinCartonWeight()
         {
@@ -186,6 +216,47 @@ namespace ASNService
               new XElement(ShipmentID, GetNewShipmentID()),
              new XElement(EDIHelperFunctions.ShippingLocationNumber, new XCData(CurrentStore)));
 
+        }
+
+        XElement BuildHeader(HoildayOrder cHoildayOrder)
+        {
+            return new XElement(HEADER,
+                new XElement(CompanyCode, cHoildayOrder.CompanyCode ),
+                new XElement(CUSTOMERNUMBER, cHoildayOrder.CustomerLineNumber ),
+                new XElement(Direction, EDIHelperFunctions.Outbound),
+                new XElement(DocumentType, EDIHelperFunctions.EDI856),
+               new XElement(EDIHelperFunctions.Version, VersionNumber),
+              new XElement(EDIHelperFunctions.Footprint, ASN),
+              new XElement(ShipmentID, GetNewShipmentID()),
+             new XElement(EDIHelperFunctions.ShippingLocationNumber, new XCData(cHoildayOrder.Store )));
+
+        }
+
+
+        XElement BuildShipmentLevel(HoildayOrder cHoildayOrder)
+        {
+
+            return new XElement(EDIHelperFunctions.ShipmentLevel,
+       new XElement(TransactionSetPurposeCode, "00"),
+                    new XElement(EDIHelperFunctions.DateLoop,
+                    new XElement(EDIHelperFunctions.DateQualifier, ShipDateDateQualifierNumber,
+                    new XAttribute(EDIHelperFunctions.Desc,
+                    EDIHelperFunctions.ShipDateString)),
+                    new XElement(EDIHelperFunctions.Date, DateTime.Now.ToString(toFormat))),
+                    new XElement(EDIHelperFunctions.ManifestCreateTime,
+                     GetMilitaryTime()),
+                    new XElement(EDIHelperFunctions.ShipmentTotals,
+                    new XElement(EDIHelperFunctions.ShipmentTotalCube, ShipmentTotalCubeValue),
+                    new XElement(EDIHelperFunctions.ShipmentPackagingCode, m_CartonTypeForASN),
+                    new XElement(ShipmentTotalCases, 1),
+                    new XElement(ShipmentTotalWeight, 1.9000)),
+                    BuildCarrier(),
+                    new XElement(MethodOfPayment, EDIHelperFunctions.DF),
+                    new XElement(FOBLocationQualifier, "OR"),
+                    new XElement(FOBDescription, new XCData(EDIHelperFunctions.FOBDescription2)),
+                    BuildShipFrom(), BuildShipTo(cHoildayOrder),
+                    new XElement(EDIHelperFunctions.VendorCode,  cHoildayOrder.VendorNumber ),
+                    BuildContactType());
         }
 
 
@@ -310,6 +381,22 @@ namespace ASNService
                     new XElement(EDIHelperFunctions.State, ShipTo.State),
                     new XElement(EDIHelperFunctions.Zip, ShipTo.PostalCode),
                     new XElement(EDIHelperFunctions.Country, EDIHelperFunctions.US));
+        }
+
+        XElement BuildShipTo(HoildayOrder cHoildayOrder)
+        {
+            DCInformation ShipTo = GetShipToAddress(cHoildayOrder);
+            return new XElement(NAME,
+                    new XElement(EDIHelperFunctions.BillAndShipToCode, EDIHelperFunctions.ShipTo),
+                    new XElement(EDIHelperFunctions.DUNSOrLocationNumberString, cHoildayOrder.DC ),
+                    new XElement(EDIHelperFunctions.NameComponentQualifier, EDIHelperFunctions.DescShipTo),
+                    new XElement(EDIHelperFunctions.NameComponent, new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, cHoildayOrder.DC ))),
+                    new XElement(EDIHelperFunctions.CompanyName, new XCData(string.Format("{0}    {1}", EDIHelperFunctions.SHIPPREDISTROTODC, cHoildayOrder.DC ))),
+                    new XElement(EDIHelperFunctions.Address, new XCData(ShipTo.Address)),
+                    new XElement(EDIHelperFunctions.City, new XCData(ShipTo.City)),
+                    new XElement(EDIHelperFunctions.State, ShipTo.State),
+                    new XElement(EDIHelperFunctions.Zip, ShipTo.PostalCode),
+                    new XElement(EDIHelperFunctions.Country, EDIHelperFunctions.US));
 
         }
         /// <summary>
@@ -334,6 +421,28 @@ namespace ASNService
             Setting.NewLineOnAttributes = true;
             Setting.Encoding = Encoding.UTF8;
             Setting.WriteEndDocumentOnClose = true;
+          
+            StreamWriter cStreamWriter = File.CreateText(m_sPathForASNFile);
+
+            using (XmlWriter cXmlWriter = XmlWriter.Create(cStreamWriter, Setting))
+            {
+
+                file.WriteTo(cXmlWriter);
+
+            };
+
+        }
+
+
+        private void SaveDataToFile(XElement file,  HoildayOrder Order )
+        {
+
+            var Setting = new XmlWriterSettings();
+            Setting.Indent = true;
+            Setting.NewLineOnAttributes = true;
+            Setting.Encoding = Encoding.UTF8;
+            Setting.WriteEndDocumentOnClose = true;
+            m_sPathForASNFile = string.Format("{0}ASN Store {1} for PO {2} {3}.xml", m_sASNFolder, Order.Store, Order.PO, GetNewShipmentID());
 
             StreamWriter cStreamWriter = File.CreateText(m_sPathForASNFile);
 
@@ -390,6 +499,21 @@ namespace ASNService
 
         }
 
+        private XElement BuildOrderLevel(HoildayOrder cHoildayOrder)
+        {
+            return new XElement(ORDERLEVEL,
+                             new XElement(IDS,
+                             new XElement(EDIHelperFunctions.PurchaseOrderNumber, new XCData(cHoildayOrder.PO )),
+                             new XElement(EDIHelperFunctions.PURCHASEORDERSOURCEID, cHoildayOrder.DocumentId ),
+                             new XElement(EDIHelperFunctions.PurchaseOrderDate, cHoildayOrder.PODate  ),
+                             new XElement(EDIHelperFunctions.StoreNumber, new XCData(cHoildayOrder.Store )),
+                             new XElement(EDIHelperFunctions.DepartmentNumberString, EDIHelperFunctions.DepartmentNumber),
+                             new XElement(EDIHelperFunctions.DivisionNumberString, EDIHelperFunctions.DivisionNumber),
+                             new XElement(EDIHelperFunctions.ReleaseNumberString, EDIHelperFunctions.ReleaseNumber)),
+                             BuildOrderTotals(cHoildayOrder ), BuildPickStruture(cHoildayOrder ));
+
+        }
+
         XElement BuildPickStruture()
         {
             List<StoreInfoFromEDI850> Orders = GetOrders();
@@ -403,6 +527,14 @@ namespace ASNService
          
         }
 
+        XElement BuildPickStruture(HoildayOrder cHoildayOrder)
+        {
+            
+            List<Carton> Cartons = BuildPickPackStructure(cHoildayOrder, false  );
+            ConvertToxml(Cartons, cHoildayOrder );
+            return PickAndPackElement();
+
+        }
 
         XElement PickAndPackElement()
         {
@@ -411,6 +543,95 @@ namespace ASNService
                 XDocument doc = XDocument.Load(cFileStream);
                 return new XElement(doc.Root);
             }
+        }
+
+
+
+        private void ConvertToxml(List<Carton> lisCarton, HoildayOrder cHoildayOrder)
+        {
+
+            var Setting = new XmlWriterSettings();
+            Setting.Indent = true;
+            Setting.NewLineOnAttributes = true;
+            Setting.Encoding = Encoding.UTF8;
+            Setting.WriteEndDocumentOnClose = true;
+
+            StreamWriter cStreamWriter = File.CreateText(m_TempPath);
+
+            using (XmlWriter cXmlWriter = XmlWriter.Create(cStreamWriter, Setting))
+            {
+                cXmlWriter.WriteStartDocument();
+                cXmlWriter.WriteStartElement(EDIHelperFunctions.PickPackStructure);
+                foreach (Carton cCarton in lisCarton)
+                {
+                    cXmlWriter.WriteStartElement(EDIHelperFunctions.Carton);
+                    cXmlWriter.WriteStartElement(MARKS);
+                    cXmlWriter.WriteStartElement(UCC128);
+                    cXmlWriter.WriteCData(cCarton.UCC128);
+                    cHoildayOrder.SSCC = cCarton.UCC128; 
+                    cXmlWriter.WriteEndElement(); //End of UCC128
+                    cXmlWriter.WriteEndElement(); //End of Mark
+                    cXmlWriter.WriteStartElement(Quantities);
+                    cXmlWriter.WriteElementString(QtyQualifier, "ZZ");
+                    cXmlWriter.WriteElementString(QtyUOM, "ZZ");
+                    cXmlWriter.WriteElementString(Qty, cCarton.Qty.ToString());
+                    cXmlWriter.WriteEndElement();
+                    cXmlWriter.WriteStartElement(Measurement);
+                    cXmlWriter.WriteElementString(MeasureQual, "WT");
+                    cXmlWriter.WriteElementString(MeasureValue, "0.95");
+                    cXmlWriter.WriteEndElement(); //Close  Measurement tag 
+                    cXmlWriter.WriteEndElement(); //Close carton tag
+                        cXmlWriter.WriteStartElement(ITEM);
+                        cXmlWriter.WriteElementString(CustomerLineNumber, cHoildayOrder.CustomerLineNumber.ToString()  );
+                        cXmlWriter.WriteStartElement(ItemIDs);
+                        cXmlWriter.WriteElementString(IdQualifier, UP);
+                        cXmlWriter.WriteStartElement(ID);
+                        cXmlWriter.WriteCData(cHoildayOrder.UPC);
+                        cXmlWriter.WriteEndElement(); //close tag for upc
+                        cXmlWriter.WriteEndElement(); //end of item for upc
+
+                        cXmlWriter.WriteStartElement(ItemIDs);
+                        cXmlWriter.WriteElementString(IdQualifier, VN);
+                        cXmlWriter.WriteStartElement(Id);
+                        cXmlWriter.WriteCData(cHoildayOrder.CompanyCode);
+                        cXmlWriter.WriteEndElement(); //close VN tag
+                        cXmlWriter.WriteEndElement(); //end of item for vn 
+
+                        cXmlWriter.WriteStartElement(ItemIDs);
+                        cXmlWriter.WriteElementString(IdQualifier, CU);
+                        cXmlWriter.WriteStartElement(Id);
+                        cXmlWriter.WriteCData(cHoildayOrder.DPCI);
+                        cXmlWriter.WriteEndElement(); //Close cu tag 
+                        cXmlWriter.WriteEndElement(); //Close itemids 
+                        cXmlWriter.WriteStartElement(Quantities);
+                        cXmlWriter.WriteElementString(QtyQualifier, "39");
+                        cXmlWriter.WriteElementString(QtyUOM, Each);
+                        cXmlWriter.WriteElementString(Qty, cHoildayOrder.QtyOrdered.ToString());
+                        cXmlWriter.WriteEndElement(); //Quantities
+
+                        cXmlWriter.WriteElementString(PackSize, QtyUOMSize);
+                        cXmlWriter.WriteElementString(Inners, one);
+                        cXmlWriter.WriteElementString(EachesPerInner, one);
+                        cXmlWriter.WriteElementString(InnersPerPacks, "25");
+                        cXmlWriter.WriteStartElement(Measurement);
+                        cXmlWriter.WriteElementString(MeasureQual, "WT");
+                        cXmlWriter.WriteElementString(MeasureValue, "0.038");
+                        cXmlWriter.WriteEndElement(); //close tag for Measurement
+
+
+
+                        cXmlWriter.WriteStartElement(ItemDescription);
+                        cXmlWriter.WriteCData(cHoildayOrder.ItemDescription.Trim());
+                        cXmlWriter.WriteEndElement();
+                        cXmlWriter.WriteEndElement();
+                    
+
+                }
+                cXmlWriter.WriteEndElement(); //End of PickPackStructure
+                cXmlWriter.Close();
+                cStreamWriter.Close();
+            }
+
         }
 
 
@@ -579,6 +800,27 @@ namespace ASNService
             return FillBox(lisStore, MaxWeightForBox);
         }
 
+        private List<Carton> BuildPickPackStructure(HoildayOrder cHoildayOrder, bool hoilday)
+        {
+            int MaxWeightForBox = GetMaxWeight();
+            return FillBox(cHoildayOrder);
+        }
+
+
+        private List<Carton> FillBox(HoildayOrder cHoildayOrder)
+        {
+            List<Carton> lisCarton = new List<Domain.Carton>();
+            Carton cCarton = new Domain.Carton();
+            bool bNewCarton = false;
+            int CustomerLineNumber = 1;
+            cCarton = GetSSCCForNewOrder();
+            cCarton.Qty = cHoildayOrder.QtyOrdered;
+            cCarton.Weight = 1;
+            lisCarton.Add(cCarton);
+            return lisCarton;
+        }
+
+
         /// <summary>
         /// Fill cartons based on the number of order items 
         /// </summary>
@@ -692,7 +934,13 @@ namespace ASNService
                      new XElement(OrderTotalWeight, GetShippingWeightOrBoxCount(ShippingInfoType.ShippingWeight)));
 
         }
+        XElement BuildOrderTotals(HoildayOrder cHoildayOrder)
+        {
+              return new XElement(ORDERTOTALS,
+                    new XElement(OrderTotalCases, 1),
+                     new XElement(OrderTotalWeight, 1.9));
 
+        }
 
         #endregion
         #region Class functions 
@@ -755,6 +1003,25 @@ namespace ASNService
 
             }
 
+        }
+
+        private DCInformation GetShipToAddress(HoildayOrder cHoildayOrder)
+        {
+            DCInformation cDCInformation = null;
+
+            using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
+            {
+                cDCInformation = UoW.DCInfo.Find(t => t.StoreID == cHoildayOrder.DC).FirstOrDefault();
+
+                if (cDCInformation != null)
+                {
+                    return cDCInformation;
+                }
+                else
+                {
+                    throw new ExceptionsEDI(string.Format("{0} {1}", EDIHelperFunctions.Help, ErrorCodes.HSAErro41));
+                }
+            }
         }
 
         private DCInformation GetShipToAddress()
@@ -997,7 +1264,7 @@ namespace ASNService
         }
         #endregion
 
-
+        #endregion
 
     }
 }

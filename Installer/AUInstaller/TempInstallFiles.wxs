@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.Root = ".\"?>
+    <ComponentGroup Id="Cmpg.TempInstallFiles" Directory ="Dir.TempInstallFiles">
+      <Component Id="Cmp.SetAUIPAddress.bat" Guid ="{3B13FDDD-4C0B-4A92-97DC-238EAD75B601}">
+        <File Id="File.SetAUIPAddress.bat" Source ="$(var.SourcePath.Root)\SetAUIPAddress.bat"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

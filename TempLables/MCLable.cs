@@ -33,6 +33,13 @@ namespace TempLables
             NewLabelFile = _NewLabelFile;
         }
 
+        public MCLable(string _ConnectionString, string _NewLabelFile)
+        {
+            
+            ConnectionString = _ConnectionString;
+            NewLabelFile = _NewLabelFile;
+        }
+
         private ShipFromInformation LoadShipFrom()
         {
             using (var UoW = new UnitofWork(new EDIContext(ConnectionString)))
@@ -134,6 +141,46 @@ namespace TempLables
 
             }
             return cStringBuilder.ToString();
+        }
+
+
+
+        public void Amex(IEnumerable<HoildayOrder> Orders)
+        {
+
+            List<Label> lisLables = new List<Label>();
+
+            foreach (var item in Orders)
+            {
+                ShipFromInformation cShipFromInformation = LoadShipFrom();
+                   Label cLables = new Label();
+                    cLables.From = ValidUSA;
+                    cLables.Faddress = cShipFromInformation.Address;
+                    cLables.Fcity = cShipFromInformation.City;
+                    cLables.Fstate = cShipFromInformation.State;
+                    cLables.FZip = cShipFromInformation.PostalCode;
+                cLables.SSCC = item.SSCC;
+                cLables.PONumber = item.PO;
+                cLables.OrderStoreNumber = item.Store;
+                    cLables.To = TargetStores;
+                string DCNumber = item.DC;
+                    DCInformation cDCInformation = LoadDCAndAddress(DCNumber);
+                    cLables.DcNumber = DCNumber;
+                    cLables.Taddress = cDCInformation.Address;
+                    cLables.Tcity = cDCInformation.City;
+                    cLables.Tstate = cDCInformation.State;
+                    cLables.Tzip = cDCInformation.PostalCode;
+                    Label Temp = lisLables.Find(t => t.SSCC == cLables.SSCC);
+                    if (Temp == null)
+                    {
+                        lisLables.Add(cLables);
+                    }
+                
+            
+
+                string CSVString = ConvertToString(lisLables);
+                SavetoFile(CSVString);
+            }
         }
 
 

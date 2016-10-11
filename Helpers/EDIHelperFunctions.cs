@@ -260,8 +260,8 @@ namespace Helpers
         #endregion
 
 
-        public const  double AmexWeight = .95;
-        public const  double MCVisaWeight = .70;
+        public const  double AmexWeight = .70;
+        public const  double MCVisaWeight = .95;
 
         /// <summary>
         /// Get ID for new ship for 
@@ -283,6 +283,7 @@ namespace Helpers
         {
             HSAError2 = 2, //Wrong registry hive 
             HSAError3 = 3, //Path to the folder could not be found 
+            HSAError4 = 4, //File not found 
             HSAError5 = 5, //csv error
             HSAErro7 = 7, //csv error with data  reader 
             HSAErro9 = 9, //duplicate PO 
@@ -310,6 +311,7 @@ namespace Helpers
             HSAErro55 = 55, //Already haas ASN
             HSAErro57 = 57, //From lerngth out of rage 
             HSAErro59 = 59, //No orders to process 
+
             
 
         }

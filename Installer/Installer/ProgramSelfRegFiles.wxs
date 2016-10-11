@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!--Relative path definitions ==============================================================-->
+    <?define SourcePath.Console.Bin = "..\..\Console\Bin" ?>
+    <?define SourcePath.Console.UBin = "..\..\Console\UBin" ?>
+    <!--Files destined for the C:\NexGen\Console\Bin directory =================================-->
+    <ComponentGroup Id="Cmpg.ProgramSelfRegFiles" Directory="Dir.NexGen.Console.Bin">
+      <Component Id="Cmp.AUCommunicatorUD.exe" Guid="{ECE8833F-49F9-466E-9E8A-07D6D00985D6}">
+        <File Id="File.AUCommunicatorUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\AUCommunicatorUD.exe" />
+      </Component>
+      <Component Id="Cmp.AUConnection.dll" Guid="{D88C0BCE-377C-4DFD-A812-3EF9F47687A2}">
+        <File Id="File.AUConnection.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\AUConnection.dll" />
+      </Component>
+      <Component Id="Cmp.AUObjps.dll" Guid="{B3AC0095-CE41-4AB5-A458-087E6D80738B}">
+        <File Id="File.AUObjps.dll" KeyPath="yes" Source="$(var.SourcePath.Console.UBin)\AUObjps.dll" />
+      </Component>
+      <Component Id="Cmp.Cfx4032.ocx" Guid="{F3F315EB-5392-49C5-A008-39AB5BD10A62}">
+        <File Id="File.Cfx4032.ocx" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\Cfx4032.ocx" />
+      </Component>
+      <Component Id="Cmp.ComTest.dll" Guid="{F39D9722-993E-4787-A469-967E72F6F1CA}">
+        <File Id="File.ComTest.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ComTest.dll" />
+      </Component>
+      <Component Id="Cmp.InstrumentModelUD.exe" Guid="{4E2FFD1A-1118-44C4-BD6C-2C736769CF12}">
+        <File Id="File.InstrumentModelUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\InstrumentModelUD.exe" />
+      </Component>
+      <Component Id="Cmp.PostOfficeps.dll" Guid="{54C9A4DE-859E-4289-BEF3-7751EFC8CAB2}">
+        <File Id="File.PostOfficeps.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\PostOfficeps.dll" />
+      </Component>
+      <Component Id="Cmp.PostOfficeUD.exe" Guid="{A4136BCF-EE10-4462-9DD9-03591785E0D5}">
+        <File Id="File.PostOfficeUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\PostOfficeUD.exe" />
+      </Component>
+      <Component Id="Cmp.UnicelService.exe" Guid="{C5DDF81F-F67E-4E47-AB7E-4E0A4E7D5114}">
+        <File Id="File.UnicelService.exe" KeyPath="yes" Source="$(var.SourcePath.Console.UBin)\UnicelService.exe" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

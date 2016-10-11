@@ -11,6 +11,7 @@ using Repository.DC;
 using Repository.EmptyBoxFolder;
 using Repository.Inbound850;
 using Repository.MinWeightFolder;
+using Repository.Notes;
 using Repository.OperatorFolder;
 using Repository.PackSize;
 using Repository.SerialRageNumberFolder;
@@ -33,15 +34,13 @@ namespace Repository.UOW
         private readonly EDIContext _EDIContext;
         public IAddEDI850 AddEDI850 { get; private set; }
         
-
         public ISkus Sku { get; private set;  }
         public ISSCCBarcode SSCCBarcode { get; private set; }
 
         public IDCInfo DCInfo { get; private set;  }
 
         public  IShipFrom ShipFrom { get; private set; }
-        public IASNContact ASNContact { get; private set;  }
-         public  ICartons856 _Cartons { get; private set; }
+        public IASNContact ASNContact { get; private set; }
 
         public IOperator Operator { get; private set; }
         public ISerialRage SerialRage { get; private set; }
@@ -54,7 +53,7 @@ namespace Repository.UOW
         public IMaxCartonWeight MaxCartonWeight { get; private set;}
 
         public IPackSizeForBundles PackSizeForBundles { get; private set;  }
-
+        public ICartons856 _Cartons { get; private set; }
         public ICartonTypeForASN CartonType { get; private set;  }
 
         public IASNFile ASNFile { get; private set; }
@@ -66,12 +65,13 @@ namespace Repository.UOW
 
         public  IMinWeightShipBox MinWeightShipBox { get; private set;  }
         
+        public IStoreNotesRepo StoreNotesRepo { get; private set; }
 
-        public UnitofWork(EDIContext cEDIContext)
+       public UnitofWork(EDIContext cEDIContext)
         {
 
             _EDIContext = cEDIContext;
-            AddEDI850 = new AddEDI850(_EDIContext);
+           AddEDI850 = new AddEDI850(_EDIContext);
             User = new UserLogin(_EDIContext);
             Sku = new Skus(_EDIContext);
             SSCCBarcode = new SSCCBarcode(_EDIContext);
@@ -90,6 +90,7 @@ namespace Repository.UOW
             CardWeight = new CardWeight(_EDIContext);
             EmptyBox = new EmptyBox(_EDIContext);
             MinWeightShipBox = new MinWeightShipBox(_EDIContext);
+            StoreNotesRepo = new StoreNotesRepo(_EDIContext);
            
         }
 
