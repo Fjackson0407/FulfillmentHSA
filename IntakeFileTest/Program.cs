@@ -40,21 +40,15 @@ namespace IntakeFileTest
             string TempPath = @"C:\Hoilday ASN\One off\tem.xml";
             string ASNPath = @"C:\Hoilday ASN\";
             string LabelFile = @"C:\Hoilday ASN\MC.csv";
-            string HomePath = @"D:\Testing\BigOrder\w2.csv";
+        
+            EDIPOService cEDIPOService = new EDIPOService(HoildayPath, 
+                                                          ASNPath, 
+                                                          TempPath,
+                                                          LabelFile ,
+                                                         "");
+            cEDIPOService.BuildHoildayorders();
 
-            try
-            {
-                EDIPOService cEDIPOService = new EDIPOService(HomePath, ConStringHome);
-                cEDIPOService.ParseEDI850();
 
-
-
-            }
-            catch (EDIException.ExceptionsEDI Ex)
-            {
-
-                string Error = Ex.InnerException.ToString();
-            }
            
 
         }
