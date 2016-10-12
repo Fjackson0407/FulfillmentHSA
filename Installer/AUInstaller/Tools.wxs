@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.InstrumentTools = "..\..\Instrument\Tools"?>
+    <ComponentGroup Id ="Cmpg.Tools" Directory ="Dir.Au.Tools">
+      <Component Id="Cmp.ConfigurationAssistantInstaller.zip" Guid="{0362494A-7D5E-4408-AFC6-758D881BAE29}">
+        <File Id="File.ConfigurationAssistantInstaller.zip" KeyPath="yes" Source="$(var.SourcePath.InstrumentTools)\ConfigurationAssistantInstaller.zip"/>
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

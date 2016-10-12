@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Binary Id="CA_DLL" SourceFile=".\ConsoleCustomActions.dll"/>
+    <CustomAction Id="CA_ContinueWithInstall"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="ContinueWithInstall"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_SetConsoleIPAddress"
+                  FileKey="File.SetConsoleIPAddress.bat"
+                  ExeCommand=''
+                  Execute='immediate'
+                  Return="ignore"/>
+    <CustomAction Id="CA_DoConsoleAndAuOSMatch"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="DoConsoleAndAuOSMatch"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_RebootAu"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="SetRunOnceThenRebootAu"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_FinalRebootAu"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="RebootAu"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_RestartConsoleComputer"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="RestartConsoleComputer"
+                  Execute="immediate"
+                  Return="ignore"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_CanSeeAuFromConsole"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="CanSeeAuFromConsole"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_IsAuInstallSuccessful"
+                  BinaryKey="CA_DLL"
+                  DllEntry ="IsAuInstallSuccessful"
+                  Execute ="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_CopyMsiToAu"
+                  FileKey="File.CopyMsiToAu.bat"
+                  ExeCommand='[AU_IP_ADDRESS]'
+                  Execute='immediate'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="CA_ConsoleConfiguration"
+                  FileKey="File.ConsoleConfiguration.bat"
+                  ExeCommand=''
+                  Execute='immediate'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="CA_InstallCIAService"
+                  FileKey="File.InstallCIAService.bat"
+                  ExeCommand=''
+                  Execute='immediate'
+                  Return="ignore">
+    </CustomAction>
+    <CustomAction Id="RegisterUnicelService.exe"
+                  Directory="Dir.NexGen.Console.Bin"
+                  ExeCommand='[Dir.NexGen.Console.Bin]UnicelService.exe /RegServer'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="CA_InstallVNC"
+                  Directory="Dir.System32"
+                  ExeCommand='msiexec.exe /i c:\TempInstallFiles\VNC-Server-5.2.1-Windows-en-32bit.msi LICENSEKEY=46BAH-3235R-S3ACB-ACN93-HB4PA ADDLOCAL=FeatureServer /qn'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="CA_InstallMsXML6"
+                  Directory="Dir.System32"
+                  ExeCommand='msiexec.exe /i c:\TempInstallFiles\msxml6_x86.msi /l* C:\InstallLog_msxml6_msi.txt /qn /norestart'
+                  Return="check">
+    </CustomAction>
+  </Fragment>
+</Wix>

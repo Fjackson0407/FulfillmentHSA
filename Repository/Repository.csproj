@@ -85,6 +85,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MinWeightFolder\IMinWeightShipBox.cs" />
     <Compile Include="MinWeightFolder\MinWeightShipBox.cs" />
+    <Compile Include="Notes\IStoreNotesRepo.cs" />
+    <Compile Include="Notes\StoreNotesRepo.cs" />
     <Compile Include="OperatorFolder\IOperator.cs" />
     <Compile Include="OperatorFolder\Operator.cs" />
     <Compile Include="PackSize\IPackSizeForBundles.cs" />
@@ -112,7 +114,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Client code\EDI\Helpers\Helpers.csproj">
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{47c222ba-6413-4c06-b08c-73e9f05ba2b5}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
@@ -126,6 +128,7 @@
       <DependentUpon>201609180909348_DEV.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

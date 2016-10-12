@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.HelpFiles = "..\..\Console\Bin\Language"?>
+    <ComponentGroup Id ="Cmpg.HelpFiles" Directory ="Dir.NexGen.Console.Bin.Language">
+      <Component Id="Cmp.DEUNGHELPSYSTEM600.HLP" Guid="{9C0E1F2B-7E92-424A-ADAA-09B1C2FFA6D8}">
+        <File Id="File.DEUNGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\DEUNG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.DEUNGHelpSystem600.cnt" Guid="{1CC47878-03B4-4E04-A374-319990568B11}">
+        <File Id="File.DEUNGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\DEUNG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.ENUNGHELPSYSTEM600.HLP" Guid="{E4D8AFE5-E4C5-4DEC-A12A-239F819575D1}">
+        <File Id="File.ENUNGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ENUNG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.ENUNGHelpSystem600.cnt" Guid="{73EDC146-C7AF-4D25-BC35-97E525237C8B}">
+        <File Id="File.ENUNGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ENUNG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.ESPNGHELPSYSTEM600.HLP" Guid="{D542FC23-6C10-4658-8E30-AF21887344B0}">
+        <File Id="File.ESPNGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ESPNG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.ESPNGHelpSystem600.cnt" Guid="{1FEADA35-D19D-4239-B851-586D5E985185}">
+        <File Id="File.ESPNGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ESPNG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.FRANGHELPSYSTEM600.HLP" Guid="{C5B3ADDA-8786-4925-A874-439668BA13BE}">
+        <File Id="File.FRANGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\FRANG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.FRANGHelpSystem600.cnt" Guid="{E56CCF55-DED0-4496-99B2-F9A6DCC9EA15}">
+        <File Id="File.FRANGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\FRANG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.CHSNGHELPSYSTEM600.HLP" Guid="{2657A209-6683-4A3D-8345-DD3356EDF227}">
+        <File Id="File.CHSNGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\CHSNG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.CHSNGHelpSystem600.cnt" Guid="{49AC3A20-9EC9-46C1-AA8C-436DCF500163}">
+        <File Id="File.CHSNGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\CHSNG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.ITANGHELPSYSTEM600.HLP" Guid="{39C3C46B-3D6A-4253-AF63-EC76159984DB}">
+        <File Id="File.ITANGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ITANG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.ITANGHelpSystem600.cnt" Guid="{B5873473-BA6A-4A68-8F71-7E760899B385}">
+        <File Id="File.ITANGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\ITANG-HelpSystem600.cnt" />
+      </Component>
+      <Component Id="Cmp.JPNNGHELPSYSTEM600.HLP" Guid="{D3F70425-BBEE-4DEA-958D-54FB65219A0E}">
+        <File Id="File.JPNNGHELPSYSTEM600.HLP" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\JPNNG-HELPSYSTEM600.HLP" />
+      </Component>
+      <Component Id="Cmp.JPNNGHelpSystem600.cnt" Guid="{F56D78E9-C858-4BB5-9644-3AA286CC10FE}">
+        <File Id="File.JPNNGHelpSystem600.cnt" KeyPath="yes" Source="$(var.SourcePath.HelpFiles)\JPNNG-HelpSystem600.cnt" />
+      </Component>
+    </ComponentGroup >
+	</Fragment>
+</Wix>

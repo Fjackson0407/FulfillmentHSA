@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*"
+           Name="DxI Installer"
+           Language="1033"
+           Version="!(bind.fileVersion.File.NexGenUIUD.exe)"
+           Manufacturer="BeckmanCoulter"
+           UpgradeCode="e7c68c84-3f41-436a-9dee-5da7e7827d9c">
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             InstallPrivileges ="elevated" />
+    <MediaTemplate EmbedCab ="yes" />
+
+    <UIRef Id="WixUI_Common"/>
+
+    <!--CONSOLESYSTEMVERSION is used to determine if this is a fresh install or not.  
+    If it is not a fresh install, some registry keys/files may not be installed a second time (i.e. time zone information)-->
+    <Property Id='CONSOLESYSTEMVERSION' Value="DoesNotExists">
+      <DirectorySearch Id ="CONSOLESYSTEMVERSION" Depth ="5" AssignToProperty ="yes" Path ="c:\NexGen\Console">
+        <FileSearch Id="CONSOLE_SYSTEM_VERSION" Name="SystemVersion.txt"/>
+      </DirectorySearch>
+    </Property>
+
+    <Property Id='TARGETDIR' Value='C:\'/>
+    <Property Id="REBOOTPROMPT" Admin="yes" Value="Suppress"/>
+    <Property Id='ASSISTANCE_LANGUAGE_NAME' Value='1033'/>
+    <Property Id='AU_IP_ADDRESS' Value='0'/>
+    
+    <InstallUISequence>
+      <Custom Action="CA_CanSeeAuFromConsole" Before="CostInitialize"/>
+      <Custom Action="CA_DoConsoleAndAuOSMatch" After="CA_CanSeeAuFromConsole"/>
+      <Custom Action="CA_ContinueWithInstall" After="CA_DoConsoleAndAuOSMatch"/>
+
+      <Custom Action="CA_CopyMsiToAu" After="ExecuteAction"/>
+      <Custom Action="CA_RebootAu" After="CA_CopyMsiToAu"/>
+      <Custom Action="CA_SetConsoleIPAddress" After="CA_RebootAu"/>
+      <Custom Action="CA_ConsoleConfiguration" After="CA_SetConsoleIPAddress"/>
+      <Custom Action="CA_InstallVNC" After="CA_ConsoleConfiguration">NOT Installed</Custom>
+      <Custom Action="CA_InstallMsXML6" After="CA_InstallVNC">NOT Installed</Custom>
+      <Custom Action="RegisterUnicelService.exe" After="CA_InstallMsXML6">Not Installed</Custom>
+      <Custom Action="CA_InstallCIAService" After="RegisterUnicelService.exe">NOT Installed</Custom>
+      <Custom Action="CA_IsAuInstallSuccessful" After="CA_InstallCIAService"/>
+      <Custom Action="CA_FinalRebootAu" After="CA_IsAuInstallSuccessful"/>
+
+      <Show Dialog="MainInstallDialog" Before="LaunchConditions"/>
+      <Show Dialog="MyExitDlg" OnExit="success"/>
+      <Show Dialog="MyExitErrorDlg" OnExit="error"/>
+    </InstallUISequence>
+
+    <Feature Id="ProductFeature" Title="DxI" Level="1" >
+      <ComponentGroupRef Id ="Cmpg.EnvironmentVariables"/>
+      <ComponentGroupRef Id ="Cmpg.OverrideConsoleRegistryKeys"/>
+      <ComponentGroupRef Id ="Cmpg.DoNotOverrideConsoleRegistryKeys"/>
+      <ComponentGroupRef Id ="Cmpg.Console.Folders"/>
+      <ComponentGroupRef Id ="Cmpg.StartMenuAndDesktopShortcuts"/>
+    </Feature>
+  </Product>
+</Wix>

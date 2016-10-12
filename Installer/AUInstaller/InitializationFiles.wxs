@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.InitializationFiles = "..\..\Instrument\AU"?>
+    <?define SourcePath.Instrument = "..\..\Instrument"?>
+    <?define SourcePath.Inc = "..\..\Inc"?>
+    <?define SourcePath.UCTAMsgData = "..\..\Instrument\UCTAMsgData"?>
+    <ComponentGroup Id ="Cmpg.InitializationFiles" Directory ="Dir.Au">
+      <Component Id="Cmp.Au.ini" Guid="{3BCFEE1D-9E56-4E59-8427-C7403AC2D051}">
+        <File Id="File.Cmp.Au.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\Au.ini"/>
+      </Component>
+      <Component Id="Cmp.BitIO.ini" Guid="{48FBA4A7-8C82-49BA-B51B-92C0F75A2C7A}">
+        <File Id="File.BitIO.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\BitIO.ini"/>
+      </Component>
+      <Component Id="Cmp.SampleTubes.ini" Guid="{72A5AD95-76AF-427A-B685-F20E144E0E1F}">
+        <File Id="File.SampleTubes.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\SampleTubes.ini"/>
+      </Component>
+      <Component Id="Cmp.Timeline.ini" Guid="{E89FB2A7-27D6-4F97-B73E-5CEFAA9CE59F}">
+        <File Id="File.Timeline.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\Timeline.ini"/>
+      </Component>
+      <Component Id="Cmp.Aligner.ini" Guid="{B7F93D3D-3DD3-4F2F-B142-9105CE1AEC0F}">
+        <File Id="File.Aligner.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\Aligner.ini"/>
+      </Component>
+      <Component Id="Cmp.SampleRackIDs.ini" Guid="{4187577D-56B9-4979-A7AE-533960AF3DB3}">
+        <File Id="File.SampleRackIDs.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\SampleRackIDs.ini"/>
+      </Component>
+      <Component Id="Cmp.VPACKDES.csv" Guid="{B1448835-F4D3-41E3-A00B-4A36A85665AB}">
+        <File Id="File.VPACKDES.csv" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\VPACKDES.csv"/>
+      </Component>
+      <Component Id="Cmp.CALIB.csv" Guid="{50F03B25-650C-4EFE-B8FB-654F94B2E09A}">
+        <File Id="File.CALIB.csv" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\CALIB.csv"/>
+      </Component>
+      <Component Id="Cmp.CALSET.csv" Guid="{4B17F958-7C0A-4AF6-9D96-D31A7DF7B8C0}">
+        <File Id="File.CALSET.csv" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\CALSET.csv"/>
+      </Component>
+      <Component Id="Cmp.PROCESS.csv" Guid="{7523A375-30CD-46A4-9B03-F7D9E31B83FE}">
+        <File Id="File.PROCESS.csv" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\PROCESS.csv"/>
+      </Component>
+      <Component Id="Cmp.AssayDes.csv" Guid="{E7D226D8-5304-4CF0-9069-A926CB22ED45}">
+        <File Id="File.AssayDes.csv" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\AssayDes.csv"/>
+      </Component>
+      <Component Id="Cmp.Commission.ini" Guid="{AB86F916-27F8-4394-A308-DFFBDFB851E1}">
+        <File Id="File.Commission.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\Commission.ini"/>
+      </Component>
+      <Component Id="Cmp.DriversOn.bat" Guid="{831FE613-57EE-46A6-8C8E-9BD19FD28237}">
+        <File Id="File.DriversOn.bat" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DriversOn.bat"/>
+      </Component>
+      <Component Id="Cmp.DriversOff.bat" Guid="{2680A210-5195-4506-9214-CACD3F85EFD0}">
+        <File Id="File.DriversOff.bat" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DriversOff.bat"/>
+      </Component>
+      <Component Id="Cmp.DxI600_specific.ini" Guid="{1124F0C5-6372-4CF1-92C3-F4CC0D584ACC}">
+        <File Id="File.DxI600_specific.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI600_specific.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI600_Subsystem.ini" Guid="{542F95DD-E2E7-4AE9-9FA7-41430BFF94E2}">
+        <File Id="File.DxI600_Subsystem.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI600_Subsystem.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI600_SMC.ini" Guid="{A67623FE-BB36-47C7-957F-EC04EB8B212C}">
+        <File Id="File.DxI600_SMC.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI600_SMC.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI800_specific.ini" Guid="{769BECB8-6B26-4941-AB2D-265D28F5A469}">
+        <File Id="File.DxI800_specific.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI800_specific.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI800_Subsystem.ini" Guid="{0276FF81-A887-4A7B-811C-DBBCDA0AEFC9}">
+        <File Id="File.DxI800_Subsystem.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI800_Subsystem.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI800_SMC.ini" Guid="{C47F63B4-299A-42E8-ABA8-08801EBCC328}">
+        <File Id="File.DxI800_SMC.ini" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI800_SMC.ini"/>
+      </Component>
+      <Component Id="Cmp.DxI_EnhancementsConfiguration.xml" Guid="{8DC38051-B219-43F9-85A4-2D37EA9683DB}">
+        <File Id="File.DxI_EnhancementsConfiguration.xml" KeyPath="yes" Source="$(var.SourcePath.InitializationFiles)\DxI_EnhancementsConfiguration.xml"/>
+      </Component>
+      <Component Id="Cmp.SystemVersion.txt" Guid="{D2AB2E97-DF75-4CB7-81FA-5D5181F02430}">
+        <File Id="File.SystemVersion.txt" KeyPath="yes" Source="$(var.SourcePath.Instrument)\SystemVersion.txt"/>
+      </Component>
+      <Component Id="Cmp.snap.bat" Guid="{D7215AC6-7D5B-4890-9B6E-725193D8C718}">
+        <File Id="File.snap.bat" KeyPath="yes" Source="$(var.SourcePath.Instrument)\snap.bat"/>
+      </Component>
+      <Component Id="Cmp.DxI600_specific.new" Guid="{41AD3EF4-ABE8-4315-959D-DA08FE51906D}">
+        <File Id="File.DxI600_specific.new" KeyPath="yes" Source="$(var.SourcePath.Instrument)\DxI600_specific.new"/>
+      </Component>
+      <Component Id="Cmp.DxI800_specific.new" Guid="{43E8E2FA-8A11-44B7-B3BF-312FEAE59B14}">
+        <File Id="File.DxI800_specific.new" KeyPath="yes" Source="$(var.SourcePath.Instrument)\DxI800_specific.new"/>
+      </Component>
+      <Component Id="Cmp.MsgTypeID.h" Guid="{D6A96DCB-852B-4B27-B7CF-0FF033E05A40}">
+        <File Id="File.MsgTypeID.h" KeyPath="yes" Source="$(var.SourcePath.Inc)\MsgTypeID.h"/>
+      </Component>
+      <Component Id="Cmp.UCTAData.h" Guid="{0C1E4EF8-D64D-4DAC-B552-15FB696F25ED}">
+        <File Id="File.UCTAData.h" KeyPath="yes" Source="$(var.SourcePath.UCTAMsgData)\UCTAData.h"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--Relative path definitions ==============================================================-->
+    <?define SourcePath.Instrument.UBin = "..\..\Instrument\UBin" ?>
+    <?define SourcePath.DeviceObjects.UBin = "..\..\Instrument\AU\DeviceObjects\UBin" ?>
+    <!--Files destined for the C:\AU directory =================================================-->
+    <ComponentGroup Id="Cmpg.ProgramDlls" Directory="Dir.Au">
+      <Component Id="Cmp.UltraSonDev.dll" Guid="{BB0E64C2-DBD6-4731-A676-6C623B07A108}">
+        <File Id="File.UltraSonDev.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\UltraSonDev.dll"/>
+      </Component>
+      <Component Id="Cmp.DCMotorDev.dll" Guid="{26EF29F6-269C-4F47-8C3C-13B6DB8DD1B7}">
+        <File Id="File.DCMotorDev.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\DCMotorDev.dll"/>
+      </Component>
+      <Component Id="Cmp.DiagPort.dll" Guid="{CC24D541-1573-41C2-8C95-FF1C721B7C47}">
+        <File Id="File.DiagPort.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\DiagPort.dll"/>
+      </Component>
+      <Component Id="Cmp.Encoder.dll" Guid="{4BC28C1E-8C3C-4701-A0DD-46655A4B3A96}">
+        <File Id="File.Encoder.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Encoder.dll"/>
+      </Component>
+      <Component Id="Cmp.Lumin.dll" Guid="{98B27830-CD9F-4AFB-AF83-EDDB09CF83C4}">
+        <File Id="File.Lumin.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Lumin.dll"/>
+      </Component>
+      <Component Id="Cmp.MixerSpeed.dll" Guid="{4F8EC0E2-346E-4E0F-86B9-AACFF548DA27}">
+        <File Id="File.MixerSpeed.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\MixerSpeed.dll"/>
+      </Component>
+      <Component Id="Cmp.RFLevelSense.dll" Guid="{3064BC92-D0CB-42DF-B40A-DDDEF59AA09F}">
+        <File Id="File.RFLevelSense.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\RFLevelSense.dll"/>
+      </Component>
+      <Component Id="Cmp.Smc.dll" Guid="{3656A215-557C-4705-9AC7-04694477BE63}">
+        <File Id="File.Smc.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Smc.dll"/>
+      </Component>
+      <Component Id="Cmp.SMCps.dll" Guid="{83373B10-F4C6-4781-BD1D-6F7015F4DACC}">
+        <File Id="File.SMCps.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\SMCps.dll"/>
+      </Component>
+      <Component Id="Cmp.TempObjps.dll" Guid="{73FE26ED-0F95-48C8-BB59-E35D045F797E}">
+        <File Id="File.TempObjps.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\TempObjps.dll"/>
+      </Component>
+      <Component Id="Cmp.BarCodeReader.dll" Guid="{1E266752-CAE7-42C2-A632-ACCA1889412C}">
+        <File Id="File.BarCodeReader.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\BarCodeReader.dll"/>
+      </Component>
+      <Component Id="Cmp.PwmObj.dll" Guid="{33E6FC93-2006-4BFC-B3C9-902687BDAA93}">
+        <File Id="File.PwmObj.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\PwmObj.dll"/>
+      </Component>
+      <Component Id="Cmp.Weight.dll" Guid="{A133675D-D043-424C-BE00-630AEDF6C707}">
+        <File Id="File.Weight.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Weight.dll"/>
+      </Component>
+      <Component Id="Cmp.Pressure.dll" Guid="{5A079FDD-E182-463F-8FC1-CFA01DE2434E}">
+        <File Id="File.Pressure.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Pressure.dll"/>
+      </Component>
+      <Component Id="Cmp.HighSpeedAnalog.dll" Guid="{5BA33D1D-18E5-40D0-B94F-3DE039C08F53}">
+        <File Id="File.HighSpeedAnalog.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\HighSpeedAnalog.dll"/>
+      </Component>
+      <Component Id="Cmp.LedControl.dll" Guid="{F8E94B79-3222-4638-AFEA-4E8DCFFDBAA5}">
+        <File Id="File.LedControl.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\LedControl.dll"/>
+      </Component>
+      <Component Id="Cmp.TempObj.dll" Guid="{541A1592-0EA7-44ED-B1E6-0D98B901A9C7}">
+        <File Id="File.TempObj.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\TempObj.dll"/>
+      </Component>
+      <Component Id="Cmp.Voltage.dll" Guid="{7A851B3F-9400-4396-B4E4-B4342B718A16}">
+        <File Id="File.Voltage.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\Voltage.dll"/>
+      </Component>
+      <Component Id="Cmp.LASFrameLayer.dll" Guid="{717FCA10-8DAF-4951-B0A7-BA49EAE8D298}">
+        <File Id="File.LASFrameLayer.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\LASFrameLayer.dll"/>
+      </Component>
+      <Component Id="Cmp.pcontrol.exe" Guid="{4C869064-EC4A-4715-AE16-726BB8C76195}">
+        <File Id="File.pcontrol.exe" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\pcontrol.exe"/>
+      </Component>
+      <Component Id="Cmp.UnicelService.exe" Guid="{2CCB9944-BA71-4C25-A3F0-13C446FD1014}">
+        <File Id="File.UnicelService.exe" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\UnicelService.exe"/>
+      </Component>
+      <Component Id="Cmp.tcontrol.exe" Guid="{B200E962-17C7-4DBA-8B2B-A713FF45BFF2}">
+        <File Id="File.tcontrol.exe" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\tcontrol.exe"/>
+      </Component>
+      <Component Id="Cmp.USBDev.dll" Guid="{E04901B8-2A37-4275-8FED-A65612005A8E}">
+        <File Id="File.USBDev.dll" KeyPath="yes" Source="$(var.SourcePath.DeviceObjects.UBin)\USBDev.dll" SelfRegCost ="1"/>
+      </Component>
+      <Component Id="Cmp.AUObjps.dll" Guid="{8FE8696D-FE43-40B5-A89B-37D8A0A4ECA1}">
+        <File Id="File.AUObjps.dll" KeyPath="yes" Source="$(var.SourcePath.Instrument.UBin)\AUObjps.dll"/>
+      </Component>
+      <Component Id="Cmp.AUObj" Guid="{2F488E10-B252-40B8-B1F6-6E67FB10DD58}">
+        <File Id="File.AUObj.exe" KeyPath="yes" Source="$(var.SourcePath.Instrument.UBin)\AUObj.exe"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

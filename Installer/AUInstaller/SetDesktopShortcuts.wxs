@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="Cmpg.SetShortcuts" Directory ="TARGETDIR">
+
+      <!-- == Start Menu Shortcuts ============================================================ -->
+
+      <Component  Id ="Cmp.AUObj.StartMenuShortcuts" Guid ="{E5EA0985-3496-4642-9ED5-E65F52A875BB}">
+        <Shortcut Id ="ShortCut.StartMenu.AUObj"
+                  Name ="Instrument Application"
+                  Description ="Instrument Application"
+                  Target ="[Dir.Au]\AUObj.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RemoveFolder Id="Dir.NexGen.Applications.Shortcuts" Directory="Dir.NexGen.Applications.Shortcuts" On="uninstall"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="AUObj.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.SMCTest.StartMenuShortcuts" Guid ="{058D6296-1A92-4544-9555-C73612B6C8B4}">
+        <Shortcut Id ="ShortCut.StartMenu.SMCTest"
+                  Name ="SMC Test"
+                  Description ="SMC Motor Testing"
+                  Target ="[Dir.Au]\SMCTest.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="SMCTest.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.TestDynamic.StartMenuShortcuts" Guid ="{2955E1A0-5365-43E1-87F6-8B72ACF8A41B}">
+        <Shortcut Id ="ShortCut.StartMenu.TestDynamic"
+                  Name ="Test Dynamic"
+                  Description ="Dynamic Data Acquisition Testing"
+                  Target ="[Dir.Au]\TestDynamic.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="TestDynamic.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.TestAnalog.StartMenuShortcuts" Guid ="{E26BA661-F6A1-47FC-88D7-0D87877F0D2C}">
+        <Shortcut Id ="ShortCut.StartMenu.TestAnalog"
+                  Name ="Test Analog"
+                  Description ="Analog Data Testing"
+                  Target ="[Dir.Au]\TestAnalog.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="TestAnalog.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.TestGPIO.StartMenuShortcuts" Guid ="{EA095B18-D45E-4DFE-9A9A-F87DDB0B86CD}">
+        <Shortcut Id ="ShortCut.StartMenu.TestGPIO"
+                  Name ="Test GPIO"
+                  Description ="General Purpose I/O Testing"
+                  Target ="[Dir.Au]\TestGPIO.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="TestGPIO.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.InBitTest.StartMenuShortcuts" Guid ="{12A93ADC-6811-454A-A5F0-E7F0206F3F28}">
+        <Shortcut Id ="ShortCut.StartMenu.InBitTest"
+                  Name ="Test Digital Inputs"
+                  Description ="Input Bit Testing"
+                  Target ="[Dir.Au]\InBitTest.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="InBitTest.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.OutBitTest.StartMenuShortcuts" Guid ="{6AE9CBA7-9362-424D-BBA7-36712907D161}">
+        <Shortcut Id ="ShortCut.StartMenu.OutBitTest"
+                  Name ="Test Digital Outputs"
+                  Description ="Output Bit Testing"
+                  Target ="[Dir.Au]\OutBitTest.exe"
+                  WorkingDirectory ="Dir.Au"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="OutBitTest.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <!-- == Desktop Shortcuts =============================================================== -->
+
+      <Component  Id ="Cmp.SetDekstopShortcuts.Au" Guid ="{58BC3148-1FBA-4460-9BEA-752D0E69CF5D}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For Au" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.Desktop.AuObj"
+                  Name ="AUObj"
+                  Arguments="-output"
+                  Description ="Instrument Application"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\AUObj.exe">        
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.SMCTest" Guid ="{B7DFE2AF-C6A1-4194-979B-444AE72DC120}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For SMCTest" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.Desktop.SMCTest"
+                  Name ="SMCTest"
+                  Description ="SMC Motor Testing"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\SMCTest.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.TestAnalog" Guid ="{0E5DD383-04BF-4865-8650-E3B31E06CA2F}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For TestAnalog" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.TestAnalog"
+                  Name ="TestAnalog"
+                  Description ="Analog Data Testing"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\TestAnalog.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.TestGpio" Guid ="{D8221370-0B5F-40BF-9B6A-3E1F3E4025EE}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For TestGpio" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.TestGpio"
+                  Name ="TestGpio"
+                  Description ="General Purpose I/O Testing"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\TestGpio.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.InBitTest" Guid ="{B15F0859-899E-423C-9EB4-64F972B4CCD7}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For InBitTest" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.InBitTest"
+                  Name ="InBitTest"
+                  Description ="Test Digital Inputs"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\InBitTest.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.OutBitTest" Guid ="{C3CF561C-C55D-4BD0-8D76-27D6AAF82F76}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For OutBitTest" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.OutBitTest"
+                  Name ="OutBitTest"
+                  Description ="Test Digital Outputs"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\OutBitTest.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component >
+      <Component  Id ="Cmp.SetDekstopShortcuts.TestDynamic" Guid ="{1D2F16A3-3176-4ED0-A317-7B39174CF5AD}">
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="Desktop Shortcuts Installed For TestDynamic" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <Shortcut Id ="ShortCut.TestDynamic"
+                  Name ="TestDynamic"
+                  Description ="Dynamic Data Acquisition Testing"
+                  WorkingDirectory ="Dir.Au"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.Au]\TestDynamic.exe" >
+        </Shortcut>
+        <Condition><![CDATA[AUSYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

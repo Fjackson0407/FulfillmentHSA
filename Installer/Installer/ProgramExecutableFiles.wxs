@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!--Relative path definitions ==============================================================-->
+    <?define SourcePath.Console.Bin = "..\..\Console\Bin" ?>
+    <?define SourcePath.Console.UBin = "..\..\Console\UBin" ?>
+    <!--Files destined for the C:\NexGen\Console\Bin directory =================================-->
+    <ComponentGroup Id="Cmpg.ProgramExecutableFiles" Directory="Dir.NexGen.Console.Bin">
+      <Component Id="Cmp.AUCommTest.exe" Guid="{5FD3FB9A-6F97-4258-9AC4-64068C0047AD}">
+        <File Id="File.AUCommTest.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\AUCommTest.exe"/>
+      </Component>
+      <Component Id="Cmp.BroadcastMonitorTest.dll" Guid="{61A4FA2D-4F26-42CB-88AD-0ADF5D376EED}">
+        <File Id="File.BroadcastMonitorTest.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BroadcastMonitorTest.dll"/>
+      </Component>
+      <Component Id="Cmp.DbMaintenanceUD.exe" Guid="{744AA1E9-BFDB-4262-9B30-3D69CEBD2252}">
+        <File Id="File.DbMaintenanceUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\DbMaintenanceUD.exe"/>
+      </Component>
+      <Component Id="Cmp.DbTestUD.exe" Guid="{E75B4FF9-4C98-4C0F-B28C-88A305B09690}">
+        <File Id="File.DbTestUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\DbTestUD.exe"/>
+      </Component>
+      <Component Id="Cmp.DxCSimulator.exe" Guid="{3BC9BD58-EAC6-4AD8-92E4-21B3B2888BE9}">
+        <File Id="File.DxCSimulator.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\DxCSimulator.exe"/>
+      </Component>
+      <Component Id="Cmp.EventsTestUD.exe" Guid="{EAE082D0-999D-4DDE-BCFF-7E789512F442}">
+        <File Id="File.EventsTestUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\EventsTestUD.exe"/>
+      </Component>
+      <Component Id="Cmp.LasUtilities.exe" Guid="{535FD017-8ECE-4C51-8110-F50C4E8A3FF4}">
+        <File Id="File.LasUtilities.exe" KeyPath="yes" Source="$(var.SourcePath.Console.UBin)\LasUtilities.exe"/>
+      </Component>
+      <Component Id="Cmp.LISServiceUD.exe" Guid="{9ED19BB0-EB3E-41FD-912E-318A4964A551}">
+        <File Id="File.LISServiceUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\LISServiceUD.exe"/>
+      </Component>
+      <Component Id="Cmp.NexGenDBGen.exe" Guid="{11BA2741-4633-416C-8701-204010D236DD}">
+        <File Id="File.NexGenDBGen.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexGenDBGen.exe"/>
+      </Component>
+      <Component Id="Cmp.NexGenUIUD.exe" Guid="{07B4A07C-8982-4954-804F-680FC6D82266}">
+        <File Id="File.NexGenUIUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexGenUIUD.exe"/>
+      </Component>
+      <Component Id="Cmp.NSPRNTUD.exe" Guid="{6AD0778A-8098-4618-9A40-6AE0CFFE2EFB}">
+        <File Id="File.NSPRNTUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NSPRNTUD.exe"/>
+      </Component>
+      <Component Id="Cmp.NsUtilUD.exe" Guid="{342EF02F-825C-4E07-9CE3-7313A6D20324}">
+        <File Id="File.NsUtilUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NsUtilUD.exe"/>
+      </Component>
+      <Component Id="Cmp.NSWGSVUD.exe" Guid="{420AE64F-2B5A-4C3A-AB7C-9051F20EB7C6}">
+        <File Id="File.NSWGSVUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NSWGSVUD.exe"/>
+      </Component>
+      <Component Id="Cmp.poet.cfg" Guid="{D5C00D2B-EE59-42B7-BCE1-671B3E723B4A}">
+        <File Id="File.poet.cfg" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\poet.cfg"/>
+      </Component>
+      <Component Id="Cmp.PtServer.cfg" Guid="{931EE328-39CB-446E-9B67-B66D45B6E3D4}">
+        <File Id="File.PtServer.cfg" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\PtServer.cfg"/>
+      </Component>
+      <Component Id="Cmp.ReduceUD.exe" Guid="{36826541-FD0B-406F-8C15-4B1749943534}">
+        <File Id="File.ReduceUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ReduceUD.exe"/>
+      </Component>
+      <Component Id="Cmp.RequestCallbackSink.dll" Guid="{C645A6A8-F22F-4DCA-B6FD-0A03E344E868}">
+        <File Id="File.RequestCallbackSink.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\RequestCallbackSink.dll"/>
+      </Component>
+      <Component Id="Cmp.RestoreUtilUD.exe" Guid="{80B9B8A5-CF0A-4C95-8CB4-6B8905AE6B5A}">
+        <File Id="File.RestoreUtilUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\RestoreUtilUD.exe"/>
+      </Component>
+      <Component Id="Cmp.ScreenTransitionToolUD.exe" Guid="{AD3BC79F-D2EC-4E13-B978-A421D7C22E8D}">
+        <File Id="File.ScreenTransitionToolUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ScreenTransitionToolUD.exe"/>
+      </Component>
+      <Component Id="Cmp.Sleep.exe" Guid="{5EDA0E1F-3E16-4A31-9DF7-57050F1AD821}">
+        <File Id="File.Sleep.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\Sleep.exe"/>
+      </Component>
+      <Component Id="Cmp.NexGenStartupScript.vbs" Guid="{C34BD352-EE21-476C-9423-AB5E4E195728}">
+        <File Id="File.NexGenStartupScript.vbs" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexGenStartupScript.vbs"/>
+      </Component>
+      <Component Id="Cmp.WorkgroupCommTestUD.exe" Guid="{B586A5B5-63C8-40A3-BB52-0A1D0BC6A6C4}">
+        <File Id="File.WorkgroupCommTestUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\WorkgroupCommTestUD.exe"/>
+      </Component>
+      <Component Id="Cmp.ResourceMonitorUD.exe" Guid="{8D3F90A5-B7D5-4B66-AF32-26D701547CEB}">
+        <File Id="File.ResourceMonitorUD.exe" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ResourceMonitorUD.exe"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.Root = ".\"?>
+    <?define SourcePath.Console.CIA = "..\..\Console\CIA"?>
+    <?define SourcePath.AuMsi = "..\AUInstaller\bin\$(var.Configuration)"?>
+    <?define SourcePath.BatchFile = "..\AUInstaller"?>
+    <?define SourcePath.Console.Intel32 = "..\..\Console\Install\NexGen Debug\Setup Files\Compressed Files\Language Independent\Intel 32"?>
+    <ComponentGroup Id="Cmpg.TempInstallFiles" Directory ="Dir.TempInstallFiles">
+      <Component Id="Cmp.AUInstaller.msi" Guid ="{AB440630-2025-4351-A4A2-99474FDA6BEB}">
+        <File Id="File.AUInstaller.msi" Source ="$(var.SourcePath.AuMsi)\AUInstaller.msi"/>
+      </Component>
+      <Component Id="Cmp.CopyMsiToAu.bat" Guid ="{C937553C-BDBE-4779-A247-A9C3E8F034AA}">
+        <File Id="File.CopyMsiToAu.bat" Source ="$(var.SourcePath.BatchFile)\CopyMsiToAu.bat"/>
+      </Component>
+      <Component Id="Cmp.CIASetup.exe" Guid ="{99401762-0ACD-4641-A15C-718D5243AA43}">
+        <File Id="File.CIASetup.exe" Source ="$(var.SourcePath.Console.CIA)\CIASetup.exe"/>
+      </Component>
+      <Component Id="Cmp.CIAInstall.iss" Guid ="{AF5B550A-F817-4A5E-807E-75C87BC4BE08}">
+        <File Id="File.CIAInstall.iss" Source ="$(var.SourcePath.Console.CIA)\CIAInstall.iss"/>
+      </Component>
+      <Component Id="Cmp.VNCInstall.msi" Guid ="{6DA26ACB-0342-4C05-B7D4-F74731B9DCE2}">
+        <File Id="File.VNCInstall.msi" Source ="$(var.SourcePath.Console.CIA)\VNC-Server-5.2.1-Windows-en-32bit.msi"/>
+      </Component>
+      <Component Id="Cmp.msxml6.msi" Guid ="{71E647C8-C551-4A2E-9938-5CC1EE6AE573}">
+        <File Id="File.msxml6.msi" Source ="$(var.SourcePath.Console.Intel32)\msxml6_x86.msi"/>
+      </Component>
+      <Component Id="Cmp.RealVNC.reg" Guid="{D016D2A3-923D-4B1C-894C-E9BA077EE979}">
+        <File Id="File.RealVNC.reg" Source="$(var.SourcePath.Console.CIA)\RealVNC-vncserver-registry-values-32bit.reg"/>
+      </Component>
+      <Component Id="Cmp.ConsoleConfiguration.bat" Guid ="{21C5A406-3A30-4192-9EE6-B4AAE10589C1}">
+        <File Id="File.ConsoleConfiguration.bat" Source ="$(var.SourcePath.Root)\ConsoleConfiguration.bat"/>
+      </Component>
+      <Component Id="Cmp.SetConsoleIPAddress.bat" Guid ="{9E1AAFEC-E085-4B26-B910-983AE1BEBC71}">
+        <File Id="File.SetConsoleIPAddress.bat" Source ="$(var.SourcePath.Root)\SetConsoleIPAddress.bat"/>
+      </Component>      
+      <Component Id="Cmp.InstallCIAService.bat" Guid ="{DEBD78C1-A7AF-4D9D-85A6-37341529B65D}">
+        <File Id="File.InstallCIAService.bat" Source ="$(var.SourcePath.Root)\InstallCIAService.bat"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

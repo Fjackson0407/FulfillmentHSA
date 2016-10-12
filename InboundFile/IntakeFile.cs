@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using ASNService;
+using Domain;
 using EDIException;
 using Helpers;
 using LumenWorks.Framework.IO.Csv;
@@ -20,7 +21,9 @@ namespace EDIService
     {
         public string FromFile { get; set; }
         public string ConnectionString { get; set; }
-        
+        public string TempPath { get; set; }
+        public string  ASNPath { get; set;  }
+        public string labelPath { get; set; }
 
         public EDIPOService(string _FromPath, string _ConnectionString)
         {
@@ -28,7 +31,7 @@ namespace EDIService
             {
                 FromFile = _FromPath;
                 ConnectionString = _ConnectionString;
-                
+
             }
             else
             {
@@ -38,6 +41,26 @@ namespace EDIService
             }
         }
 
+
+        public EDIPOService(string _FromPath, string _ASNPath ,string _TempPath, string _LabelPath,  string _ConnectionString)
+        {
+            FromFile = _FromPath;
+            TempPath = _TempPath;
+            ASNPath = _ASNPath;
+            ConnectionString = _ConnectionString;
+            labelPath = _LabelPath;
+        }
+
+
+        public void BuildHoildayorders()
+        {
+            var orders = ParserHoildayOrder();  
+            ASNBuild cASNBuild = new ASNBuild(ASNPath , labelPath , TempPath , ConnectionString);
+            cASNBuild.BuildHoildayASN(orders.OrderBy(t => t.Store ));
+
+
+
+        }
         public List<StoreInfoFromEDI850> BuildReport()
         {
             return ParseFileForReport();
@@ -170,7 +193,7 @@ namespace EDIService
                     cSkuItem.Id = Guid.NewGuid();
                     cSkuItem.Brand = "Visa";
                     cSkuItem.Product = reader.GetValue((int)TargetProductMappingStockPile.Product).ToString();
-                    cSkuItem.SubProduct = reader.GetValue((int)TargetProductMappingStockPile.Product ).ToString();
+                    cSkuItem.SubProduct = reader.GetValue((int)TargetProductMappingStockPile.Product).ToString();
                     cSkuItem.DPCI = reader.GetValue((int)TargetProductMappingStockPile.DPCI).ToString();
                     cSkuItem.ProductUPC = reader.GetValue((int)TargetProductMappingStockPile.ProductUPC).ToString();
                     cSkuItem.PackageUPC = reader.GetValue((int)TargetProductMappingStockPile.PackageUPC).ToString();
@@ -188,7 +211,7 @@ namespace EDIService
             }
 
         }
-        
+
         private List<StoreInfoFromEDI850> ParseFileForReport()
         {
 
@@ -247,6 +270,43 @@ namespace EDIService
             return Invoice;
         }
 
+        private IEnumerable<HoildayOrder> ParserHoildayOrder()
+        {
+            List<HoildayOrder> LisOrder = new List<HoildayOrder>();
+            using (CsvReader csv = new CsvReader(new StreamReader(FromFile), true, CsvReader.DefaultDelimiter, CsvReader.DefaultQuote, CsvReader.DefaultEscape, CsvReader.DefaultDelimiter, ValueTrimmingOptions.None))
+            {
+                csv.SupportsMultiline = true;
+                IDataReader reader = csv;
+                HoildayOrder cHoildayOrder = null;
+                while (reader.Read())
+                {
+                    cHoildayOrder = new HoildayOrder();
+                    cHoildayOrder.id = Guid.NewGuid();
+                    cHoildayOrder.CompanyCode = reader.GetValue((int)Inbound850Mapping.CompanyCode).ToString();
+                    cHoildayOrder.DC = reader.GetValue((int)Inbound850Mapping.ShipToAddress).ToString().Replace(@"'", "");
+                    cHoildayOrder.Store = reader.GetValue((int)Inbound850Mapping.OrderStoreNumber).ToString();
+                    cHoildayOrder.QtyOrdered = reader.GetInt32((int)Inbound850Mapping.QtyOrdered);
+                    cHoildayOrder.UPC = reader.GetValue((int)Inbound850Mapping.UPCCode).ToString().Replace(@"'", "");
+                    cHoildayOrder.VendorNumber = reader.GetValue((int)Inbound850Mapping.VendorNumber).ToString();
+                    cHoildayOrder.PO = reader.GetValue((int)Inbound850Mapping.PONumber).ToString();
+                    cHoildayOrder.PODate = reader.GetDateTime((int)Inbound850Mapping.PODate);
+                    cHoildayOrder.DocumentId = reader.GetValue((int)Inbound850Mapping.DocumentId).ToString();
+                    cHoildayOrder.CustomerLineNumber = reader.GetValue((int)Inbound850Mapping.CustomerNumber).ToString();
+                    CommonFunctions cCommonFunctions = new CommonFunctions(ConnectionString);
+                    SkuItem cSkuItem = cCommonFunctions.GetSkuInfo(cHoildayOrder.UPC);
+                    if (cSkuItem != null)
+                    {
+                        cHoildayOrder.ItemDescription = cSkuItem.Product;
+                    }
+                    cHoildayOrder.DPCI = reader.GetValue((int)Inbound850Mapping.DPCI).ToString();
+
+                    LisOrder.Add(cHoildayOrder);
+                }
+
+            }
+
+            return LisOrder;
+        }
 
 
         private List<StoreInfoFromEDI850> ParseFile()

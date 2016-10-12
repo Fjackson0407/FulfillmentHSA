@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="Dir.NexGen.Applications.Shortcuts" Name="NexGen"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Directory Id="Dir.UtilityProgramsFolder.Shortcuts" Name="Utility Programs"/>
+      </Directory>
+      <Directory Id="Dir.TempInstallFiles" Name="TempInstallFiles"/>
+      <Directory Id="Dir.Windows" Name="Windows">
+        <Directory Id="Dir.System32" Name="System32">
+        </Directory >
+      </Directory >
+      <Directory Id="Dir.NexGen" Name="NexGen">
+        <Directory Id ="Dir.NexGen.Console" Name ="Console">
+          <Directory  Id ="Dir.NexGen.Console.Bin" Name ="Bin">
+            <Directory Id="Dir.NexGen.Console.Bin.Language" Name="Language" />
+          </Directory>
+          <Directory Id ="Dir.NexGen.Console.Dro" Name ="Dro" >
+            <Directory  Id ="Dir.NexGen.Console.Dro.EventDict" Name ="EventDict"/>
+            <Directory  Id ="Dir.NexGen.Console.Dro.NexStepDict" Name ="NexStepDict"/>
+            <Directory  Id ="Dir.NexGen.Console.Dro.Reports" Name ="Reports"/>
+          </Directory>
+          <Directory Id ="Dir.NexGen.Console.Drw" Name ="Drw">
+            <Directory  Id ="Dir.NexGen.Console.Drw.EventBase" Name ="EventBase"/>
+            <Directory  Id ="Dir.NexGen.Console.Drw.NexStepBase" Name ="NexStepBase"/>
+            <Directory Id ="Dir.NexGen.Console.Drw.Reports" Name ="Reports">
+              <Directory Id ="Dir.NexGen.Console.Drw.Reports.Spool" Name ="Spool"/>
+            </Directory>
+          </Directory>
+        </Directory>
+        <Directory Id ="Dir.NexGen.FastObjects" Name ="FastObjects">
+          <Directory Id ="Dir.NexGen.FastObjects.Bin" Name ="Bin"/>
+          <Directory Id ="Dir.NexGen.FastObjects.runtime" Name ="runtime">
+            <Directory Id ="Dir.NexGen.FastObjects.runtime.Bin" Name ="Bin"/>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+</Wix>

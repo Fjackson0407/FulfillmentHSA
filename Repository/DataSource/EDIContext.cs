@@ -42,6 +42,7 @@ namespace Repository.DataSource
 
         public virtual DbSet<UserOrders> UserOrders { get; set;  }
 
+        
         public virtual DbSet<MaxWeightFullBox> MaxWeight { get; set; }
         public virtual DbSet<Pack> Pack { get; set; }
         public virtual DbSet<CartonType> CartonType { get; set;  }
@@ -51,6 +52,7 @@ namespace Repository.DataSource
         public virtual DbSet<BundleWeight> BundleWeight { get; set;  }
         public virtual DbSet<EmptyBoxWeight> EmptyBoxWeight { get; set;  }
         public virtual DbSet<MinWeightForShipping> MinWeightForShipping { get; set; }
+        public virtual DbSet<StoreNotes> StoreNotes { get; set;  }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //This is for packs in a carton 
@@ -76,6 +78,13 @@ namespace Repository.DataSource
                 .WillCascadeOnDelete();
 
 
+            modelBuilder.Entity<StoreInfoFromEDI850>()
+                .HasMany(t => t.StoreNotes )
+                .WithOptional(t => t.StoreInfoFromEDI850)
+                .HasForeignKey(t => t.StoreInfoFromEDI850FK)
+                .WillCascadeOnDelete();
+
+
             modelBuilder.Entity<BundleWeight>()
                 .HasOptional(t => t.store)
                 .WithOptionalDependent();
@@ -86,14 +95,7 @@ namespace Repository.DataSource
                 .HasForeignKey(s => s.ASNFileOutBoundFK)
                 .WillCascadeOnDelete();
 
-          
-
-            modelBuilder.Entity<SkuItem>()
-                    .HasMany(t => t.Store)
-                    .WithOptional(t => t.SkuItem)
-                    .HasForeignKey(t => t.SkuItemFK)
-                    .WillCascadeOnDelete();
-
+        
 
         }
         

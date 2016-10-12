@@ -10,6 +10,7 @@ namespace Domain
         {
             Carton = new HashSet<Carton>();
             SerialRageNumber = new HashSet<SerialRageNumber>();
+            StoreNotes = new HashSet<StoreNotes>();
         }
 
         public Guid Id { get; set; }
@@ -78,11 +79,12 @@ namespace Domain
         public virtual ASNFileOutBound ASNFileOutBound { get; set; }
         public int CustomerLineNumber { get; set; }
         public ICollection<BOLForASN> BOL { get; set; }
-        public virtual SkuItem SkuItem { get; set; }
         public Guid? SkuItemFK { get; set; }
 
         public virtual ICollection<Carton> Carton { get; set; }
         public virtual ICollection<SerialRageNumber> SerialRageNumber { get; set; }
+
+        public virtual ICollection<StoreNotes> StoreNotes { get; set;  }
         public double PkgWeight { get; set; }
         public string User { get; set; }
         public bool InUse { get; set; }

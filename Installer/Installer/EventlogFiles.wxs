@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.EventlogFiles = "..\..\Console\DRW\EventBase"?>
+    <ComponentGroup Id ="Cmpg.EventlogFiles" Directory ="Dir.NexGen.Console.Drw.EventBase">
+      <Component Id ="Cmp.EventBase._objects.dat" Guid ="{2B4EA343-CD19-4ABE-A3E3-2EFB3476596E}">
+        <File Id ="File.EventBase._objects.dat" Source ="$(var.SourcePath.EventlogFiles)\objects.dat"/>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+      <Component Id ="Cmp.EventBase.object.idx"  Guid ="{06123969-5564-4071-8249-ABF17FC19CC7}">
+        <File Id ="File.EventBase.objects.idx" Source ="$(var.SourcePath.EventlogFiles)\objects.idx"/>
+        <Condition><![CDATA[CONSOLESYSTEMVERSION = "DoesNotExists"]]></Condition>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

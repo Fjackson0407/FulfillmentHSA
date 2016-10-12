@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.SharedSelfRegFiles = "..\..\SharedFiles\System32"?>
+    <ComponentGroup Id ="Cmpg.SharedSelfRegFiles" Directory ="Dir.System32">
+      <Component Id="Cmp.atl.dll" Guid="{54390B12-E403-48D1-B58F-AB3F2A5F637F}">
+        <File Id="File.atl.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\atl.dll"/>
+      </Component>
+      <Component Id="Cmp.mfc42.dll" Guid="{31514F33-7F2D-4A98-B0FC-5EA64ADB3D38}">
+        <File Id="File.mfc42.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mfc42.dll"/>
+      </Component>
+      <Component Id="Cmp.mfc42d.dll" Guid="{E23AA3F4-7EFD-4809-9158-77DD67E87DE8}">
+        <File Id="File.mfc42d.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mfc42d.dll"/>
+      </Component>
+      <Component Id="Cmp.mfco42d.dll" Guid="{A0F56071-0EF9-4B83-B6C8-B7168F56A6D4}">
+        <File Id="File.mfco42d.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mfco42d.dll"/>
+      </Component>
+      <Component Id="Cmp.mfco42ud.dll" Guid="{15FD5400-EDE3-420E-805B-E99E96475B3E}">
+        <File Id="File.mfco42ud.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mfco42ud.dll"/>
+      </Component>
+      <Component Id="Cmp.mscomctl.ocx" Guid="{5A164E88-37CB-4B5C-AE3D-1D50D0FD9736}">
+        <File Id="File.mscomctl.ocx" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mscomctl.ocx"/>
+      </Component>
+      <Component Id="Cmp.msstkprp.dll" Guid="{6C920105-C30D-45E4-97D0-FA5A23F7C85A}">
+        <File Id="File.msstkprp.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\msstkprp.dll"/>
+      </Component>
+      <Component Id="Cmp.mswinsck.ocx" Guid="{A342782A-DCFB-47E7-9244-8121E3B0DD40}">
+        <File Id="File.mswinsck.ocx" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\mswinsck.ocx"/>
+      </Component>
+      <Component Id="Cmp.oleaut32.dll" Guid="{CD7FC655-1EB0-4AAA-8249-BE2F2A5CB808}">
+        <File Id="File.oleaut32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\oleaut32.dll"/>
+      </Component>
+      <Component Id="Cmp.olepro32.dll" Guid="{76216268-694A-4573-B748-40977C4F8486}">
+        <File Id="File.olepro32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedSelfRegFiles)\olepro32.dll"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="Cmpg.Au.Folders">
+      <Component Id ="Cmp.AU" Guid ="{E8D88450-6ED7-44A0-8BBC-C00D9BD04358}" Directory ="Dir.Au">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.Defaults" Guid ="{26D7E76E-9B67-423D-8FF4-BC0450E8A97E}" Directory ="Dir.Au.Defaults">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.Log" Guid ="{8632F8CA-9E07-46EB-9E18-7D32849655D4}" Directory ="Dir.Au.Log">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.Tools" Guid ="{A161C662-7238-413C-802E-EBBE2E291464}" Directory = "Dir.Au.Tools">
+        <CreateFolder/>
+      </Component>
+      <Component Id ="Cmp.OSR" Guid ="{DFCF5625-3CDF-41B2-B77E-0A67B02FF356}" Directory = "Dir.Drivers">
+        <CreateFolder/>
+      </Component>
+     
+      <ComponentGroupRef Id ="Cmpg.InitializationFiles"/>
+      <ComponentGroupRef Id ="Cmpg.NonSelfRegisteringDlls"/>
+      <ComponentGroupRef Id ="Cmpg.ProgramDlls"/>
+      <ComponentGroupRef Id ="Cmpg.ProgramExecutableFiles"/>
+      <ComponentGroupRef Id ="Cmpg.RequiredMicrosoftDlls"/>
+      <ComponentGroupRef Id ="Cmpg.SelfRegisteringMicrosoftDlls"/>
+      <ComponentGroupRef Id ="Cmpg.Tools"/>
+      <ComponentGroupRef Id ="Cmpg.PsExecFiles"/>
+      <ComponentGroupRef Id ="Cmpg.OSR.Drivers"/>
+      <ComponentGroupRef Id ="Cmpg.FtdiDriver.ToDRVSTORE"/>
+      <ComponentGroupRef Id ="Cmpg.FtdiDriver.ToSystem32"/>
+      <ComponentGroupRef Id ="Cmpg.TempInstallFiles"/>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

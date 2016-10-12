@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.EventlogDictionary = "..\..\Console\DRO\EventDict"?>
+    <ComponentGroup Id ="Cmpg.EventlogDictionary" Directory ="Dir.NexGen.Console.Dro.EventDict">
+      <Component Id ="Cmp.EventDict._objects.dat" Guid ="{1CD83E08-603D-415F-81C7-4CF12D84261C}">
+        <File Id ="File.EventDict._objects.dat" Source ="$(var.SourcePath.EventlogDictionary)\_objects.dat"/>
+      </Component >
+      <Component Id ="Cmp.EventDict.object.idx"  Guid ="{CA7874BD-8E27-40C4-9872-47709BDF6FB9}">
+        <File Id ="File.EventDict._objects.idx" Source ="$(var.SourcePath.EventlogDictionary)\_objects.idx"/>
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

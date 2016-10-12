@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="Cmpg.EnvironmentVariables"  Directory="TARGETDIR">
+      <Component Id ="Cmp.EnvironmentVariables" Guid ="{B46807E0-D919-42B9-935A-E290CB681AD0}" KeyPath ="yes">
+        <Environment Id ="ENV.PTPATHCONSOLE"
+                     Name ="PtPath"
+                     Value ="C:\NexGen\Console\Bin"
+                     Action ="create"
+                     System ="yes"/>
+        <Environment Id ="ENV.PATHCONSOLE"
+                     Name ="PATH"
+                     Value ="C:\NexGen\Console\Bin;C:\NexGen\FastObjects\runtime\Bin;C:\NexGen\FastObjects\bin"
+                     Action ="set"
+                     System ="yes"
+                     Part ="last"
+                     Separator =";"/>
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

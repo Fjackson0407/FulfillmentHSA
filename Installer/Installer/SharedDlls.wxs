@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.SharedDlls = "..\..\SharedFiles\System32"?>
+    <?define SourcePath.MSDev98.Bin = "..\..\SharedFiles\MSDev98"?>
+    <ComponentGroup Id ="Cmpg.SharedDlls" Directory ="Dir.System32">
+      <Component Id="Cmp.asycfilt.dll" Guid="{5BFBC9D6-786A-4C45-808A-E74FF13FA83E}">
+        <File Id="File.asycfilt.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\asycfilt.dll"/>
+      </Component>
+      <Component Id="Cmp.mfc42ud.dll" Guid="{B3A67FD0-40C4-432F-9314-DB4DE7F7B01C}">
+        <File Id="File.mfc42ud.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\mfc42ud.dll"/>
+      </Component>
+      <Component Id="Cmp.mfcn42ud.dll" Guid="{4C4463D4-4A6E-4E36-8041-6DBE77F63CA3}">
+        <File Id="File.mfc42nud.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\mfcn42ud.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcirt.dll" Guid="{30C3C553-2FE1-4960-905D-6C8E650112F7}">
+        <File Id="File.msvcirt.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcirt.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcirtd.dll" Guid="{57514905-F552-4A96-A006-0878A8F099D1}">
+        <File Id="File.msvcirtd.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcirtd.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcp60.dll" Guid="{AD171C95-53DE-4EA8-B1E6-60D76CF8D4CB}">
+        <File Id="File.msvcp60.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcp60.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcp60d.dll" Guid="{A322516F-F177-43B0-BD45-35D74A02F1B2}">
+        <File Id="File.msvcp60d.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcp60d.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcrt.dll" Guid="{264DEDBF-F513-41E0-B4DC-AB93CB5F7A6E}">
+        <File Id="File.msvcrt.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcrt.dll"/>
+      </Component>
+      <Component Id="Cmp.msvcrtd.dll" Guid="{1AD1916F-05BB-4C84-8767-2820545F4F38}">
+        <File Id="File.msvcrtd.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\msvcrtd.dll"/>
+      </Component>
+      <Component Id="Cmp.ole32.dll" Guid="{EDF6A7CC-6CF6-4A3F-9470-DA5B0CA1A03B}">
+        <File Id="File.ole32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\ole32.dll"/>
+      </Component>
+      <Component Id="Cmp.psapi.dll" Guid="{8FAEE71E-8C2C-4C38-BA9A-234657DCCDE1}">
+        <File Id="File.psapi.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\psapi.dll"/>
+      </Component>
+      <Component Id="Cmp.riched20.dll" Guid="{A96BA47E-2509-4186-BF3E-287D559103FC}">
+        <File Id="File.riched20.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\riched20.dll"/>
+      </Component>
+      <Component Id="Cmp.Roboex32.dll" Guid="{D243995F-E08B-432D-B42F-7DEA317AFE34}">
+        <File Id="File.Roboex32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\Roboex32.dll" />
+      </Component>
+      <Component Id="Cmp.rpcrt4.dll" Guid="{DC6EA9C9-5E40-488E-8B36-6C3354FC2319}">
+        <File Id="File.rpcrt4.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\rpcrt4.dll"/>
+      </Component>
+      <Component Id="Cmp.rundll32.exe" Guid="{265E29D6-F0A5-41D7-B9F4-8B0822682B62}">
+        <File Id="File.rundll32.exe" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\rundll32.exe"/>
+      </Component>
+      <Component Id="Cmp.stdole2.tlb" Guid="{E747CF2A-A87A-4319-8B24-B60852DB6079}">
+        <File Id="File.stdole2.tlb" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\stdole2.tlb"/>
+      </Component>
+      <Component Id="Cmp.winmm.dll" Guid="{630E2864-DA92-4DF1-82F0-EBDF7EE0F9FD}">
+        <File Id="File.winmm.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\winmm.dll"/>
+      </Component>
+      <Component Id="Cmp.ws2_32.dll" Guid="{D8515551-2E03-4490-992C-7D50300EC604}">
+        <File Id="File.ws2_32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\ws2_32.dll"/>
+      </Component>
+      <Component Id="Cmp.ws2help.dll" Guid="{ADD2BB11-D102-417F-A26F-B355CBB6702D}">
+        <File Id="File.ws2help.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\ws2help.dll"/>
+      </Component>
+      <Component Id="Cmp.wsock32.dll" Guid="{FDFBA1F9-FC4B-49A8-9CC8-C66A48BA1F73}">
+        <File Id="File.wsock32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\wsock32.dll"/>
+      </Component>
+      <Component Id="Cmp.comctl32.dll" Guid="{4D5C3851-EDBD-459F-844B-FDF49D9C5D3F}">
+        <File Id="File.comctl32.dll" KeyPath="yes" Source="$(var.SourcePath.SharedDlls)\comctl32.dll" />
+      </Component>
+      <Component Id="Cmp.msvcmon.exe" Guid="{893842C5-18EA-4CB9-B64A-78AFFD3A9B22}">
+        <File Id="File.msvcmon.exe" KeyPath="yes" Source="$(var.SourcePath.MSDev98.Bin)\msvcmon.exe"/>
+      </Component>
+      <Component Id="Cmp.TLN0T.DLL" Guid="{0616C0BD-5A5F-4DCF-AFE7-B89DB6F12E51}">
+        <File Id="File.TLN0T.DLL" KeyPath="yes" Source="$(var.SourcePath.MSDev98.Bin)\TLN0T.DLL"/>
+      </Component>
+      <Component Id="Cmp.Dm.dll" Guid="{B5DF3D48-0843-41EE-A8CC-F8BE1F59F6B3}">
+        <File Id="File.Dm.dll" KeyPath="yes" Source="$(var.SourcePath.MSDev98.Bin)\Dm.dll"/>
+      </Component>
+      <Component Id="Cmp.msdis110.dll" Guid="{8D433EA6-85CA-4186-A6CF-FA13D0A813D5}">
+        <File Id="File.msdis110.dll" KeyPath="yes" Source="$(var.SourcePath.MSDev98.Bin)\msdis110.dll"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

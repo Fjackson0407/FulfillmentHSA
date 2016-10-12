@@ -10,7 +10,6 @@ namespace Domain
 
       public SkuItem()
         {
-            Store = new HashSet<StoreInfoFromEDI850>();
         }
         /******************************************************************************
 		* Member Variables
@@ -42,7 +41,6 @@ namespace Domain
         public string  ProductUPC { get; set; }
         public string  PackageUPC { get; set; }
 
-       public virtual ICollection<StoreInfoFromEDI850> Store { get; set; }
 
     }
 }

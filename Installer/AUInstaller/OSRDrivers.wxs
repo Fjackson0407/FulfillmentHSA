@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.OSRDrivers = "..\..\Instrument\drivers\OSR\Install\Release"?>
+    <ComponentGroup Id ="Cmpg.OSR.Drivers"   Directory ="Dir.Drivers">
+
+      <Component  Id ="Cmp.BcCom.inf" Guid ="E880B874-8C08-450A-9BD6-38730D269F35">
+        <File Id="File.BcCom.inf"  Source="$(var.SourcePath.OSRDrivers)\BcCom.inf"/>
+      </Component >
+      <Component  Id ="Cmp.BcCom.Cat" Guid ="{833BCFF5-C803-4725-A6AD-E5F14C7BCAEF}">
+        <File Id="File.BcCom.cat"  Source="$(var.SourcePath.OSRDrivers)\BcCom.cat"/>
+      </Component >
+      <Component  Id ="Cmp.BcCom.sys" Guid ="{A98F4120-698B-4BE3-8E4A-72D75F6C4EB4}">
+        <File Id="File.BcCom.sys"  Source="$(var.SourcePath.OSRDrivers)\BcCom.sys"/>
+      </Component >
+      <Component  Id ="Cmp.BcCom.pdb" Guid ="{3A04318C-CDCD-498F-97F8-BDD66B626FA3}">
+        <File Id="File.BcCom.pdb"  Source="$(var.SourcePath.OSRDrivers)\BcCom.pdb"/>
+      </Component >
+      <Component  Id ="Cmp.WdfCoinstaller01009.dll" Guid ="{39BDC10C-2FF7-4818-A1AF-D98F2DE3268F}">
+        <File  Id ="File.WdfCoinstaller01009.dll" Source ="$(var.SourcePath.OSRDrivers)\WdfCoinstaller01009.dll"/>
+      </Component >
+      <Component  Id ="Cmp.BCdaq.inf" Guid ="{E43402A3-34DD-42A9-8586-FCDCE3E201B0}">
+        <File Id="File.BCDaq.inf"  Source="$(var.SourcePath.OSRDrivers)\BCDaq.inf"/>
+      </Component >
+      <Component  Id ="Cmp.BCDaq.cat" Guid ="{0049D46E-7C55-4999-8BFC-749561074DFB}">
+        <File Id="File.BCDaq.cat"  Source="$(var.SourcePath.OSRDrivers)\BCDaq.cat"/>
+      </Component >
+      <Component  Id ="Cmp.BCDaq.sys" Guid ="{6004289E-9372-4667-A8C9-156481433D77}">
+        <File Id="File.BCDaq.sys"  Source="$(var.SourcePath.OSRDrivers)\BCDaq.sys"/>
+      </Component >
+      <Component  Id ="Cmp.BCDaq.pdb" Guid ="{04F5CFBE-B65E-4D36-9A4F-585E189FC5E8}">
+        <File Id="File.BCDaq.pdb"  Source="$(var.SourcePath.OSRDrivers)\BCDaq.pdb"/>
+      </Component >
+      <Component  Id ="Cmp.devcon.exe" Guid ="{EECADDFB-403C-4253-990E-04F64B55A165}">
+        <File Id ="File.devcon.exe" Source ="$(var.SourcePath.OSRDrivers)\devcon.exe"/>
+      </Component >
+    </ComponentGroup >
+  </Fragment>
+</Wix>

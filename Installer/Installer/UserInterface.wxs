@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <UI>
+      <Property Id="DefaultUIFont">DlgFont8</Property>
+      <TextStyle Id="DlgFont8" FaceName="Calibri" Size="8" />     
+      <TextStyle Id="ErrorCodeFont" FaceName="Calibri" Size="12" Bold="no" Red="255"/>
+      <TextStyle Id="VersionFont" FaceName="Calibri" Size="12" Bold="no"/>
+      <TextStyle Id="LanguageFont" FaceName="Calibri" Size="12" Bold="no"/>     
+      <Property Id="Welcome">welcome</Property>
+      <Binary Id="welcome" SourceFile="Binary\Welcome.jpg" />
+      <Property Id="Installing">installing</Property>
+      <Binary Id="installing" SourceFile="Binary\Installing.jpg" />
+      <Property Id="Complete">complete</Property>
+      <Binary Id="complete" SourceFile="Binary\SetupComplete.jpg" />
+      <Property Id="Failed">failed</Property>
+      <Binary Id="failed" SourceFile="Binary\Failed.jpg" />
+      <Property Id="Exclama">Exclama</Property>
+      <Binary Id="Exclama" SourceFile="Binary\Warning.bmp" />    
+      <Property Id="ERROR_CODE" Value="0" />
+
+      <Dialog Id="MainInstallDialog" Width="600" Height="360" Title="DxI System Software Installation" NoMinimize="yes">
+        <Control Id="Welcome" Type="Bitmap" X="0" Y="0" Width="600" Height="360" TabSkip="no" Text="[Welcome]" />
+        <Control Id="VersionNum" Type="Text" X="416" Y="204" TabSkip="yes" Width="180" Height="60" Transparent="yes">
+          <Text>{\VersionFont}5.3.0</Text>
+        </Control>
+        <Control Id="LanguageText" Type="Text" X="346" Y="226" TabSkip="yes" Width="180" Height="60" Transparent="yes">
+          <Text>{\LanguageFont}Language: </Text>
+        </Control>
+        <Control Id="LanguageList" Type="ComboBox" ComboList="yes" Height="30" Width="90" X="406" Y="228"
+                 Property="ASSISTANCE_LANGUAGE_NAME" Text="ASSISTANCE_LANGUAGE_NAME" Sorted="no">
+          <ComboBox Property="ASSISTANCE_LANGUAGE_NAME">
+            <ListItem Text="English" Value="1033"/>
+            <ListItem Text="Spanish (Español)" Value="3082"/>
+            <ListItem Text="French (Français)" Value="1036"/>
+            <ListItem Text="Italian (Italiano)" Value="1040"/>
+            <ListItem Text="German (Deutsch)" Value="1031"/>
+            <ListItem Text="Simplified Chinese" Value="2052"/>
+            <ListItem Text="Japanese " Value="1041"/>
+          </ComboBox>
+        </Control>
+        <Control Id="Ok" Type="PushButton" X="334" Y="315" Width="60" Height="25" Default="no" Text="Install" >
+          <Publish Event="NewDialog" Value="MyProgressDlg"/>
+        </Control>
+        <Control Id="Quit" Type="PushButton" X="475" Y="315" Width="60" Height="25" Default="no" Text="Quit" Cancel="yes">
+          <Publish Event="EndDialog" Value="Exit"/>
+        </Control>
+      </Dialog>
+      <Dialog Id="MyProgressDlg" Width="600" Height="360" Title="DxI System Software Installation" NoMinimize="yes" Modeless="yes">
+        <Control Id="Installing" Type="Bitmap" X="0" Y="0" Width="600" Height="360" TabSkip="no" Text="[Installing]" />
+        <Control Id="VersionNum" Type="Text" X="416" Y="204" TabSkip="yes" Width="180" Height="60" Transparent="yes">
+          <Text>{\VersionFont}5.3.0</Text>
+        </Control>
+        <Control Id="ProgressBar" Type="ProgressBar" X="124" Y="235" Width="360" Height="20" ProgressBlocks="yes" Text="Progress done">
+          <Subscribe Event="SetProgress" Attribute="Progress" />
+        </Control>
+      </Dialog>
+      <Dialog Id="MyExitDlg" Width="600" Height="360" Title="DxI System Software Installation" NoMinimize="yes">
+        <Control Id="Complete" Type="Bitmap" X="0" Y="0" Width="600" Height="360" TabSkip="no" Text="[Complete]" />
+        <Control Id="VersionNum" Type="Text" X="416" Y="204" TabSkip="yes" Width="180" Height="60" Transparent="yes">
+          <Text>{\VersionFont}5.3.0</Text>
+        </Control>
+        <Control Id="ProgressBar" Type="ProgressBar" X="124" Y="235" Width="360" Height="20" ProgressBlocks="yes" Text="Progress done">
+          <Subscribe Event="SetProgress" Attribute="Progress" />
+        </Control>
+        <Control X="45" Y="262" Width="360" Height="90" TabSkip="no" Id="Description" Type="Text" Transparent="yes">
+          <Text>{\ErrorCodeFont}[ERROR_CODE]</Text>
+        </Control>
+        <Control Id="Quit" Type="PushButton" X="475" Y="315" Width="60" Height="25" Default="no" Text="Finish" Cancel="yes">
+          <Publish Event="DoAction" Value="CA_RestartConsoleComputer"/>
+        </Control>
+      </Dialog>
+      <Dialog Id="MyExitErrorDlg" Width="600" Height="360" Title="DxI System Software Installation" NoMinimize="yes">
+        <Control Id="Failed" Type="Bitmap" X="0" Y="0" Width="600" Height="360" TabSkip="no" Text="[Failed]" />
+        <Control Id="VersionNum" Type="Text" X="416" Y="204" TabSkip="yes" Width="180" Height="60" Transparent="yes">
+          <Text>{\VersionFont}5.3.0</Text>
+        </Control>
+        <Control Id="ProgressBar" Type="ProgressBar" X="124" Y="235" Width="360" Height="20" ProgressBlocks="yes" Text="Progress done">
+          <Subscribe Event="SetProgress" Attribute="Progress" />
+        </Control>
+        <Control Id="Exclama" Type="Bitmap" X="25" Y="262" Width="16" Height="16" TabSkip="no" Text="[Exclama]" />
+        <Control X="45" Y="262" Width="360" Height="90" TabSkip="no" Id="Description" Type="Text" Property="ERROR_CODE" Transparent="yes">
+          <Text>{\ErrorCodeFont}[ERROR_CODE]</Text>
+        </Control>
+        <Control Id="Quit" Type="PushButton" X="475" Y="315" Width="60" Height="25" Default="no" Text="Finish" Cancel="yes">
+          <Publish Event="EndDialog" Value="Exit"/>
+        </Control>        
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

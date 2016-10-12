@@ -1,0 +1,114 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AU", "AU", "{6087E127-6918-40A7-B93C-08CEAE921750}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{3FC2BB8E-5E0B-4523-8C10-D3B79E791A2F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AUCustomActions", "AUCustomActions\AUCustomActions.vcxproj", "{D51A37FC-0C8D-4891-8A74-596096E53203}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleCustomActions", "ConsoleCustomActions\ConsoleCustomActions.vcxproj", "{64411BE0-CE99-4B82-8736-443D4DD45825}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{F210975B-E949-4D54-AB28-4825275C4733}"
+	ProjectSection(ProjectDependencies) = postProject
+		{64411BE0-CE99-4B82-8736-443D4DD45825} = {64411BE0-CE99-4B82-8736-443D4DD45825}
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "AUInstaller", "AUInstaller\AUInstaller.wixproj", "{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D51A37FC-0C8D-4891-8A74-596096E53203} = {D51A37FC-0C8D-4891-8A74-596096E53203}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfsprd.beckman.com:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AUCustomActions\\AUCustomActions.vcxproj
+		SccProjectTopLevelParentUniqueName1 = DxIInstaller.sln
+		SccProjectName1 = AUCustomActions
+		SccLocalPath1 = AUCustomActions
+		SccProjectUniqueName2 = ConsoleCustomActions\\ConsoleCustomActions.vcxproj
+		SccProjectTopLevelParentUniqueName2 = DxIInstaller.sln
+		SccProjectName2 = ConsoleCustomActions
+		SccLocalPath2 = ConsoleCustomActions
+		SccProjectUniqueName3 = Installer\\Installer.wixproj
+		SccProjectTopLevelParentUniqueName3 = DxIInstaller.sln
+		SccProjectName3 = Installer
+		SccLocalPath3 = Installer
+		SccProjectUniqueName4 = AUInstaller\\AUInstaller.wixproj
+		SccProjectTopLevelParentUniqueName4 = DxIInstaller.sln
+		SccProjectName4 = AUInstaller
+		SccLocalPath4 = AUInstaller
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|Win32.Build.0 = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|x86.ActiveCfg = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Debug|x86.Build.0 = Debug|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|Win32.ActiveCfg = Release|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|Win32.Build.0 = Release|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|x86.ActiveCfg = Release|Win32
+		{D51A37FC-0C8D-4891-8A74-596096E53203}.Release|x86.Build.0 = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|Win32.Build.0 = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|x86.ActiveCfg = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Debug|x86.Build.0 = Debug|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|Win32.ActiveCfg = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|Win32.Build.0 = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|x86.ActiveCfg = Release|Win32
+		{64411BE0-CE99-4B82-8736-443D4DD45825}.Release|x86.Build.0 = Release|Win32
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|Win32.ActiveCfg = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|Win32.Build.0 = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|x86.ActiveCfg = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Debug|x86.Build.0 = Debug|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|Win32.ActiveCfg = Release|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|Win32.Build.0 = Release|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|x86.ActiveCfg = Release|x86
+		{F210975B-E949-4D54-AB28-4825275C4733}.Release|x86.Build.0 = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|Win32.ActiveCfg = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|Win32.Build.0 = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|x86.ActiveCfg = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Debug|x86.Build.0 = Debug|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|Win32.ActiveCfg = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|Win32.Build.0 = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|x86.ActiveCfg = Release|x86
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D51A37FC-0C8D-4891-8A74-596096E53203} = {6087E127-6918-40A7-B93C-08CEAE921750}
+		{64411BE0-CE99-4B82-8736-443D4DD45825} = {3FC2BB8E-5E0B-4523-8C10-D3B79E791A2F}
+		{F210975B-E949-4D54-AB28-4825275C4733} = {3FC2BB8E-5E0B-4523-8C10-D3B79E791A2F}
+		{C7558CB4-A2E2-44DD-BF86-AE2EBDE77221} = {6087E127-6918-40A7-B93C-08CEAE921750}
+	EndGlobalSection
+EndGlobal

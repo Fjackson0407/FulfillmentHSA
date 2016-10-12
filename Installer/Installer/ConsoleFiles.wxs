@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?define SourcePath.ConsoleFile = "..\..\Console"?>
+    <?define SourcePath.Inc = "..\..\Inc"?>
+    <ComponentGroup Id="Cmpg.ConsoleFiles" Directory ="Dir.NexGen.Console">
+      <Component Id ="Cmp.SystemVerison" Guid ="{FF03159B-4537-453E-9794-39FE18148FED}">
+        <File  Id ="File.SystemVerison" Source ="$(var.SourcePath.ConsoleFile)\SystemVersion.txt"/>
+      </Component >
+      <Component Id ="Cmp.MsgTypeID.h" Guid ="{6B2695DD-2CA9-47AB-BEE9-42B2CABEACFD}">
+        <File  Id ="File.MsgTypeID.h" Source ="$(var.SourcePath.Inc)\MsgTypeID.h"/>
+      </Component >
+    </ComponentGroup >
+	</Fragment>
+</Wix>

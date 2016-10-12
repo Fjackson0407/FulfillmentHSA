@@ -1,0 +1,11 @@
+LIBRARY "ConsoleCustomActions"
+
+EXPORTS
+
+CanSeeAuFromConsole
+ContinueWithInstall
+DoConsoleAndAuOSMatch
+IsAuInstallSuccessful
+RebootAu
+RestartConsoleComputer
+SetRunOnceThenRebootAu

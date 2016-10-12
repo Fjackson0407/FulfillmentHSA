@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <?define SourcePath.LanguageDlls = "..\..\Console\Bin\Language"?>
+    <ComponentGroup Id ="Cmpg.LanguageDlls" Directory ="Dir.NexGen.Console.Bin.Language">
+      <Component Id="Cmp.DeuUDErrorText.dll" Guid="{E0B7D834-9707-4B5C-A891-22BCE9463A94}">
+        <File Id="File.DeuUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\DeuUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.DeuUDMessageText.dll" Guid="{E28140D1-835D-46D2-9DD0-FA049141D752}">
+        <File Id="File.DeuUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\DeuUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.EnuUDErrorText.dll" Guid="{1DFCC9B6-83ED-4A4B-AF10-6CD892273EC4}">
+        <File Id="File.EnuUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\EnuUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.EnuUDMessageText.dll" Guid="{87CB0EEE-3440-40E2-89C5-C5CC45D964CC}">
+        <File Id="File.EnuUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\EnuUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.EspUDErrorText.dll" Guid="{21785C0C-1C03-4F95-8F22-78137D2A2C12}">
+        <File Id="File.EspUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\EspUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.EspUDMessageText.dll" Guid="{B01F4BF3-910D-4B59-B0F4-BFDE115DE7FE}">
+        <File Id="File.EspUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\EspUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.FraUDErrorText.dll" Guid="{AF943D5D-9D7A-48B8-B176-A79A681633C0}">
+        <File Id="File.FraUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\FraUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.FraUDMessageText.dll" Guid="{B8CFB927-6082-4E8F-BB32-29FEF18A70D3}">
+        <File Id="File.FraUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\FraUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.ChsUDErrorText.dll" Guid="{30EADACA-41E8-421B-A05F-51B1338915DE}">
+        <File Id="File.ChsUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\ChsUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.ChsUDMessageText.dll" Guid="{EA54DB0E-989C-401B-91B1-86A6BFF48E2B}">
+        <File Id="File.ChsUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\ChsUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.ItaUDErrorText.dll" Guid="{2FE3F2C8-593C-4481-8D0C-50231BE5500A}">
+        <File Id="File.ItaUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\ItaUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.ItaUDMessageText.dll" Guid="{119017ED-6CAD-4415-A79C-12963D617F26}">
+        <File Id="File.ItaUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\ItaUDMessageText.dll" />
+      </Component>
+      <Component Id="Cmp.JpnUDErrorText.dll" Guid="{E5969D81-B11A-4AD1-9548-1A3936C41378}">
+        <File Id="File.JpnUDErrorText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\JpnUDErrorText.dll" />
+      </Component>
+      <Component Id="Cmp.JpnUDMessageText.dll" Guid="{D827A262-8AB2-457D-8E2F-2C4FF94309A2}">
+        <File Id="File.JpnUDMessageText.dll" KeyPath="yes" Source="$(var.SourcePath.LanguageDlls)\JpnUDMessageText.dll" />
+      </Component>
+    </ComponentGroup >
+  </Fragment>
+</Wix>

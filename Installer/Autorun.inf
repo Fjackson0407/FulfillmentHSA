@@ -1,0 +1,2 @@
+[autorun]
+shellexecute=DxIInstaller.msi /l*v c:\InstallLog.txt

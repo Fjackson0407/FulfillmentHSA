@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--The installer regisgtry keys should be handled in two component groups.  
+    1. Registry Keys that should be overwritten for each install, and
+    2. Registry Keys that should be written once and then never again modified by the installer (i.e. TimeZone)-->
+    <ComponentGroup Id ="Cmpg.OverrideAuRegistryKeys" Directory ="TARGETDIR">
+      <Component Id="Cmp.OverrideAuRegistryKeys" Guid="{71DCACAD-3255-4A07-8477-CE0C96246A2A}" KeyPath="yes">
+        <RegistryKey Key="SOFTWARE\Beckman\NexStep\ResourceMonitor"  Root="HKLM">
+          <RegistryValue Name="EnableMonitoring" Value="1" Type="integer"/>
+          <RegistryValue Name="MonitoringFrequency" Value="1" Type="integer"/>
+          <RegistryValue Name="PointsToAverage" Value="100" Type="integer"/>
+          <RegistryValue Name="MemoryThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="CPUThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="HDDSpaceThreshold" Value="80" Type="integer"/>
+          <RegistryValue Name="ThresholdWindowWidth" Value="5" Type="integer"/>
+          <RegistryValue Name="LogEntriesCount" Value="1000" Type="integer"/>
+          <RegistryValue Name="RecentLogFilesCount" Value="100" Type="integer"/>
+        </RegistryKey>
+        <RegistryKey Key ="SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" Root="HKLM">
+          <RegistryValue Name="C:\AU\AUObj.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\EMI.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\pcontrol.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\tcontrol.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\TestReagentIf.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\UCTASimulator.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\UnicelService.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\TestUltrasonic.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\sleep.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\NVMEditor.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\SMCTest.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\TestAnalog.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\TestDynamic.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\TestGpio.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\InBitTest.exe" Value="~ RUNASADMIN" Type="string" />
+          <RegistryValue Name="C:\AU\OutBitTest.exe" Value="~ RUNASADMIN" Type="string" />
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run" Root="HKLM">
+          <RegistryValue Name="AUObj.bat" Value="c:\AU\AUObj.bat" Type="string" />
+        </RegistryKey >
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Analog" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="extended base" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Analog\Parameters" Root="HKLM">
+          <RegistryValue Name="Analog Data Address" Value="851968" Type="integer" />
+          <RegistryValue Name="BaseAddress" Value="800" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\DynamicADC" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="Extended Base Late" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\DynamicADC\Parameters" Root="HKLM">
+          <RegistryValue Name="Analog Data Address" Value="851968" Type="integer" />
+          <RegistryValue Name="Base Address" Value="800" Type="integer" />
+          <RegistryValue Name="Interrupt" Value="11" Type="integer" />
+          <RegistryValue Name="Length" Value="2040" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\EventLog\Analog" Root="HKLM">
+          <RegistryValue Name="EventMessageFile" Value="\Winnt\System32\Drivers\analog.sys" Type="string" />
+          <RegistryValue Name="TypesSupported" Value="7" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\EventLog\Gpio" Root="HKLM">
+          <RegistryValue Name="EventMessageFile" Value="\Winnt\System32\Drivers\Gpio.sys" Type="string" />
+          <RegistryValue Name="TypesSupported" Value="7" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\EventLog\Lumi" Root="HKLM">
+          <RegistryValue Name="EventMessageFile" Value="\Winnt\System32\Drivers\Lumi.sys" Type="string" />
+          <RegistryValue Name="TypesSupported" Value="7" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\EventLog\Mcc" Root="HKLM">
+          <RegistryValue Name="EventMessageFile" Value="\Winnt\System32\Drivers\Mcc.sys" Type="string" />
+          <RegistryValue Name="TypesSupported" Value="7" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\EventLog\Serialcomm" Root="HKLM">
+          <RegistryValue Name="EventMessageFile" Value="\Winnt\System32\Drivers\Serialcomm.sys" Type="string" />
+          <RegistryValue Name="TypesSupported" Value="7" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Gpio" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="extended base" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Gpio\Parameters" Root="HKLM">
+          <RegistryValue Name="Base Address" Value="816" Type="integer" />
+          <RegistryValue Name="Encoder Address" Value="784" Type="integer" />
+          <RegistryValue Name="Encoder0 Direction" Value="0" Type="integer" />
+          <RegistryValue Name="Encoder0 Sample Freq" Value="1" Type="integer" />
+          <RegistryValue Name="Encoder1 Direction" Value="0" Type="integer" />
+          <RegistryValue Name="Encoder1 Sample Freq" Value="1" Type="integer" />
+          <RegistryValue Name="Encoder2 Direction" Value="0" Type="integer" />
+          <RegistryValue Name="Encoder2 Sample Freq" Value="1" Type="integer" />
+          <RegistryValue Name="Encoder3 Direction" Value="0" Type="integer" />
+          <RegistryValue Name="Encoder3 Sample Freq" Value="1" Type="integer" />
+          <RegistryValue Name="Encoder4 Direction" Value="0" Type="integer" />
+          <RegistryValue Name="Encoder4 Sample Freq" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Lumi" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="extended base" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Lumi\Parameters" Root="HKLM">
+          <RegistryValue Name="Base Address" Value="800" Type="integer" />
+          <RegistryValue Name="Gate Time" Value="1000" Type="integer" />
+          <RegistryValue Name="Interrupt" Value="11" Type="integer" />
+          <RegistryValue Name="PMT Voltage" Value="0" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Mcc" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="Extended Base Late" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Nvm\Parameters" Root="HKLM">
+          <RegistryValue Name="Base Address" Value="768" Type="integer" />
+          <RegistryValue Name="Length" Value="1048576" Type="integer" />
+          <RegistryValue Name="Nvm Address" Value="15728640" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Serialcomm" Root="HKLM">
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer" />
+          <RegistryValue Name="Group" Value="extended base" Type="string" />
+          <RegistryValue Name="Start" Value="4" Type="integer" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Serialcomm\Parameters" Root="HKLM">
+          <RegistryValue Name="BaseAddress" Value="816" Type="integer" />
+          <RegistryValue Name="Interrupt" Value="5" Type="integer" />
+          <RegistryValue Name="Parameters0" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters1" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters2" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters3" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters4" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters5" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters6" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters7" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters8" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters9" Value="7E1" Type="string" />
+          <RegistryValue Name="Parameters10" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters11" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters12" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters13" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters14" Value="8N1" Type="string" />
+          <RegistryValue Name="Parameters15" Value="8N1" Type="string" />
+          <RegistryValue Name="PortType0" Value="1" Type="integer" />
+          <RegistryValue Name="PortType1" Value="1" Type="integer" />
+          <RegistryValue Name="PortType2" Value="1" Type="integer" />
+          <RegistryValue Name="PortType3" Value="1" Type="integer" />
+          <RegistryValue Name="PortType4" Value="1" Type="integer" />
+          <RegistryValue Name="PortType5" Value="1" Type="integer" />
+          <RegistryValue Name="PortType6" Value="1" Type="integer" />
+          <RegistryValue Name="PortType7" Value="1" Type="integer" />
+          <RegistryValue Name="PortType8" Value="1" Type="integer" />
+          <RegistryValue Name="PortType9" Value="0" Type="integer" />
+          <RegistryValue Name="PortType10" Value="1" Type="integer" />
+          <RegistryValue Name="PortType11" Value="0" Type="integer" />
+          <RegistryValue Name="PortType12" Value="1" Type="integer" />
+          <RegistryValue Name="PortType13" Value="0" Type="integer" />
+          <RegistryValue Name="PortType14" Value="1" Type="integer" />
+          <RegistryValue Name="PortType15" Value="0" Type="integer" />
+          <RegistryValue Name="Speed0" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed1" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed2" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed3" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed4" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed5" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed6" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed7" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed8" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed9" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed10" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed11" Value="56000" Type="integer" />
+          <RegistryValue Name="Speed12" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed13" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed14" Value="9600" Type="integer" />
+          <RegistryValue Name="Speed15" Value="56000" Type="integer" />
+          <RegistryValue Name="UART Address" Value="576" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Services\Usonic\Parameters" Root="HKLM">
+          <RegistryValue Name="BaseAddress1" Value="1808" Type="integer" />
+          <RegistryValue Name="BaseAddress2" Value="1792" Type="integer" />
+          <RegistryValue Name="BaseAddress3" Value="1920" Type="integer" />
+          <RegistryValue Name="BaseAddress4" Value="1936" Type="integer" />
+          <RegistryValue Name="Group" Value="Extended Base" Type="string" />
+        </RegistryKey>
+      </Component>
+      <Component Id="Cmp.NVMHardware" Guid="{0D7934A9-A6E6-4C88-8474-A5CDFC42178E}" KeyPath="yes">
+        <RegistryKey   Key="SYSTEM\CurrentControlSet\Services\Nvm" Root="HKLM"    >
+          <RegistryValue Name="ErrorControl" Value="1" Type="integer"  />
+          <RegistryValue Name="Group" Value="extended base" Type="string" />
+          <RegistryValue Name="Type" Value="1" Type="integer" />
+          <RegistryValue Name="Start" Value="4" Type="integer"  />
+        </RegistryKey>
+        <Condition><![CDATA[NVM_ENABLED <> "#2"]]></Condition>
+      </Component>
+    </ComponentGroup>
+
+    <!--If an existing registry key from this component group needs to be modified in a newer version
+    of software, it will need to be moved to the OverrideRegistryKeys section for that release. -->
+    <ComponentGroup Id ="Cmpg.DoNotOverrideAuRegistryKeys" Directory ="TARGETDIR">
+      <Component Id="Cmp.DoNotOverrideAuRegistryKeys" Guid="{3801919F-B58D-4E65-B741-CC24EA59EA83}" KeyPath="yes" NeverOverwrite ="yes">
+        <RegistryKey Key="SOFTWARE\Beckman-Coulter" Root="HKLM">
+          <RegistryValue Name="Mcc Type" Value="3" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Beckman-Coulter\Alignments" Root="HKLM">
+          <RegistryValue Name="Ini Filename" Value="NexGen.ini" Type="string" />
+        </RegistryKey>
+        <RegistryKey Key="SYSTEM\CurrentControlSet\Control\TimeZoneInformation" Root="HKLM">
+          <RegistryValue Name="DisableAutoDaylightTimeSet" Value="1" Type="integer" />
+        </RegistryKey>
+        <RegistryKey Key="SOFTWARE\Microsoft\Windows\CurrentVersion\policies\Explorer" Root="HKLM">
+          <RegistryValue Name="HonorAutoRunSetting" Value="1" Type="integer" />
+          <RegistryValue Name="NoDriveTypeAutoRun" Value="149" Type="integer" />
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

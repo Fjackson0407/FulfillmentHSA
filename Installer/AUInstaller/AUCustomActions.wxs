@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Binary Id="AU_CA_DLL" SourceFile=".\AUCustomActions.dll"/>
+    <CustomAction Id="CA_SignalStatusToConsole"
+                  BinaryKey="AU_CA_DLL"
+                  DllEntry ="SignalStatusToConsole"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no"
+                  Impersonate="yes"/>
+    <CustomAction Id="CA_SetAuIPAddress"
+                  FileKey="File.SetAUIPAddress.bat"
+                  ExeCommand=''
+                  Execute='immediate'
+                  Return="ignore"/>
+    <CustomAction Id="RegisterLumin.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\Lumin.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterDiagPort.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\DiagPort.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterBarcodeReader.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\BarcodeReader.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterSMC.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\SMC.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterSMCps.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\SMCps.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterDCMotorDev.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\DCMotorDev.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterEncoder.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\Encoder.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterHighSpeedAnalog.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\HighSpeedAnalog.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterLEDControl.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\LEDControl.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterPressure.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\Pressure.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterPwmObj.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\PwmObj.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterRFLevelSense.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\RFLevelSense.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterTempObj.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\TempObj.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterTempObjps.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\TempObjps.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterUltraSonDev.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\UltraSonDev.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterVoltage.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\Voltage.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterWeight.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\Weight.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterMixerSpeed.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\MixerSpeed.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterLASFrameLayer.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\LASFrameLayer.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterAUObjps.dll"
+                  Directory="Dir.Au"
+                  ExeCommand='regsvr32.exe /s "c:\Au\AUObjps.dll"'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterTControl.exe"
+                  Directory="Dir.Au"
+                  ExeCommand='[Dir.Au]TControl.exe /RegServer'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterPControl.exe"
+                  Directory="Dir.Au"
+                  ExeCommand='[Dir.Au]PControl.exe /RegServer'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="RegisterUnicelService.exe"
+                  Directory="Dir.Au"
+                  ExeCommand='[Dir.Au]UnicelService.exe /RegServer'
+                  Return="check">
+    </CustomAction>
+    <CustomAction Id="Install.FtdiDrivers"
+                  Directory="Dir.System32.DRVSTORE"
+                  ExeCommand='DPInst.exe'
+                  Return="ignore">
+    </CustomAction>
+    <!--Driver Installation. Note:  No matching device was found for 'c:\sec\bccom.inf'. Driver will be installed when plugged in.
+      DPINST is indeed working.  But since your devices are not enumerated by PnP, nobody is kicking off
+      the instantiation of the drivers by saying “Hey!  This hardware is plugged-in!! 
+      Load the drivers now!” – In kernel-mode parlance, we would say “nobody is creating the DevNode”
+      DevCon solves this neatly by creating the dev node FOR you as part of the install process.-->
+    <CustomAction Id='Install.BCCom'
+                  Directory='Dir.Drivers'
+                  Execute='deferred'
+                  ExeCommand='&quot;[Dir.Drivers]devcon.exe&quot; install bccom.inf root\bccom'
+                  Return='ignore'>
+    </CustomAction>
+    <CustomAction Id='Install.BCDaq'
+                  Directory='Dir.Drivers'
+                  Execute='deferred'
+                  ExeCommand='&quot;[Dir.Drivers]devcon.exe&quot; install bcdaq.inf root\bcdaq'
+                  Return='ignore'>
+    </CustomAction>
+  </Fragment>
+</Wix>

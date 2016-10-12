@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <ComponentGroup Id="Cmpg.StartMenuAndDesktopShortcuts" Directory ="TARGETDIR">
+
+      <!-- == Start Menu Shortcuts ============================================================ -->
+
+      <Component  Id ="Cmp.NexGenUIUD.StartMenuShortcuts" Guid ="{E04CB129-3810-446C-BC97-0A1D9BD63786}">
+        <Shortcut Id ="ShortCut.StartMenu.NexGenUIUD"
+                  Name ="NexGenUI UD"
+                  Description ="NexGen User Interface"
+                  Target ="[Dir.NexGen.Console.Bin]\NexGenUIUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RemoveFolder Id="Dir.NexGen.Applications.Shortcuts" Directory="Dir.NexGen.Applications.Shortcuts" On="uninstall"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NexGenUIUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.NSUtilUD.StartMenuShortcuts" Guid ="{906CFCD2-F304-4689-BBAD-913ADA9FC9C3}">
+        <Shortcut Id ="ShortCut.StartMenu.NSUtilUD"
+                  Name ="NS Utility"
+                  Description ="Manufacturing Services"
+                  Target ="[Dir.NexGen.Console.Bin]\NSUtilUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NSUtilUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.FastObjectsDeveloper.StartMenuShortcuts" Guid ="{89127D62-EF3F-4767-BCA6-71D90B1E2541}">
+        <Shortcut Id ="ShortCut.StartMenu.FastObjectsDeveloper"
+                  Name ="Fast Objects - Developer"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.FastObjects.Bin]\FastObjectsDeveloper.exe"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="FastObjectsDeveloper.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.FastObjectsAdministrator.StartMenuShortcuts" Guid ="{ABFE3F83-7D20-435A-9BAA-C064B89174CC}">
+        <Shortcut Id ="ShortCut.StartMenu.FastObjectsAdministrator"
+                  Name ="Fast Objects - Administrator"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.FastObjects.Bin]\FastObjectsAdministrator.exe"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="FastObjectsAdministrator.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.FastObjectsServer.StartMenuShortcuts" Guid ="{660B72B7-00E5-4695-AF61-D24522B20611}">
+        <Shortcut Id ="ShortCut.StartMenu.ptserv32"
+                  Name ="Fast Objects - Server"
+                  Description ="Fast Objects Server Launch"
+                  Target ="[Dir.NexGen.FastObjects.runtime.Bin]\ptserv32.exe"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.runtime.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="ptserv32.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.ReduceUD.StartMenuShortcuts" Guid ="{62E145DA-EA32-44D2-9361-0CC7A04FAC49}">
+        <Shortcut Id ="ShortCut.StartMenu.ReduceUD"
+                  Name ="Reduce UD"
+                  Description ="Test Result Analysis Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\ReduceUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="ReduceUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.AUCommTest.StartMenuShortcuts" Guid ="{87299F93-CBCC-4567-A0B6-9BACBA791315}">
+        <Shortcut Id ="ShortCut.StartMenu.AUCommTest"
+                  Name ="AU Comm Test"
+                  Description ="AU Communications Test Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\AUCommTest.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="AUCommTest.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.DBTestUD.StartMenuShortcuts" Guid ="{54F245EF-4150-42C9-9C61-E5CED05D3D03}">
+        <Shortcut Id ="ShortCut.StartMenu.DBTestUD"
+                  Name ="DBTest UD"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\DBTestUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="DBTestUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.EventsTestUD.StartMenuShortcuts" Guid ="{D9A90DB1-4919-46A0-B43D-797F7A82ACBB}">
+        <Shortcut Id ="ShortCut.StartMenu.EventsTestUD"
+                  Name ="Events UD"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\EventsTestUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="EventsTestUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.LISServiceUD.StartMenuShortcuts" Guid ="{8DA466C3-76F8-4866-9047-80EB39C1C871}">
+        <Shortcut Id ="ShortCut.StartMenu.LISServiceUD"
+                  Name ="LIS Service UD"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\LISServiceUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="LISServiceUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.RestoreUtilUD.StartMenuShortcuts" Guid ="{8CA9074A-F202-4CB0-8E7C-D95F31C32279}">
+        <Shortcut Id ="ShortCut.StartMenu.RestoreUtilUD"
+                  Name ="Restore Utility"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\RestoreUtilUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="RestoreUtilUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.NSWGSVUD.StartMenuShortcuts" Guid ="{BF5CAD5C-66B7-4C3E-9A71-9AA2565D7B07}">
+        <Shortcut Id ="ShortCut.StartMenu.NSWGSVUD"
+                  Name ="Workgroup Service UD"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.NexGen.Console.Bin]\NSWGSVUD.exe"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NSWGSVUD.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.msvcmon.StartMenuShortcuts" Guid ="{3FA27383-9ED6-4D2D-A70D-2EF32E521D6D}">
+        <Shortcut Id ="ShortCut.StartMenu.msvcmon"
+                  Name ="Remote Debugger"
+                  Description ="Diagnostic Support Tool"
+                  Target ="[Dir.System32]\msvcmon.exe"
+                  WorkingDirectory ="Dir.System32"
+                  Directory="Dir.NexGen.Applications.Shortcuts"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="msvcmon.exe Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <!-- == Desktop Shortcuts =============================================================== -->
+
+      <Component Id="DesktopShortcut" Guid="{4DA71589-EE4A-47C5-BED9-3A04CBC1C1AE}">
+        <Shortcut Id ="ShortCut.Desktop.NexGenUIUD"
+                  Name ="NexGen Application"
+                  Description ="NexGen User Interface"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "DesktopFolder"
+                  Target ="[Dir.NexGen.Console.Bin]\NexGenUIUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NexGenUIUD Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <!-- == Desktop Utility Program Shortcuts Folder ======================================== -->
+
+      <Component Id="Cmp.NSUtilUD.UtilityProgramsFolderShortcut" Guid="{BFEFF917-C2F2-491E-A8E6-FFA0676DEBF7}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.NSUtilityUD"
+                  Name ="NS Utility"
+                  Description ="Manufacturing Services"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\NSUtilUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NSUtilUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+        <RemoveFolder Id="Dir.UtilityProgramsFolder.Shortcuts" Directory="Dir.UtilityProgramsFolder.Shortcuts" On="uninstall"/>
+      </Component>
+
+      <Component  Id ="Cmp.FastObjectsDeveloper.UtilityProgramsFolderShortcut" Guid ="{FD447D27-1995-4E99-8CE5-16EEDDD6519C}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.FastObjectsDeveloper"
+                  Name ="Fast Objects Developer"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.Bin"
+                  Directory="Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.FastObjects.Bin]\FastObjectsDeveloper.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="FastObjectsDeveloper Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.FastObjectsAdministrator.UtilityProgramsFolderShortcut" Guid ="{43227156-747C-4720-B7BF-262BE74E9E48}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.FastObjectsAdministrator"
+                  Name ="Fast Objects - Administrator"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.Bin"
+                  Directory="Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.FastObjects.Bin]\FastObjectsAdministrator.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="FastObjectsAdministrator Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component  Id ="Cmp.FastObjectsServer.UtilityProgramsFolderShortcut" Guid ="{7773C8D0-16AA-4D02-8A39-BA41C5CB16D5}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.ptserv32"
+                  Name ="Fast Objects - Server"
+                  Description ="Fast Objects Server Launch"
+                  WorkingDirectory ="Dir.NexGen.FastObjects.runtime.Bin"
+                  Directory="Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.FastObjects.runtime.Bin]\ptserv32.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="ptserv32 Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component >
+
+      <Component Id="Cmp.ReduceUD.UtilityProgramsFolderShortcut" Guid="{403F0B89-2F25-4C84-921E-A4371614E350}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.ReduceUD"
+                  Name ="Reduce UD"
+                  Description ="Test Result Analysis Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\ReduceUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="ReduceUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.AUCommTest.UtilityProgramsFolderShortcut" Guid="{0233CE31-E2BD-4133-A1BE-B81AEBDE229E}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.AUCommTest"
+                  Name ="AU Comm Test"
+                  Description ="AU Communications Test Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\AUCommTest.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="AUCommTest Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.DBTestUD.UtilityProgramsFolderShortcut" Guid="{F8318D36-2E00-4791-AB29-5CB335500A50}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.DBTestUD"
+                  Name ="DB Test UD"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\DBTestUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="DBTestUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.EventsTestUD.UtilityProgramsFolderShortcut" Guid="{19E0C5D3-14D2-41B2-BE40-11762ED27C3E}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.EventsTestUD"
+                  Name ="Events Test UD"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\EventsTestUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="EventsTestUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.LISServiceUD.UtilityProgramsFolderShortcut" Guid="{DC6AA76E-1AD0-42AB-98D4-C5B7FE5D7A10}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.LISServiceUD"
+                  Name ="LIS Service UD"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\LISServiceUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="LISServiceUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.RestoreUtilUD.UtilityProgramsFolderShortcut" Guid="{688DFD36-1FF6-41DC-A601-0AC32A95CD05}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.RestoreUtilUD"
+                  Name ="Restore Utility"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\RestoreUtilUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="RestoreUtilUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.NSWGSVUD.UtilityProgramsFolderShortcut" Guid="{811700C3-A1E3-45AB-8921-2BD012B6ABD4}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.NSWGSVUD"
+                  Name ="Workgroup Service UD"
+                  Description ="Diagnostic Support Tool"
+                  WorkingDirectory ="Dir.NexGen.Console.Bin"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.NexGen.Console.Bin]\NSWGSVUD.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="NSWGSVUD Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="Cmp.msvcmon.UtilityProgramsFolderShortcut" Guid="{8ADE4A36-2428-4A75-93EE-138873E8A1E6}">
+        <Shortcut Id ="ShortCut.UtilityProgramsFolder.msvcmon"
+                  Name ="Remote Debugger"
+                  Description ="Remote Debug Connection Management"
+                  WorkingDirectory ="Dir.System32"
+                  Directory = "Dir.UtilityProgramsFolder.Shortcuts"
+                  Target ="[Dir.System32]\msvcmon.exe"
+                  Advertise="no"/>
+        <RegistryKey Root="HKCU" Key="Software\Beckman Coulter">
+          <RegistryValue Name="msvcmon.exe Utility Programs Folder Shortcut Installed" Type="integer" Value="1" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+
+    </ComponentGroup >
+  </Fragment>
+</Wix>

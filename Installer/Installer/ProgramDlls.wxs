@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!--Relative path definitions ==============================================================-->
+    <?define SourcePath.Console.Bin = "..\..\Console\Bin" ?>
+    <!--Files destined for the C:\NexGen\Console\Bin directory =================================-->
+    <ComponentGroup Id="Cmpg.ProgramDlls" Directory="Dir.NexGen.Console.Bin">
+      <Component Id="Cmp.AsynchronousInterface.dll" Guid="{E9CFBA1C-8C60-410B-8552-A9A87A9D7D36}">
+        <File Id="File.AsynchronousInterface.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\AsynchronousInterface.dll" />
+      </Component>
+      <Component Id="Cmp.AUCommunicatorps.dll" Guid="{9C7D65D4-352D-49ED-85B1-215129C1C336}">
+        <File Id="File.AUCommunicatorps.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\AUCommunicatorps.dll" />
+      </Component>
+      <Component Id="Cmp.BDxIServer.dll" Guid="{7F6F7D42-93ED-4FFE-B8D6-1BDCAA560BC3}">
+        <File Id="File.BDxIServer.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BDxIServer.dll" />
+      </Component>
+      <Component Id="Cmp.BDxIToDxCClient.dll" Guid="{B878C84D-4F93-4ABA-A18B-0318B8C97E0D}">
+        <File Id="File.BDxIToDxCClient.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BDxIToDxCClient.dll" />
+      </Component>
+      <Component Id="Cmp.BDxIToDxCServer.dll" Guid="{5829CD4A-A3B2-40A7-80CF-F8836DFF3C47}">
+        <File Id="File.BDxIToDxCServer.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BDxIToDxCServer.dll" />
+      </Component>
+      <Component Id="Cmp.BmpMgrUD.dll" Guid="{CD4B8ADD-247B-4D88-99B1-6BC0D81658F6}">
+        <File Id="File.BmpMgrUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BmpMgrUD.dll" />
+      </Component>
+      <Component Id="Cmp.BTcpUtilitiesD.dll" Guid="{C7BB06C8-8186-4366-BE9F-967852E3BBDC}">
+        <File Id="File.BTcpUtilitiesD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BTcpUtilitiesD.dll" />
+      </Component>
+      <Component Id="Cmp.BusinessModelUD.dll" Guid="{AD91BEC8-0223-432A-A0A1-E8B139E7C2EE}">
+        <File Id="File.BusinessModelUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\BusinessModelUD.dll" />
+      </Component>
+      <Component Id="Cmp.cdrvdl32.dll" Guid="{3F5BBBA9-120F-457F-81EF-2AAD224BB529}">
+        <File Id="File.cdrvdl32.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\cdrvdl32.dll" />
+      </Component>
+      <Component Id="Cmp.cdrvhf32.dll" Guid="{1E8320CE-15BF-4BA7-94A8-BD1942B776D1}">
+        <File Id="File.cdrvhf32.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\cdrvhf32.dll" />
+      </Component>
+      <Component Id="Cmp.cdrvxf32.dll" Guid="{DE3F222E-CBF2-443B-B5C3-D5C744F45D51}">
+        <File Id="File.cdrvxf32.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\cdrvxf32.dll" />
+      </Component>
+      <Component Id="Cmp.commsc32.dll" Guid="{9EF6819A-E4F1-4342-AE29-03D1B8D33EF8}">
+        <File Id="File.commsc32.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\commsc32.dll" />
+      </Component>
+      <Component Id="Cmp.crpe32.dll" Guid="{95F4DE73-9F00-49FA-840B-101CE82B5140}">
+        <File Id="File.crpe32.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\crpe32.dll" />
+      </Component>
+      <Component Id="Cmp.dbghelp.dll" Guid="{4566D598-7CFE-4951-B0C3-60DC1F8F3C98}">
+        <File Id="File.dbghelp.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\dbghelp.dll" />
+      </Component>
+      <Component Id="Cmp.DxIMsgData.dll" Guid="{EA3B4E5F-8FB7-441C-8A39-F7262F8F2495}">
+        <File Id="File.DxIMsgData.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\DxIMsgData.dll" />
+      </Component>
+      <Component Id="Cmp.DxIToDxCMsgData.dll" Guid="{252DEDF0-8748-4399-B3A3-F06DD4DD171C}">
+        <File Id="File.DxIToDxCMsgData.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\DxIToDxCMsgData.dll" />
+      </Component>
+      <Component Id="Cmp.EventsUD.dll" Guid="{011FC284-D05C-465E-A846-1745F7C6709E}">
+        <File Id="File.EventsUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\EventsUD.dll" />
+      </Component>
+      <Component Id="Cmp.FrameworkBarsUD.ocx" Guid="{8C06F843-C983-41B4-98EE-1D0D9463AD40}">
+        <File Id="File.FrameworkBarsUD.ocx" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\FrameworkBarsUD.ocx" />
+      </Component>
+      <Component Id="Cmp.IA.ini" Guid="{360CD072-C83C-42AA-B79F-7BFA8DB33AEC}">
+        <File Id="File.IA.ini" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\IA.ini" />
+      </Component>
+      <Component Id="Cmp.implode.dll" Guid="{6BBBF3CD-FD08-4A50-A755-4ABC8ABD1E0F}">
+        <File Id="File.implode.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\implode.dll" />
+      </Component>
+      <Component Id="Cmp.InstrumentModelps.dll" Guid="{6FD2112F-02AD-4704-BB16-C22AACCF823C}">
+        <File Id="File.InstrumentModelps.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\InstrumentModelps.dll" />
+      </Component>
+      <Component Id="Cmp.LISClientUD.dll" Guid="{CD5AEDD3-D7B2-4EF8-9CA4-2A740CDE93B1}">
+        <File Id="File.LISClientUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\LISClientUD.dll" />
+      </Component>
+      <Component Id="Cmp.MathModelUD.dll" Guid="{1B9060BC-D9EC-4C8D-8671-3FEBC396F36A}">
+        <File Id="File.MathModelUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\MathModelUD.dll" />
+      </Component>
+      <Component Id="Cmp.MMIAssertUD.dll" Guid="{7A2E7DC0-598D-4E14-98E2-6AC4C6EF1BB4}">
+        <File Id="File.MMIAssertUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\MMIAssertUD.dll" />
+      </Component>
+      <Component Id="Cmp.MsgDataUD.dll" Guid="{DA7E5AE5-BD73-482C-BF31-FF70D6AE90EE}">
+        <File Id="File.MsgDataUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\MsgDataUD.dll" />
+      </Component>
+      <Component Id="Cmp.NexStepGridUD.dll" Guid="{5A608F55-DF27-4553-A21C-9C9A69823C8C}">
+        <File Id="File.NexStepGridUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexStepGridUD.dll" />
+      </Component>
+      <Component Id="Cmp.NexStepMFCLowLevelUD.dll" Guid="{247D5763-CA43-44FC-8DCB-9A16818E78DC}">
+        <File Id="File.NexStepMFCLowLevelUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexStepMFCLowLevelUD.dll" />
+      </Component>
+      <Component Id="Cmp.NexStepMFCUD.dll" Guid="{7D2D5681-9F21-4DED-A48B-87F0B045B7C6}">
+        <File Id="File.NexStepMFCUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexStepMFCUD.dll" />
+      </Component>
+      <Component Id="Cmp.NexStepWin32LowLevelUD.dll" Guid="{6912F2C6-1653-4552-A24A-5C8E31E44049}">
+        <File Id="File.NexStepWin32LowLevelUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexStepWin32LowLevelUD.dll" />
+      </Component>
+      <Component Id="Cmp.NexStepWin32UD.dll" Guid="{D75B81A3-F5E2-4A36-B28D-EC40F8790D9E}">
+        <File Id="File.NexStepWin32UD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\NexStepWin32UD.dll" />
+      </Component>
+      <Component Id="Cmp.p2sodbc.dll" Guid="{CDE1EFB1-5AE8-4FD9-B02F-1208A5101739}">
+        <File Id="File.p2sodbc.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\p2sodbc.dll" />
+      </Component>
+      <Component Id="Cmp.POEventUD.dll" Guid="{68070C68-09B8-4A8E-9869-1DD97552A3CA}">
+        <File Id="File.POEventUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\POEventUD.dll" />
+      </Component>
+      <Component Id="Cmp.RackButtonsUD.ocx" Guid="{CEA5EAAC-EAC5-494C-9E5A-E651B29E72A7}">
+        <File Id="File.RackButtonsUD.ocx" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\RackButtonsUD.ocx" />
+      </Component>
+      <Component Id="Cmp.ReportPrintUD.dll" Guid="{ACAE8EF0-D09C-47B7-BB33-3A3E660C96BF}">
+        <File Id="File.ReportPrintUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ReportPrintUD.dll" />
+      </Component>
+      <Component Id="Cmp.RMS.dll" Guid="{753F9867-2938-4DE0-9208-5B9411182538}">
+        <File Id="File.RMS.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\RMS.dll" />
+      </Component>
+      <Component Id="Cmp.ScreenTransitionHookUD.dll" Guid="{655AB78A-C605-4BAD-8CB2-8CF84C2F92E3}">
+        <File Id="File.ScreenTransitionHookUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\ScreenTransitionHookUD.dll" />
+      </Component>
+      <Component Id="Cmp.SfxBar.dll" Guid="{9857610C-11BE-412D-AD69-A1A726B102B5}">
+        <File Id="File.SfxBar.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\SfxBar.dll" />
+      </Component>
+      <Component Id="Cmp.WidgetsUD.dll" Guid="{0824928C-995C-4A38-BAFA-24F584D2FE94}">
+        <File Id="File.WidgetsUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\WidgetsUD.dll" />
+      </Component>
+      <Component Id="Cmp.WorkgroupCommunicationsUD.dll" Guid="{EBF3B2AD-502A-4CC6-A3EF-8F3DB2101303}">
+        <File Id="File.WorkgroupCommunicationsUD.dll" KeyPath="yes" Source="$(var.SourcePath.Console.Bin)\WorkgroupCommunicationsUD.dll" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
